@@ -9,7 +9,6 @@ export default class Register extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <div className="Login">
                 <form onSubmit={this.props.handleSubmit}>

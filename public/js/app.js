@@ -62374,7 +62374,6 @@ var Root = function (_Component) {
             writable: true,
             value: function value(event) {
                 _this.setState(_defineProperty({}, event.target.id, event.target.value));
-                Object(__WEBPACK_IMPORTED_MODULE_3__api__["a" /* getTest */])();
             }
         });
         Object.defineProperty(_this, 'handleSubmit', {
@@ -62470,7 +62469,6 @@ var Register = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log(this.props);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'Login' },
@@ -75172,8 +75170,14 @@ var Well = function (_React$Component) {
 
 
 function getTest() {
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('http://localhost:8000/api/test').then(function (response) {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('http://localhost:8000/api/user/register', {
+        first_name: 'Adri',
+        last_name: 'dude',
+        email: 'testuser123@gmail.com',
+        password: 'kekkertop'
+    }).then(function (response) {
         console.log(response);
+        // TODO: save response.data.access_token in localstorage/cookie
     }).catch(function (error) {
         console.log(error);
     });

@@ -20,7 +20,6 @@ export default class Root extends Component {
         this.setState({
             [event.target.id]: event.target.value
         });
-        getTest();
     }
 
     handleSubmit = event => {
