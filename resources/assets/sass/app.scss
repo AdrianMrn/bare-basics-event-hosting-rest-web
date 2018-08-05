@@ -6,8 +6,9 @@
 @import "variables";
 
 // Bootstrap
-@import '~bootstrap/dist/css/bootstrap';
-@import '~bootstrap/dist/css/bootstrap-theme';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~bootstrap/dist/css/bootstrap-theme.min.css';
+@import '~bootstrap-daterangepicker/daterangepicker.css';
 
 .navbar-laravel {
   background-color: #fff;
