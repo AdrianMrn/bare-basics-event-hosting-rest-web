@@ -18,11 +18,12 @@ class UsersTableSeeder extends Seeder
          * @var $user User
          */
 
-        $admin = Role::create(['name' => 'admin']);
-        $editor = Role::create(['name' => 'editor']);
+      //  $admin = Role::create(['name' => 'admin']);
+      //  $editor = Role::create(['name' => 'editor']);
 
         $user =  User::create([
-            'name' => 'admin',
+            'first_name' => 'adriaan',
+            'last_name' => 'marain',
             'email' => 'adriaanmarain300@gmail.com',
             'password' => bcrypt('admin'),
         ]);
