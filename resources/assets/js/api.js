@@ -1,17 +1,47 @@
 import axios from 'axios';
+import cookie from 'react-cookies'
 
-export function getTest() {
-    axios.post('http://localhost:8000/api/user/register', {
-        first_name: 'Adri',
-        last_name: 'dude',
-        email: 'testuser123@gmail.com',
-        password: 'kekkertop'
+import { apiUrl } from './config';
+
+export function registerAccount(data, next) {
+    axios.post(`${apiUrl}user/register`, {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        password: data.password
+    })
+        .then(function (response) {
+            // Saving the user's data to cookies
+            cookie.save('email', data.email);
+            cookie.save('firstName', data.first_name);
+            cookie.save('lastName', data.last_name);
+            cookie.save('accessToken', response.data.access_token);
+            cookie.save('refreshToken', response.data.refresh_token);
+
+            next(false);
+        })
+        .catch(function (error) {
+            next(error);
+        });
+}
+
+export function authenticateAccount(data, next) {
+    axios.post(`${apiUrl}user/authenticate`, {
+        email: data.email,
+        password: data.password
     })
         .then(function (response) {
             console.log(response);
-            // TODO: save response.data.access_token in localstorage/cookie
+            // Saving the user's data to cookies
+            /* cookie.save('email', data.email);
+            cookie.save('firstName', data.first_name);
+            cookie.save('lastName', data.last_name); */
+            cookie.save('accessToken', response.data.access_token);
+            cookie.save('refreshToken', response.data.refresh_token);
+            
+            next(false);
         })
         .catch(function (error) {
-            console.log(error);
+            next(error);
         });
 }

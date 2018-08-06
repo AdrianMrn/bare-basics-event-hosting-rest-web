@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
-import Register from '../components/Register';
+import Store from '../Store';
 
-import { getTest } from '../api';
+import Login from '../components/authentication/Login';
+import Register from '../components/authentication/Register';
 
-export default class Root extends Component {
+import { registerAccount, authenticateAccount } from '../api';
+
+class Authenticate extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            name: "",
-            email: "",
-            password: ""
+            disableSubmit: false,
         };
     }
 
@@ -22,9 +22,46 @@ export default class Root extends Component {
         });
     }
 
-    handleSubmit = event => {
+    handleSubmitRegister = event => {
         event.preventDefault();
-        getTest();
+
+        let store = this.props.store;
+        this.setState({ disableSubmit: true });
+        registerAccount({
+            first_name: store.get('first_name'),
+            last_name: store.get('last_name'),
+            email: store.get('email'),
+            password: store.get('password')
+        }, (error) => {
+            this.setState({ disableSubmit: false });
+            if (error) {
+                console.log(error);
+                // TODO: display error message to user
+            } else {
+                console.log('registered!');
+                // TODO: route to dashboard
+            }
+        });
+    }
+
+    handleSubmitLogin = event => {
+        event.preventDefault();
+
+        let store = this.props.store;
+        this.setState({ disableSubmit: true });
+        authenticateAccount({
+            email: store.get('email'),
+            password: store.get('password')
+        }, (error) => {
+            this.setState({ disableSubmit: false });
+            if (error) {
+                console.log(error);
+                // TODO: display error message to user
+            } else {
+                console.log('logged in!');
+                // TODO: route to dashboard
+            }
+        });
     }
 
     render() {
@@ -32,13 +69,20 @@ export default class Root extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col-md-8">
-                        <Register
-                            name={this.state.name}
-                            email={this.state.email}
-                            password={this.state.password}
-                            handleChange={this.handleChange}
-                            handleSubmit={this.handleSubmit}
-                        />
+                        {this.props.authType === 'register' &&
+                            <Register
+                                handleChange={this.handleChange}
+                                handleSubmitRegister={this.handleSubmitRegister}
+                                disableSubmit={this.state.disableSubmit}
+                            />
+                        }
+                        {this.props.authType === 'login' &&
+                            <Login
+                                handleChange={this.handleChange}
+                                handleSubmitLogin={this.handleSubmitLogin}
+                                disableSubmit={this.state.disableSubmit}
+                            />
+                        }
                     </div>
                 </div>
             </div>
@@ -46,6 +90,4 @@ export default class Root extends Component {
     }
 }
 
-if (document.getElementById('root')) {
-    ReactDOM.render(<Root />, document.getElementById('root'));
-}
+export default Store.withStore(Authenticate);

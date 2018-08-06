@@ -1,53 +1,50 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+
+import Store from '../../Store';
 
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-export default class Register extends Component {
+class Login extends Component {
     validateForm() {
-        return this.props.email.length > 0 && this.props.password.length > 0;
+        return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
     }
 
     render() {
+        let store = this.props.store
         return (
             <div className="Login">
-                <form onSubmit={this.props.handleSubmit}>
-                    <FormGroup controlId="name" bsSize="sm">
-                        <ControlLabel>Name</ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.props.name}
-                            onChange={this.props.handleChange}
-                        />
-                    </FormGroup>
+                <form onSubmit={this.props.handleSubmitLogin}>
                     <FormGroup controlId="email" bsSize="sm">
                         <ControlLabel>Email</ControlLabel>
                         <FormControl
                             autoFocus
                             type="email"
-                            value={this.props.email}
-                            onChange={this.props.handleChange}
+                            value={store.get('email')}
+                            onChange={e => store.set('email')(e.target.value)}
+                            disabled={this.props.disableSubmit}
                         />
                     </FormGroup>
                     <FormGroup controlId="password" bsSize="sm">
                         <ControlLabel>Password</ControlLabel>
                         <FormControl
-                            value={this.props.password}
-                            onChange={this.props.handleChange}
+                            value={store.get('password')}
+                            onChange={e => store.set('password')(e.target.value)}
                             type="password"
+                            disabled={this.props.disableSubmit}
                         />
                     </FormGroup>
                     <Button
                         block
                         bsSize="large"
-                        disabled={!this.validateForm()}
+                        disabled={!this.validateForm() || this.props.disableSubmit}
                         type="submit"
                     >
-                        Register
+                        Login
           </Button>
                 </form>
             </div>
         );
     }
 }
+
+export default Store.withStore(Login);
