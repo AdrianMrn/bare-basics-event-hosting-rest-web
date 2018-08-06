@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Store from '../../Store';
 
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl } from "react-bootstrap";
 
 class Register extends Component {
     validateForm() {
