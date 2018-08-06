@@ -3778,7 +3778,8 @@ var locationsAreEqual = function locationsAreEqual(a, b) {
   email: '',
   first_name: '',
   last_name: '',
-  password: ''
+  password: '',
+  myEvents: ''
 }));
 
 /***/ }),
@@ -9180,7 +9181,7 @@ function never() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__CloseButton__ = __webpack_require__(111);
 /* unused harmony reexport CloseButton */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ControlLabel__ = __webpack_require__(405);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_13__ControlLabel__["a"]; });
+/* unused harmony reexport ControlLabel */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Col__ = __webpack_require__(406);
 /* unused harmony reexport Col */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Collapse__ = __webpack_require__(115);
@@ -9194,9 +9195,9 @@ function never() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Form__ = __webpack_require__(420);
 /* unused harmony reexport Form */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__FormControl__ = __webpack_require__(421);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_20__FormControl__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_20__FormControl__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__FormGroup__ = __webpack_require__(424);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_21__FormGroup__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_21__FormGroup__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__Glyphicon__ = __webpack_require__(114);
 /* unused harmony reexport Glyphicon */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__Grid__ = __webpack_require__(187);
@@ -13539,11 +13540,16 @@ __webpack_require__(246);
 
 /***/ }),
 /* 210 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_cookies__ = __webpack_require__(497);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_cookies___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_cookies__);
 
 window._ = __webpack_require__(211);
 window.Popper = __webpack_require__(213).default;
+
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -13579,6 +13585,13 @@ if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
+// Adding the access token to the axios header if it exists
+var apiAccessToken = __WEBPACK_IMPORTED_MODULE_0_react_cookies___default.a.load('accessToken');
+
+if (apiAccessToken) {
+  window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + apiAccessToken;
 }
 
 /**
@@ -46984,6 +46997,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(259);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Store__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__containers_Authenticate__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__containers_Dashboard__ = __webpack_require__(514);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46991,6 +47005,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -47019,25 +47034,14 @@ var Root = function (_Component) {
                     'div',
                     { className: 'container' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'row justify-content-center' },
+                        __WEBPACK_IMPORTED_MODULE_3__Store__["a" /* default */].Container,
+                        null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'col-md-10' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_3__Store__["a" /* default */].Container,
-                                null,
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Switch */],
-                                    null,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Route */], { exact: true, path: '/login', render: function render() {
-                                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__containers_Authenticate__["a" /* default */], { authType: 'login' });
-                                        } }),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Route */], { exact: true, path: '/register', render: function render() {
-                                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__containers_Authenticate__["a" /* default */], { authType: 'register' });
-                                        } })
-                                )
-                            )
+                            __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Switch */],
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Route */], { exact: true, path: '/register', component: __WEBPACK_IMPORTED_MODULE_4__containers_Authenticate__["a" /* default */] }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Route */], { exact: true, path: '/login', component: __WEBPACK_IMPORTED_MODULE_4__containers_Authenticate__["a" /* default */] }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Route */], { exact: true, path: '/dashboard', component: __WEBPACK_IMPORTED_MODULE_5__containers_Dashboard__["a" /* default */] })
                         )
                     )
                 )
@@ -72687,8 +72691,6 @@ function isInitialized(store) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__api__ = __webpack_require__(496);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -72712,11 +72714,17 @@ var Authenticate = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Authenticate.__proto__ || Object.getPrototypeOf(Authenticate)).call(this, props));
 
-        Object.defineProperty(_this, 'handleChange', {
+        Object.defineProperty(_this, 'afterLoginOrRegister', {
             enumerable: true,
             writable: true,
-            value: function value(event) {
-                _this.setState(_defineProperty({}, event.target.id, event.target.value));
+            value: function value(error) {
+                _this.setState({ disableSubmit: false });
+                if (error) {
+                    console.log(error);
+                    // TODO: display error message to user
+                } else {
+                    _this.props.history.push('/dashboard');
+                }
             }
         });
         Object.defineProperty(_this, 'handleSubmitRegister', {
@@ -72727,20 +72735,13 @@ var Authenticate = function (_Component) {
 
                 var store = _this.props.store;
                 _this.setState({ disableSubmit: true });
-                Object(__WEBPACK_IMPORTED_MODULE_4__api__["b" /* registerAccount */])({
+                Object(__WEBPACK_IMPORTED_MODULE_4__api__["c" /* registerAccount */])({
                     first_name: store.get('first_name'),
                     last_name: store.get('last_name'),
                     email: store.get('email'),
                     password: store.get('password')
                 }, function (error) {
-                    _this.setState({ disableSubmit: false });
-                    if (error) {
-                        console.log(error);
-                        // TODO: display error message to user
-                    } else {
-                        console.log('registered!');
-                        // TODO: route to dashboard
-                    }
+                    _this.afterLoginOrRegister(error);
                 });
             }
         });
@@ -72756,14 +72757,7 @@ var Authenticate = function (_Component) {
                     email: store.get('email'),
                     password: store.get('password')
                 }, function (error) {
-                    _this.setState({ disableSubmit: false });
-                    if (error) {
-                        console.log(error);
-                        // TODO: display error message to user
-                    } else {
-                        console.log('logged in!');
-                        // TODO: route to dashboard
-                    }
+                    _this.afterLoginOrRegister(error);
                 });
             }
         });
@@ -72780,20 +72774,18 @@ var Authenticate = function (_Component) {
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'container' },
+                null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'row' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'col-md-8' },
-                        this.props.authType === 'register' && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_authentication_Register__["a" /* default */], {
-                            handleChange: this.handleChange,
+                        { className: 'col-md-6 col-md-offset-3' },
+                        this.props.location.pathname === '/register' && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_authentication_Register__["a" /* default */], {
                             handleSubmitRegister: this.handleSubmitRegister,
                             disableSubmit: this.state.disableSubmit
                         }),
-                        this.props.authType === 'login' && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_authentication_Login__["a" /* default */], {
-                            handleChange: this.handleChange,
+                        this.props.location.pathname === '/login' && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_authentication_Login__["a" /* default */], {
                             handleSubmitLogin: this.handleSubmitLogin,
                             disableSubmit: this.state.disableSubmit
                         })
@@ -72851,43 +72843,35 @@ var Login = function (_Component) {
             var store = this.props.store;
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'Login' },
+                null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'form',
                     { onSubmit: this.props.handleSubmitLogin },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["d" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* FormGroup */],
                         { controlId: 'email', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["b" /* ControlLabel */],
-                            null,
-                            'Email'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["b" /* FormControl */], {
                             autoFocus: true,
                             type: 'email',
                             value: store.get('email'),
                             onChange: function onChange(e) {
                                 return store.set('email')(e.target.value);
                             },
-                            disabled: this.props.disableSubmit
+                            disabled: this.props.disableSubmit,
+                            placeholder: 'Email'
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["d" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* FormGroup */],
                         { controlId: 'password', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["b" /* ControlLabel */],
-                            null,
-                            'Password'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["b" /* FormControl */], {
                             value: store.get('password'),
                             onChange: function onChange(e) {
                                 return store.set('password')(e.target.value);
                             },
                             type: 'password',
-                            disabled: this.props.disableSubmit
+                            disabled: this.props.disableSubmit,
+                            placeholder: 'Password'
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -75705,7 +75689,7 @@ ControlLabel.propTypes = propTypes;
 ControlLabel.defaultProps = defaultProps;
 ControlLabel.contextTypes = contextTypes;
 
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_9__utils_bootstrapUtils__["a" /* bsClass */])('control-label', ControlLabel));
+/* unused harmony default export */ var _unused_webpack_default_export = (Object(__WEBPACK_IMPORTED_MODULE_9__utils_bootstrapUtils__["a" /* bsClass */])('control-label', ControlLabel));
 
 /***/ }),
 /* 406 */
@@ -84725,77 +84709,61 @@ var Register = function (_Component) {
             var store = this.props.store;
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'Login' },
+                null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'form',
                     { onSubmit: this.props.handleSubmitRegister },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["d" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* FormGroup */],
                         { controlId: 'first_name', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["b" /* ControlLabel */],
-                            null,
-                            'First Name'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["b" /* FormControl */], {
                             autoFocus: true,
                             type: 'text',
                             value: store.get('first_name'),
                             onChange: function onChange(e) {
                                 return store.set('first_name')(e.target.value);
                             },
-                            disabled: this.props.disableSubmit
+                            disabled: this.props.disableSubmit,
+                            placeholder: 'First name'
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["d" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* FormGroup */],
                         { controlId: 'last_name', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["b" /* ControlLabel */],
-                            null,
-                            'Last Name'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["b" /* FormControl */], {
                             type: 'text',
                             value: store.get('last_name'),
                             onChange: function onChange(e) {
                                 return store.set('last_name')(e.target.value);
                             },
-                            disabled: this.props.disableSubmit
+                            disabled: this.props.disableSubmit,
+                            placeholder: 'Last name'
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["d" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* FormGroup */],
                         { controlId: 'email', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["b" /* ControlLabel */],
-                            null,
-                            'Email'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["b" /* FormControl */], {
                             type: 'email',
                             value: store.get('email'),
                             onChange: function onChange(e) {
                                 return store.set('email')(e.target.value);
                             },
-                            disabled: this.props.disableSubmit
+                            disabled: this.props.disableSubmit,
+                            placeholder: 'Email'
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["d" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* FormGroup */],
                         { controlId: 'password', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["b" /* ControlLabel */],
-                            null,
-                            'Password'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["b" /* FormControl */], {
                             value: store.get('password'),
                             onChange: function onChange(e) {
                                 return store.set('password')(e.target.value);
                             },
                             type: 'password',
-                            disabled: this.props.disableSubmit
+                            disabled: this.props.disableSubmit,
+                            placeholder: 'Password'
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -84823,8 +84791,9 @@ var Register = function (_Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = registerAccount;
+/* harmony export (immutable) */ __webpack_exports__["c"] = registerAccount;
 /* harmony export (immutable) */ __webpack_exports__["a"] = authenticateAccount;
+/* harmony export (immutable) */ __webpack_exports__["b"] = getUserEvents;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_cookies__ = __webpack_require__(497);
@@ -84860,8 +84829,8 @@ function authenticateAccount(data, next) {
         email: data.email,
         password: data.password
     }).then(function (response) {
-        console.log(response);
         // Saving the user's data to cookies
+        // TODO: find a way to get the user's details and set them in cookies (in the store as well? or let Root.js handle this?)
         /* cookie.save('email', data.email);
         cookie.save('firstName', data.first_name);
         cookie.save('lastName', data.last_name); */
@@ -84869,6 +84838,14 @@ function authenticateAccount(data, next) {
         __WEBPACK_IMPORTED_MODULE_1_react_cookies___default.a.save('refreshToken', response.data.refresh_token);
 
         next(false);
+    }).catch(function (error) {
+        next(error);
+    });
+}
+
+function getUserEvents(next) {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + 'getuserevents').then(function (response) {
+        next(false, response);
     }).catch(function (error) {
         next(error);
     });
@@ -85268,6 +85245,92 @@ var apiUrl = 'http://localhost:8000/api/';
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 501 */,
+/* 502 */,
+/* 503 */,
+/* 504 */,
+/* 505 */,
+/* 506 */,
+/* 507 */,
+/* 508 */,
+/* 509 */,
+/* 510 */,
+/* 511 */,
+/* 512 */,
+/* 513 */,
+/* 514 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Store__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api__ = __webpack_require__(496);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+var Dashboard = function (_Component) {
+    _inherits(Dashboard, _Component);
+
+    function Dashboard(props) {
+        _classCallCheck(this, Dashboard);
+
+        return _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
+    }
+
+    _createClass(Dashboard, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            Object(__WEBPACK_IMPORTED_MODULE_2__api__["b" /* getUserEvents */])(function (error, response) {
+                if (error) {
+                    // TODO: display error to user
+                    console.log(error);
+                } else {
+                    // TODO: add user's events to the myEvents array in the store
+                    console.log(response);
+                }
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'row' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col-md-10 col-md-offset-1' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'p',
+                            null,
+                            'kek'
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Dashboard;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1__Store__["a" /* default */].withStore(Dashboard));
 
 /***/ })
 /******/ ]);

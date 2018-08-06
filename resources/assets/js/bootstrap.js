@@ -1,6 +1,7 @@
 
 window._ = require('lodash');
 window.Popper = require('popper.js').default;
+import cookie from 'react-cookies';
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -36,6 +37,13 @@ if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
+// Adding the access token to the axios header if it exists
+let apiAccessToken = cookie.load('accessToken');
+
+if (apiAccessToken) {
+    window.axios.defaults.headers.common['Authorization'] = `Bearer ${apiAccessToken}`;
 }
 
 /**

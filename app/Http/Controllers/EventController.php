@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+use App\Event;
+
 class EventController extends Controller 
 {
 
@@ -24,8 +26,9 @@ class EventController extends Controller
 
     }
 
-    public function testApi(Request $request){
-        return response()->json(['test' => 'hello world'], 200);
+    public function getUserEvents(Request $request){
+        $events = Event::where('owner_id', $request->user()->id)->get();
+        return $events;
     }
   
 }

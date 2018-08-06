@@ -16,10 +16,14 @@ class Authenticate extends Component {
         };
     }
 
-    handleChange = event => {
-        this.setState({
-            [event.target.id]: event.target.value
-        });
+    afterLoginOrRegister = error => {
+        this.setState({ disableSubmit: false });
+        if (error) {
+            console.log(error);
+            // TODO: display error message to user
+        } else {
+            this.props.history.push('/dashboard');
+        }
     }
 
     handleSubmitRegister = event => {
@@ -33,14 +37,7 @@ class Authenticate extends Component {
             email: store.get('email'),
             password: store.get('password')
         }, (error) => {
-            this.setState({ disableSubmit: false });
-            if (error) {
-                console.log(error);
-                // TODO: display error message to user
-            } else {
-                console.log('registered!');
-                // TODO: route to dashboard
-            }
+            this.afterLoginOrRegister(error);
         });
     }
 
@@ -53,32 +50,23 @@ class Authenticate extends Component {
             email: store.get('email'),
             password: store.get('password')
         }, (error) => {
-            this.setState({ disableSubmit: false });
-            if (error) {
-                console.log(error);
-                // TODO: display error message to user
-            } else {
-                console.log('logged in!');
-                // TODO: route to dashboard
-            }
+            this.afterLoginOrRegister(error);
         });
     }
 
     render() {
         return (
-            <div className="container">
+            <div>
                 <div className="row">
-                    <div className="col-md-8">
-                        {this.props.authType === 'register' &&
+                    <div className="col-md-6 col-md-offset-3">
+                        {this.props.location.pathname === '/register' &&
                             <Register
-                                handleChange={this.handleChange}
                                 handleSubmitRegister={this.handleSubmitRegister}
                                 disableSubmit={this.state.disableSubmit}
                             />
                         }
-                        {this.props.authType === 'login' &&
+                        {this.props.location.pathname === '/login' &&
                             <Login
-                                handleChange={this.handleChange}
                                 handleSubmitLogin={this.handleSubmitLogin}
                                 disableSubmit={this.state.disableSubmit}
                             />

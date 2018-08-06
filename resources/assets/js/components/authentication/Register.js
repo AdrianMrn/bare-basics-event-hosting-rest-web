@@ -12,43 +12,43 @@ class Register extends Component {
     render() {
         let store = this.props.store
         return (
-            <div className="Login">
+            <div>
                 <form onSubmit={this.props.handleSubmitRegister}>
                     <FormGroup controlId="first_name" bsSize="sm">
-                        <ControlLabel>First Name</ControlLabel>
                         <FormControl
                             autoFocus
                             type="text"
                             value={store.get('first_name')}
                             onChange={e => store.set('first_name')(e.target.value)}
                             disabled={this.props.disableSubmit}
+                            placeholder="First name"
                         />
                     </FormGroup>
                     <FormGroup controlId="last_name" bsSize="sm">
-                        <ControlLabel>Last Name</ControlLabel>
                         <FormControl
                             type="text"
                             value={store.get('last_name')}
                             onChange={e => store.set('last_name')(e.target.value)}
                             disabled={this.props.disableSubmit}
+                            placeholder="Last name"
                         />
                     </FormGroup>
                     <FormGroup controlId="email" bsSize="sm">
-                        <ControlLabel>Email</ControlLabel>
                         <FormControl
                             type="email"
                             value={store.get('email')}
                             onChange={e => store.set('email')(e.target.value)}
                             disabled={this.props.disableSubmit}
+                            placeholder="Email"
                         />
                     </FormGroup>
                     <FormGroup controlId="password" bsSize="sm">
-                        <ControlLabel>Password</ControlLabel>
                         <FormControl
                             value={store.get('password')}
                             onChange={e => store.set('password')(e.target.value)}
                             type="password"
                             disabled={this.props.disableSubmit}
+                            placeholder="Password"
                         />
                     </FormGroup>
                     <Button
