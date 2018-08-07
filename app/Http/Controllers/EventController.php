@@ -11,11 +11,24 @@ class EventController extends Controller
 {
 
     public function create(Request $request){
+        $event = new Event;
 
+        $event->name = 'Unnamed Event';
+        $event->slug = 'unnamed-event-' . time();
+        $event->owner_id = $request->user()->id;
+
+        $event->save();
+        return JsonResponse::create(['eventId' => $event->id]);
     }
 
-    public function get(Request $request){
+    public function show($id, Request $request){
+        $event = Event::where('slug', $id)->firstOrFail();
 
+        if ($event->owner_id === $request->user()->id) {
+            return JsonResponse::create(['error' => false, 'eventData' => $event]);
+        } else {
+            abort(401);
+        }
     }
 
     public function update(Request $request){

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 import Store from '../Store';
 
+import { registerAccount, authenticateAccount } from '../api';
+
 import Login from '../components/authentication/Login';
 import Register from '../components/authentication/Register';
-
-import { registerAccount, authenticateAccount } from '../api';
 
 class Authenticate extends Component {
     constructor(props) {

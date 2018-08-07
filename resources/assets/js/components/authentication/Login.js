@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
+import { Button, FormGroup, FormControl } from "react-bootstrap";
 
 import Store from '../../Store';
-
-import { Button, FormGroup, FormControl } from "react-bootstrap";
 
 class Login extends Component {
     validateForm() {
@@ -10,7 +9,7 @@ class Login extends Component {
     }
 
     render() {
-        let store = this.props.store
+        let store = this.props.store;
         return (
             <div>
                 <form onSubmit={this.props.handleSubmitLogin}>

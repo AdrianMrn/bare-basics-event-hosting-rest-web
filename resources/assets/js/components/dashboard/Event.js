@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
+import { Panel, Button } from 'react-bootstrap';
 
-import Store from '../../Store';
-
-import { Panel } from "react-bootstrap";
-
-class Event extends Component {
+export default class Event extends Component {
     render() {
-        let { data, store } = this.props;
-        console.log(data);
+        let { data } = this.props;
         return (
             <div>
                 <Panel>
                     <Panel.Heading>
-                        <Panel.Title componentClass="h3">{data.name}</Panel.Title>
-                        {data.date_start} -  {data.date_end} {/* TODO: convert to human readable date */}
+                        <Panel.Title componentClass="h3">
+                            {data.name}
+                            <Button className='pull-right' bsStyle='warning' onClick={() => this.props.navigateToEventEdit(data)}>Edit</Button>
+                        </Panel.Title>
+                        {data.date_start && <div>
+                            <span>{data.date_start}</span> - <span>{data.date_end}</span> {/* TODO: display human readable dates */}
+                        </div>}
                     </Panel.Heading>
                     <Panel.Body>
                         {/* TODO: insert event logo */}
                         {data.description}
-                        {/* TODO: insert EDIT button */}
                     </Panel.Body>
                 </Panel>
             </div>
         );
     }
 }
-
-export default Store.withStore(Event);

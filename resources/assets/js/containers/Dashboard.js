@@ -1,29 +1,52 @@
 import React, { Component } from 'react';
+import { Button, Glyphicon } from 'react-bootstrap';
 
 import Store from '../Store';
 
-import { getUserEvents } from '../api';
-
 import Event from '../components/dashboard/Event';
+
+import { getUserEvents, createNewEvent } from '../api';
 
 class Dashboard extends Component {
     constructor(props) {
         super(props);
 
-        // TODO: display loader icon where events will show up until fetched
-
+        this.state = {
+            fetchingEvents: true,
+            disableCreateEventButton: false,
+        }
     }
 
     componentDidMount() {
         getUserEvents((error, response) => {
-            // TODO: Remove loader icon
+            this.setState({ fetchingEvents: false });
             if (error) {
-                // TODO: display error to user
+                // TODO: display error & ask user to refresh the page
                 console.log(error)
             } else {
                 this.props.store.set('myEvents')(response.data);
             }
         });
+    }
+
+    createEvent = () => {
+        this.setState({ disableCreateEventButton: true });
+        createNewEvent((error, response) => {
+            if (error) {
+                // TODO: display error
+                console.log(error)
+                this.setState({ disableCreateEventButton: false });
+            } else {
+                // TODO: Redirect user to the event edit page
+                this.setState({ disableCreateEventButton: false });
+
+            }
+        })
+    }
+
+    navigateToEventEdit = (data) => {
+        this.props.store.set('eventEdit')({ data });
+        this.props.history.push(`/dashboard/event-detail/${data.slug}`);
     }
 
     render() {
@@ -32,10 +55,18 @@ class Dashboard extends Component {
             <div>
                 <div className="row">
                     <div className="col-md-10 col-md-offset-1">
-                        {/* TODO: "Create an event" button */}
-                        {store.state.myEvents && store.state.myEvents.map((data, index) => (
-                            <Event data={data} key={index} />
-                        ))}
+                        <div className="y-padding">
+                            <Button bsStyle="info" onClick={this.createEvent} disabled={this.state.disableCreateEventButton}>
+                                <Glyphicon glyph="plus" /> Create an event
+                            </Button>
+                        </div>
+                        <div className="y-padding">
+                            {/* TODO: Title with "your events", ... */}
+                            {this.state.fetchingEvents && <div className="lds-dual-ring"></div>}
+                            {store.state.myEvents && store.state.myEvents.map((data, index) => (
+                                <Event data={data} navigateToEventEdit={this.navigateToEventEdit} key={index} />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

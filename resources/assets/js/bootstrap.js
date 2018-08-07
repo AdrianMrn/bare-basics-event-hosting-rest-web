@@ -39,13 +39,6 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-// Adding the access token to the axios header if it exists
-let apiAccessToken = cookie.load('accessToken');
-
-if (apiAccessToken) {
-    window.axios.defaults.headers.common['Authorization'] = `Bearer ${apiAccessToken}`;
-}
-
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
