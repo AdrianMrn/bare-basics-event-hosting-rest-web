@@ -409,6 +409,14 @@
   min-height: 58px;
 }
 
+.event-edit-tab {
+  border: 1px solid #ddd;
+  border-top: 0px;
+  border-radius: 0 0 20px 20px;
+  padding: 10px 20px;
+  min-height: 200px;
+}
+
 /* loading spinner */
 
 .lds-dual-ring {

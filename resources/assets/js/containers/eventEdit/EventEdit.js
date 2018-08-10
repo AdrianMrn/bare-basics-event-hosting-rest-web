@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Panel, Tabs, Tab } from 'react-bootstrap';
 
 import Store from '../../Store';
 
 import { getEventData } from '../../api';
+import { General } from '../../components/eventEditTabs/index';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -42,17 +44,31 @@ class Dashboard extends Component {
                             {this.state.fetchingEvent && <div className="lds-dual-ring"></div>}
                             {!this.state.fetchingEvent &&
                                 <div>
-                                    {/* If the initial steps have not yet been completed (description, startdate, ...), display those first, otherwise display the extras */}
-                                    {!event.date_start && 
-                                    <div>
-                                        Initial steps
-                                    </div>}
+                                    <Tabs activeKey={this.state.key} onSelect={this.handleSelectTabs} id="controlled-tabs">
+                                        <Tab eventKey={1} title="General info">
+                                            <div className='event-edit-tab'>
+                                                <General />
+                                            </div>
+                                        </Tab>
 
-                                    {event.date_start && 
-                                    <div>
-                                        Extras
-                                    </div>}
+                                        <Tab eventKey={2} title="Sessions">
+                                            <div className='event-edit-tab'>
+                                                tab
+                                            </div>
+                                        </Tab>
 
+                                        <Tab eventKey={3} title="Speakers">
+                                            <div className='event-edit-tab'>
+                                                tab
+                                            </div>
+                                        </Tab>
+
+                                        <Tab eventKey={4} title="Sponsors">
+                                            <div className='event-edit-tab'>
+                                                tab
+                                            </div>
+                                        </Tab>
+                                    </Tabs>
                                 </div>}
                         </div>
                     </div>
