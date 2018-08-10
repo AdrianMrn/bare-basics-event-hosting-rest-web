@@ -8,35 +8,35 @@ export default createConnectedStore({
   myEvents: '',
 
   selectedEvent: {
-    id: undefined,
-    name: undefined,
-    slug: undefined,
-    address: undefined,
-    city: undefined,
-    country: undefined,
-    venue_name: undefined,
-    description: undefined,
-    date_start: undefined,
-    date_end: undefined,
-    type: undefined,
-    is_private: undefined,
-    is_published: undefined,
-  }
+    id: '',
+    name: '',
+    slug: '',
+    address: '',
+    city: '',
+    country: '',
+    venue_name: '',
+    description: '',
+    date_start: '',
+    date_end: '',
+    type: '',
+    is_private: '',
+    is_published: '',
+  },
 
+  eventEdit: {
+    name: '',
+    address: '',
+    city: '',
+    country: '',
+    venue_name: '',
+    description: '',
+    date_start: '',
+    date_end: '',
+    type: '',
+    is_private: '',
+    is_published: '',
+  },
   /* 
-    eventEdit: {
-      name: undefined,
-      address: undefined,
-      city: undefined,
-      country: undefined,
-      venue_name: undefined,
-      description: undefined,
-      date_start: undefined,
-      date_end: undefined,
-      type: undefined,
-      is_private: undefined,
-      is_published: undefined,
-    }
 
     selectedEventSessions: {
 

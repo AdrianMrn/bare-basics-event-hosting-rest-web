@@ -56,7 +56,12 @@ class Dashboard extends Component {
                     <div className="col-md-10 col-md-offset-1">
                         <div className="y-padding">
                             <Button bsStyle="info" onClick={this.createEvent} disabled={this.state.disableCreateEventButton}>
-                                <Glyphicon glyph="plus" /> Create an event
+                                {this.state.disableCreateEventButton && 
+                                    <span><Glyphicon glyph="refresh" /> Create an event</span>
+                                }
+                                {!this.state.disableCreateEventButton &&
+                                    <span><Glyphicon glyph="plus" /> Create an event</span>
+                                }
                             </Button>
                         </div>
                         <div className="y-padding">

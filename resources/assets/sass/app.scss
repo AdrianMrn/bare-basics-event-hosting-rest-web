@@ -32,6 +32,17 @@
   min-height: 200px;
 }
 
+.event-edit-savebutton-top {
+  position: absolute;
+  right: 25px;
+  top: 15px;
+}
+.event-edit-savebutton-bottom {
+  position: absolute;
+  right: 25px;
+  bottom: 20px;
+}
+
 /* loading spinner */
 .lds-dual-ring {
   display: inline-block;
@@ -57,4 +68,5 @@
     transform: rotate(360deg);
   }
 }
+
 //

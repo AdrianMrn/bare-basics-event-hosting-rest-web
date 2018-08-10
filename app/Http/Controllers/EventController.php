@@ -31,8 +31,8 @@ class EventController extends Controller
         }
     }
 
-    public function update(Request $request){
-        return JsonResponse::create(['test' => 'hello world', 200]);
+    public function update($id, Request $request){
+        return JsonResponse::create(['test' => 'hello world', 200, 'id' => $id, 'data' => $request->all()]);
     }
 
     public function delete(Request $request){

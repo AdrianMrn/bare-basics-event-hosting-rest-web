@@ -75,6 +75,17 @@ export function createNewEvent(next) {
         });
 }
 
+export function saveEventGeneralInfo(eventId, postData, next) {
+    setAccessToken();
+    axios.put(`${apiUrl}/events/${eventId}`, postData)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
 export function getEventData(id, next) {
     setAccessToken();
     axios.get(`${apiUrl}/events/${id}`)
