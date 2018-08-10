@@ -3781,7 +3781,7 @@ var locationsAreEqual = function locationsAreEqual(a, b) {
   password: '',
   myEvents: '',
 
-  eventEdit: {
+  selectedEvent: {
     id: undefined,
     name: undefined,
     slug: undefined,
@@ -84923,7 +84923,7 @@ function getUserEvents(next) {
 
 function createNewEvent(next) {
     setAccessToken();
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/events').then(function (response) {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/events').then(function (response) {
         next(false, response);
     }).catch(function (error) {
         next(error);
@@ -85405,8 +85405,8 @@ var Dashboard = function (_Component) {
                         console.log(error);
                         _this.setState({ disableCreateEventButton: false });
                     } else {
-                        // TODO: Redirect user to the event edit page
                         _this.setState({ disableCreateEventButton: false });
+                        _this.navigateToEventEdit(response.data.slug);
                     }
                 });
             }
@@ -85414,9 +85414,8 @@ var Dashboard = function (_Component) {
         Object.defineProperty(_this, 'navigateToEventEdit', {
             enumerable: true,
             writable: true,
-            value: function value(data) {
-                _this.props.store.set('eventEdit')({ data: data });
-                _this.props.history.push('/dashboard/event-detail/' + data.slug);
+            value: function value(slug) {
+                _this.props.history.push('/dashboard/event-detail/' + slug);
             }
         });
 
@@ -85436,7 +85435,7 @@ var Dashboard = function (_Component) {
             Object(__WEBPACK_IMPORTED_MODULE_4__api__["d" /* getUserEvents */])(function (error, response) {
                 _this2.setState({ fetchingEvents: false });
                 if (error) {
-                    // TODO: display error & ask user to refresh the page
+                    // TODO: display error
                     console.log(error);
                 } else {
                     _this2.props.store.set('myEvents')(response.data);
@@ -85538,7 +85537,7 @@ var Event = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
                                 { className: 'pull-right', bsStyle: 'warning', onClick: function onClick() {
-                                        return _this2.props.navigateToEventEdit(data);
+                                        return _this2.props.navigateToEventEdit(data.slug);
                                     } },
                                 'Edit'
                             )
@@ -85622,27 +85621,22 @@ var Dashboard = function (_Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            if (this.props.store.get('eventEdit.data.id')) {
-                // If the user navigated here from the dashboard and the event data is already in the store
-            } else {
-                // If the user navigated directly to this URL or refreshed the page, we need to get the event data from the API and place it in the store
-                this.setState({ fetchingEvent: true });
-                Object(__WEBPACK_IMPORTED_MODULE_3__api__["c" /* getEventData */])(this.props.match.params.slug, function (error, response) {
-                    if (error) {
-                        // TODO: display error & ask user to refresh the page
-                        console.log(error);
-                    } else {
-                        _this2.props.store.set('eventEdit')(response.data.eventData);
-                    }
-                    _this2.setState({ fetchingEvent: false });
-                });
-            }
+            this.setState({ fetchingEvent: true });
+            Object(__WEBPACK_IMPORTED_MODULE_3__api__["c" /* getEventData */])(this.props.match.params.slug, function (error, response) {
+                if (error) {
+                    // TODO: display error
+                    console.log(error);
+                } else {
+                    _this2.props.store.set('selectedEvent')(response.data.eventData);
+                }
+                _this2.setState({ fetchingEvent: false });
+            });
         }
     }, {
         key: 'render',
         value: function render() {
             var store = this.props.store;
-            var event = store.get('eventEdit');
+            var event = store.get('selectedEvent');
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,

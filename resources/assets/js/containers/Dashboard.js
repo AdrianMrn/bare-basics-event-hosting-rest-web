@@ -21,7 +21,7 @@ class Dashboard extends Component {
         getUserEvents((error, response) => {
             this.setState({ fetchingEvents: false });
             if (error) {
-                // TODO: display error & ask user to refresh the page
+                // TODO: display error
                 console.log(error)
             } else {
                 this.props.store.set('myEvents')(response.data);
@@ -37,16 +37,15 @@ class Dashboard extends Component {
                 console.log(error)
                 this.setState({ disableCreateEventButton: false });
             } else {
-                // TODO: Redirect user to the event edit page
                 this.setState({ disableCreateEventButton: false });
+                this.navigateToEventEdit(response.data.slug);
 
             }
         })
     }
 
-    navigateToEventEdit = (data) => {
-        this.props.store.set('eventEdit')({ data });
-        this.props.history.push(`/dashboard/event-detail/${data.slug}`);
+    navigateToEventEdit = (slug) => {
+        this.props.history.push(`/dashboard/event-detail/${slug}`);
     }
 
     render() {

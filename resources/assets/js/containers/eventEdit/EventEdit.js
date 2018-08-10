@@ -16,26 +16,21 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        if (this.props.store.get('eventEdit.data.id')) {
-            // If the user navigated here from the dashboard and the event data is already in the store
-        } else {
-            // If the user navigated directly to this URL or refreshed the page, we need to get the event data from the API and place it in the store
-            this.setState({ fetchingEvent: true });
-            getEventData(this.props.match.params.slug, (error, response) => {
-                if (error) {
-                    // TODO: display error & ask user to refresh the page
-                    console.log(error)
-                } else {
-                    this.props.store.set('eventEdit')(response.data.eventData);
-                }
-                this.setState({ fetchingEvent: false });
-            });
-        }
+        this.setState({ fetchingEvent: true });
+        getEventData(this.props.match.params.slug, (error, response) => {
+            if (error) {
+                // TODO: display error
+                console.log(error)
+            } else {
+                this.props.store.set('selectedEvent')(response.data.eventData);
+            }
+            this.setState({ fetchingEvent: false });
+        });
     }
 
     render() {
         const store = this.props.store;
-        const event = store.get('eventEdit');
+        const event = store.get('selectedEvent');
         return (
             <div>
                 <div className="row">

@@ -66,7 +66,7 @@ export function getUserEvents(next) {
 
 export function createNewEvent(next) {
     setAccessToken();
-    axios.put(`${apiUrl}/events`)
+    axios.post(`${apiUrl}/events`)
         .then(response => {
             next(false, response);
         })

@@ -7,7 +7,7 @@ export default createConnectedStore({
   password: '',
   myEvents: '',
 
-  eventEdit: {
+  selectedEvent: {
     id: undefined,
     name: undefined,
     slug: undefined,

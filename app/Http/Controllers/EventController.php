@@ -10,7 +10,7 @@ use App\Event;
 class EventController extends Controller 
 {
 
-    public function create(Request $request){
+    public function store(Request $request){
         $event = new Event;
 
         $event->name = 'Unnamed Event';
@@ -18,7 +18,7 @@ class EventController extends Controller
         $event->owner_id = $request->user()->id;
 
         $event->save();
-        return JsonResponse::create(['eventId' => $event->id]);
+        return $event;
     }
 
     public function show($id, Request $request){
