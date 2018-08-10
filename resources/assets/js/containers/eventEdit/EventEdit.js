@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Tabs, Tab, Button } from 'react-bootstrap';
+import { Tabs, Tab, Button, Glyphicon } from 'react-bootstrap';
 
 import Store from '../../Store';
 
-import { getEventData, saveEventGeneralInfo } from '../../api';
+import { getEventData, saveEventGeneralInfo, getEventExtraDetails } from '../../api';
 import { GeneralTab, SessionsTab, SpeakersTab, SponsorsTab } from '../../components/eventEditTabs/index';
 
 class Dashboard extends Component {
@@ -13,6 +13,7 @@ class Dashboard extends Component {
         this.state = {
             fetchingEvent: false,
             loading: false,
+            saveOnNextTabChange: true,
         }
     }
 
@@ -27,18 +28,18 @@ class Dashboard extends Component {
             }
             this.setState({ fetchingEvent: false });
         });
-
     }
 
     handleSaveGeneralInfo = event => {
-        event.preventDefault();
+        if (event) {
+            event.preventDefault();
+        }
 
         let store = this.props.store;
         this.setState({ loading: true });
 
         const selectedEvent = store.get('selectedEvent');
         const eventEdit = store.get('eventEdit');
-
         saveEventGeneralInfo(selectedEvent.id, eventEdit,
             (error, response) => {
                 if (error) {
@@ -46,10 +47,39 @@ class Dashboard extends Component {
                     console.log(error);
                     this.setState({ loading: false });
                 } else {
-                    console.log(response);
                     this.setState({ loading: false });
+                    store.set('selectedEvent')({ ...selectedEvent, ...eventEdit });
                 }
             });
+    }
+
+    handleChangeTabs = tab => {
+        if (tab != 'general') {
+            let store = this.props.store;
+            const selectedEvent = store.get('selectedEvent');
+            getEventExtraDetails(tab, selectedEvent.id, (error, response) => {
+                if (error) {
+                    // TODO: display error
+                    console.log(error);
+                } else {
+                    // TODO: store response data in store
+                    console.log(response);
+                }
+            });
+        }
+
+        // If changing from the general tab, save general info to API
+        if (this.state.saveOnNextTabChange) {
+            this.handleSaveGeneralInfo();
+            this.setState({ saveOnNextTabChange: false });
+        }
+        if (tab === 'general') {
+            this.setState({ saveOnNextTabChange: true });
+        }
+    }
+
+    navigateToDashboard = () => {
+        this.props.history.push('/dashboard');
     }
 
     render() {
@@ -60,36 +90,39 @@ class Dashboard extends Component {
                 <div className="row">
                     <div className="col-md-10 col-md-offset-1">
                         <div className="y-padding">
-                            {this.state.fetchingEvent && <div className="lds-dual-ring"></div>}
-                            {!this.state.fetchingEvent &&
-                                <div>
-                                    <Tabs activeKey={this.state.key} onSelect={this.handleSelectTabs} id="controlled-tabs">
-                                        <Tab eventKey={1} title="General info">
-                                            <div className='event-edit-tab'>
+                            <div className="y-padding">
+                                <Button onClick={this.navigateToDashboard}><Glyphicon glyph="menu-left" /> to Dashboard</Button>
+                            </div>
+                            <div>
+                                <Tabs activeKey={this.state.key} onSelect={this.handleChangeTabs} id="controlled-tabs">
+                                    <Tab eventKey={'general'} title="General info" disabled={this.state.fetchingEvent}>
+                                        <div className='event-edit-tab'>
+                                            {this.state.fetchingEvent && <div className="lds-dual-ring"></div>}
+                                            {!this.state.fetchingEvent &&
                                                 <GeneralTab handleSave={this.handleSaveGeneralInfo} loading={this.state.loading} />
-                                            </div>
-                                        </Tab>
+                                            }
+                                        </div>
+                                    </Tab>
 
-                                        <Tab eventKey={2} title="Sessions">
-                                            <div className='event-edit-tab'>
-                                                <SessionsTab loading={this.state.loading} />
-                                            </div>
-                                        </Tab>
+                                    <Tab eventKey={'sessions'} title="Sessions" disabled={this.state.fetchingEvent}>
+                                        <div className='event-edit-tab'>
+                                            <SessionsTab loading={this.state.loading} />
+                                        </div>
+                                    </Tab>
 
-                                        <Tab eventKey={3} title="Speakers">
-                                            <div className='event-edit-tab'>
-                                                <SpeakersTab loading={this.state.loading} />
-                                            </div>
-                                        </Tab>
+                                    <Tab eventKey={'speakers'} title="Speakers" disabled={this.state.fetchingEvent}>
+                                        <div className='event-edit-tab'>
+                                            <SpeakersTab loading={this.state.loading} />
+                                        </div>
+                                    </Tab>
 
-                                        <Tab eventKey={4} title="Sponsors">
-                                            <div className='event-edit-tab'>
-                                                <SponsorsTab loading={this.state.loading} />
-                                            </div>
-                                        </Tab>
-                                    </Tabs>
-                                </div>
-                            }
+                                    <Tab eventKey={'sponsors'} title="Sponsors" disabled={this.state.fetchingEvent}>
+                                        <div className='event-edit-tab'>
+                                            <SponsorsTab loading={this.state.loading} />
+                                        </div>
+                                    </Tab>
+                                </Tabs>
+                            </div>
                         </div>
                     </div>
                 </div>

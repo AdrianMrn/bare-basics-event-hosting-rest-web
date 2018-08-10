@@ -32,7 +32,26 @@ class EventController extends Controller
     }
 
     public function update($id, Request $request){
-        return JsonResponse::create(['test' => 'hello world', 200, 'id' => $id, 'data' => $request->all()]);
+        $event = Event::findOrFail($id);
+
+        if ($event->owner_id === $request->user()->id) {
+            $event->name = $request->name;
+            $event->description = $request->description;
+            $event->address = $request->address;
+            $event->city = $request->city;
+            $event->country = $request->country;
+            $event->date_start = $request->date_start;
+            $event->date_end = $request->date_end;
+            $event->is_private = $request->is_private;
+            $event->type = $request->type;
+            $event->venue_name = $request->venue_name;
+            
+            $event->save();
+            return JsonResponse::create(['error' => false, 'eventData' => $event]);
+        } else {
+            abort(401);
+        }
+
     }
 
     public function delete(Request $request){

@@ -11,6 +11,7 @@ class CreateSpeakersTable extends Migration {
 			$table->increments('id');
 			$table->integer('user_id')->index();
 			$table->integer('session_id')->unsigned()->index();
+			$table->integer('event_id')->unsigned()->index();
 			$table->timestamps();
 			$table->softDeletes();
 		});

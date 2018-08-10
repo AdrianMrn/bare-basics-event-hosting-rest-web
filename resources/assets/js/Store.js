@@ -5,7 +5,7 @@ export default createConnectedStore({
   first_name: '',
   last_name: '',
   password: '',
-  myEvents: '',
+  myEvents: [],
 
   selectedEvent: {
     id: '',
@@ -22,7 +22,6 @@ export default createConnectedStore({
     is_private: '',
     is_published: '',
   },
-
   eventEdit: {
     name: '',
     address: '',
@@ -36,30 +35,22 @@ export default createConnectedStore({
     is_private: '',
     is_published: '',
   },
-  /* 
 
-    selectedEventSessions: {
 
-    }
+  selectedEventSessions: [],
+  sessionEdit: {
 
-    sessionEdit: {
+  },
 
-    }
+  selectedEventSpeakers: [],
+  speakerEdit: {
 
-    selectedEventSpeakers: {
+  },
 
-    }
+  selectedEventSponsors: [],
 
-    speakerEdit: {
+  sponsorEdit: {
 
-    }
+  },
 
-    selectedEventSponsors: {
-
-    }
-
-    sponsorEdit: {
-
-    }
-  */
 });

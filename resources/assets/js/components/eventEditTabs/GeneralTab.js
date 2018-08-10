@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, FormControl } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Checkbox } from "react-bootstrap";
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import moment from 'moment';
 
 import Store from '../../Store';
 
 class General extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            addressInput: '',
+        }
+    }
+
     validateForm() {
         //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
         return true;
@@ -26,9 +34,14 @@ class General extends Component {
         });
     }
 
-    handleChange = (field, value) => {
+    handleChange = (field, event) => {
         let eventEdit = this.props.store.get('eventEdit');
-        this.props.store.set('eventEdit')({ ...eventEdit, [field]: value });
+        this.props.store.set('eventEdit')({ ...eventEdit, [field]: event.target.value });
+    }
+
+    addressLookup = event => {
+        this.setState({ addressInput: event.target.value });
+        // TODO: autocomplete address and set it in store: address, city & country
     }
 
     render() {
@@ -43,7 +56,7 @@ class General extends Component {
                             autoFocus
                             type="text"
                             value={eventEdit.name || ''}
-                            onChange={e => this.handleChange('name', e.target.value)}
+                            onChange={e => this.handleChange('name', e)}
                             disabled={loading}
                             placeholder="Event Name"
                         />
@@ -53,7 +66,7 @@ class General extends Component {
                         <FormControl
                             componentClass="textarea"
                             value={eventEdit.description || ''}
-                            onChange={e => this.handleChange('description', e.target.value)}
+                            onChange={e => this.handleChange('description', e)}
                             disabled={loading}
                             placeholder="Description"
                         />
@@ -69,11 +82,29 @@ class General extends Component {
                         >
                             <FormControl
                                 type="text"
-                                /* value={eventEdit.name || ''}
-                                onChange={e => this.handleChange('name', e)} */
+                                value={eventEdit.date_start ? `${eventEdit.date_start} - ${eventEdit.date_end}` : 'Click here to set the start and end dates'}
                                 disabled={loading}
+                                readOnly={true}
+                                className='date-time-input'
                             />
                         </DateRangePicker>
+                    </FormGroup>
+
+                    {/* TODO: make this disable the address field && stop the address from being sent in the POST request */}
+                    {/* <FormGroup controlId="is_online" bsSize="sm"> 
+                        <Checkbox>
+                            This is an online event (no location)
+                        </Checkbox>
+                    </FormGroup> */}
+
+                    <FormGroup controlId="name" bsSize="sm">
+                        <FormControl
+                            type="text"
+                            value={this.state.addressInput}
+                            onChange={this.addressLookup}
+                            disabled={loading}
+                            placeholder="Location (address)"
+                        />
                     </FormGroup>
 
 

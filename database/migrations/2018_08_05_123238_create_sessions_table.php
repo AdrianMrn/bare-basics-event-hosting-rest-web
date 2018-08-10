@@ -9,6 +9,7 @@ class CreateSessionsTable extends Migration {
 	{
 		Schema::create('sessions', function(Blueprint $table) {
 			$table->increments('id');
+			$table->integer('event_id');
 			$table->string('name');
 			$table->text('description')->nullable();
 			$table->integer('type');

@@ -22,18 +22,22 @@ Route::post('/user/authenticate', 'Auth\ApiLoginController@authenticate');
 Route::post('/user/refresh', 'Auth\ApiLoginController@refreshToken');
 
 Route::group(['middleware' => ['auth:api']], function () {
-
+    
     Route::resources([
         'events' => 'EventController',
         'sessions' => 'SessionController',
         'attendees' => 'AttendeeController',
         'speakers' => 'SpeakersController'
-    ]);
-
+        ]);
+        
     /* 
     * Other routes (not CRUD)
     */
     Route::get('/getuserevents', 'EventController@getUserEvents');
     Route::get('/getuserprofile', 'UserController@get');
+    
+    Route::get('/eventinfo/sessions/{id}', 'SessionController@getEventSessions');
+    Route::get('/eventinfo/speakers/{id}', 'SpeakerController@getEventSpeakers');
+    //Route::get('/eventinfo/sponsors', 'SponsorController@getEventSponsors');
 
 });

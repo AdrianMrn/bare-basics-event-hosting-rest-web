@@ -30,17 +30,22 @@
   border-radius: 0 0 20px 20px;
   padding: 10px 20px;
   min-height: 200px;
+  padding-bottom: 50px;
 }
 
 .event-edit-savebutton-top {
   position: absolute;
-  right: 25px;
+  right: 35px;
   top: 15px;
 }
 .event-edit-savebutton-bottom {
   position: absolute;
-  right: 25px;
+  right: 35px;
   bottom: 20px;
+}
+
+.date-time-input {
+  min-width: 270px;
 }
 
 /* loading spinner */

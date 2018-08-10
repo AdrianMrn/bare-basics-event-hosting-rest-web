@@ -97,6 +97,17 @@ export function getEventData(id, next) {
         });
 }
 
+export function getEventExtraDetails(type, eventId, next) {
+    setAccessToken();
+    axios.get(`${apiUrl}/eventinfo/${type}/${eventId}`)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
 /* export function getUserInfo(next) {
     setAccessToken();
     axios.get(`${apiUrl}/getuserprofile`)
