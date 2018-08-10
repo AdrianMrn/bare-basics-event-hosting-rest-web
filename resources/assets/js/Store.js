@@ -6,7 +6,7 @@ export default createConnectedStore({
   last_name: '',
   password: '',
   myEvents: '',
-  
+
   eventEdit: {
     id: undefined,
     name: undefined,
@@ -22,4 +22,44 @@ export default createConnectedStore({
     is_private: undefined,
     is_published: undefined,
   }
+
+  /* 
+    eventEdit: {
+      name: undefined,
+      address: undefined,
+      city: undefined,
+      country: undefined,
+      venue_name: undefined,
+      description: undefined,
+      date_start: undefined,
+      date_end: undefined,
+      type: undefined,
+      is_private: undefined,
+      is_published: undefined,
+    }
+
+    selectedEventSessions: {
+
+    }
+
+    sessionEdit: {
+
+    }
+
+    selectedEventSpeakers: {
+
+    }
+
+    speakerEdit: {
+
+    }
+
+    selectedEventSponsors: {
+
+    }
+
+    sponsorEdit: {
+
+    }
+  */
 });

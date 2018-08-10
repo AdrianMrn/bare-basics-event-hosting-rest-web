@@ -3795,8 +3795,35 @@ var locationsAreEqual = function locationsAreEqual(a, b) {
     type: undefined,
     is_private: undefined,
     is_published: undefined
-  }
-}));
+
+    /* 
+      eventEdit: {
+        name: undefined,
+        address: undefined,
+        city: undefined,
+        country: undefined,
+        venue_name: undefined,
+        description: undefined,
+        date_start: undefined,
+        date_end: undefined,
+        type: undefined,
+        is_private: undefined,
+        is_published: undefined,
+      }
+       selectedEventSessions: {
+       }
+       sessionEdit: {
+       }
+       selectedEventSpeakers: {
+       }
+       speakerEdit: {
+       }
+       selectedEventSponsors: {
+       }
+       sponsorEdit: {
+       }
+    */
+  } }));
 
 /***/ }),
 /* 66 */
@@ -85641,7 +85668,7 @@ var Dashboard = function (_Component) {
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'div',
                                             { className: 'event-edit-tab' },
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_eventEditTabs_index__["General"], null)
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_eventEditTabs_index__["a" /* GeneralTab */], null)
                                         )
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -85650,7 +85677,7 @@ var Dashboard = function (_Component) {
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'div',
                                             { className: 'event-edit-tab' },
-                                            'tab'
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_eventEditTabs_index__["b" /* SessionsTab */], null)
                                         )
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -85659,7 +85686,7 @@ var Dashboard = function (_Component) {
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'div',
                                             { className: 'event-edit-tab' },
-                                            'tab'
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_eventEditTabs_index__["c" /* SpeakersTab */], null)
                                         )
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -85668,7 +85695,7 @@ var Dashboard = function (_Component) {
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'div',
                                             { className: 'event-edit-tab' },
-                                            'tab'
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_eventEditTabs_index__["d" /* SponsorsTab */], null)
                                         )
                                     )
                                 )
@@ -85694,11 +85721,17 @@ var Dashboard = function (_Component) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GeneralTab__ = __webpack_require__(523);
-/* unused harmony reexport GeneralTab */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SessionsTab__ = __webpack_require__(524);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SpeakersTab__ = __webpack_require__(525);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SponsorsTab__ = __webpack_require__(526);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__GeneralTab__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__SessionsTab__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2__SpeakersTab__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__SponsorsTab__["a"]; });
 
-/* import SessionsTab from './SessionsTab';
-import SpeakersTab from './SpeakersTab';
-import SponsorsTab from './SponsorsTab'; */
+
+
+
 
 
 
@@ -85743,14 +85776,165 @@ var General = function (_Component) {
         key: 'render',
         value: function render() {
             var store = this.props.store;
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                'noice'
+            );
         }
     }]);
 
     return General;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_2__Store__["a" /* default */].withStore(General));
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_2__Store__["a" /* default */].withStore(General));
+
+/***/ }),
+/* 524 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Store__ = __webpack_require__(65);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+var Sessions = function (_Component) {
+    _inherits(Sessions, _Component);
+
+    function Sessions() {
+        _classCallCheck(this, Sessions);
+
+        return _possibleConstructorReturn(this, (Sessions.__proto__ || Object.getPrototypeOf(Sessions)).apply(this, arguments));
+    }
+
+    _createClass(Sessions, [{
+        key: 'validateForm',
+        value: function validateForm() {
+            //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var store = this.props.store;
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
+        }
+    }]);
+
+    return Sessions;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_2__Store__["a" /* default */].withStore(Sessions));
+
+/***/ }),
+/* 525 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Store__ = __webpack_require__(65);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+var Speakers = function (_Component) {
+    _inherits(Speakers, _Component);
+
+    function Speakers() {
+        _classCallCheck(this, Speakers);
+
+        return _possibleConstructorReturn(this, (Speakers.__proto__ || Object.getPrototypeOf(Speakers)).apply(this, arguments));
+    }
+
+    _createClass(Speakers, [{
+        key: 'validateForm',
+        value: function validateForm() {
+            //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var store = this.props.store;
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
+        }
+    }]);
+
+    return Speakers;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_2__Store__["a" /* default */].withStore(Speakers));
+
+/***/ }),
+/* 526 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Store__ = __webpack_require__(65);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+var Sponsors = function (_Component) {
+    _inherits(Sponsors, _Component);
+
+    function Sponsors() {
+        _classCallCheck(this, Sponsors);
+
+        return _possibleConstructorReturn(this, (Sponsors.__proto__ || Object.getPrototypeOf(Sponsors)).apply(this, arguments));
+    }
+
+    _createClass(Sponsors, [{
+        key: 'validateForm',
+        value: function validateForm() {
+            //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var store = this.props.store;
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
+        }
+    }]);
+
+    return Sponsors;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_2__Store__["a" /* default */].withStore(Sponsors));
 
 /***/ })
 /******/ ]);

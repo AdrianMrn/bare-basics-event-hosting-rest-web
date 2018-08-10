@@ -12,6 +12,7 @@ class General extends Component {
         let store = this.props.store;
         return (
             <div>
+                noice
                 {/* <form onSubmit={this.props.handleSubmitLogin}>
                     <FormGroup controlId="email" bsSize="sm">
                         <FormControl

@@ -4,7 +4,7 @@ import { Panel, Tabs, Tab } from 'react-bootstrap';
 import Store from '../../Store';
 
 import { getEventData } from '../../api';
-import { General } from '../../components/eventEditTabs/index';
+import { GeneralTab, SessionsTab, SpeakersTab, SponsorsTab } from '../../components/eventEditTabs/index';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -47,25 +47,25 @@ class Dashboard extends Component {
                                     <Tabs activeKey={this.state.key} onSelect={this.handleSelectTabs} id="controlled-tabs">
                                         <Tab eventKey={1} title="General info">
                                             <div className='event-edit-tab'>
-                                                <General />
+                                                <GeneralTab />
                                             </div>
                                         </Tab>
 
                                         <Tab eventKey={2} title="Sessions">
                                             <div className='event-edit-tab'>
-                                                tab
+                                                <SessionsTab />
                                             </div>
                                         </Tab>
 
                                         <Tab eventKey={3} title="Speakers">
                                             <div className='event-edit-tab'>
-                                                tab
+                                                <SpeakersTab />
                                             </div>
                                         </Tab>
 
                                         <Tab eventKey={4} title="Sponsors">
                                             <div className='event-edit-tab'>
-                                                tab
+                                                <SponsorsTab />
                                             </div>
                                         </Tab>
                                     </Tabs>
