@@ -130,6 +130,17 @@ export function createNewSession(eventId, next) {
         });
 }
 
+export function deleteSession(id, next) {
+    setAccessToken();
+    axios.delete(`${apiUrl}/sessions/${id}`)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
 /* export function getUserInfo(next) {
     setAccessToken();
     axios.get(`${apiUrl}/getuserprofile`)

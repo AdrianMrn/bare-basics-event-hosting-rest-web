@@ -44,6 +44,18 @@ class SessionController extends Controller
         }
     }
 
+    public function destroy($id, Request $request){
+        $session = Session::findOrFail($id);
+        $event = Event::findOrFail($session->event_id);
+
+        if ($event->owner_id === $request->user()->id) {
+            $session->delete();
+            return JsonResponse::create(['error' => false]);
+        } else {
+            abort(401);
+        }
+    }
+
     public function getEventSessions($id, Request $request){
         $event = Event::findOrFail($id);
         if ($event->owner_id === $request->user()->id) {

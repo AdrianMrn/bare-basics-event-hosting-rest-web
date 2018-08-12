@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Panel, Button, Glyphicon, FormGroup, FormControl } from 'react-bootstrap';
 import moment from 'moment';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
+import Select from 'react-select';
+import { styles } from 'react-select-bootstrap3';
 
-import { getSessionSpeakers } from '../../../api';
+import { getSessionSpeakers, getEventExtraDetails, deleteSession } from '../../../api';
 
 import Store from '../../../Store';
 
@@ -13,8 +15,9 @@ class Sessions extends Component {
 
         this.state = {
             loading: true,
+            editing: false,
             speakers: [],
-            editing: true,
+            possibleSpeakers: [],
         }
     }
 
@@ -28,7 +31,6 @@ class Sessions extends Component {
                 // TODO: display error
                 console.log(error)
             } else {
-                console.log(response);
                 this.setState({ speakers: response.data });
             }
             this.setState({ loading: false });
@@ -38,6 +40,10 @@ class Sessions extends Component {
     handleChange = (field, event) => {
         const sessionEdit = this.props.store.get('sessionEdit');
         this.props.store.set('sessionEdit')({ ...sessionEdit, [field]: event.target.value });
+    }
+
+    handleSpeakerChange = speakers => {
+        this.setState({ speakers });
     }
 
     onDateChange = (e, picker) => {
@@ -56,18 +62,19 @@ class Sessions extends Component {
         // Fill store.sessionEdit with this session's info
         this.props.store.set('sessionEdit')(this.props.data);
 
-        // Get a list of all possible speakers and populate the multiselect with this
-        // API call blabla .then(...
+        // Get a list of all possible speakers and populate the multiselect with them
+        getEventExtraDetails('speakers', this.props.store.get('selectedEvent').id, (error, response) => {
+            if (error) {
+                console.log(error);
+                // TODO: display error
+            } else {
+                const s = response.data.map(speaker => {
+                    return { label: speaker.speakerName, value: speaker.id }
+                });
 
-        // Change the component's layout to editing mode and enable the controls again
-        this.setState({ editing: true, loading: false });
-
-        /* TODO:
-            -Fill store.sessionEdit with this session's info
-            -Change the component's layout to editing mode (in render method)
-            -Get a list of all possible speakers and populate the multiselect with this
-            -Change the Edit button to a Cancel and Save button (this.cancelEdit() and this.saveSession()) (in render)
-        */
+                this.setState({ possibleSpeakers: s, editing: true, loading: false });
+            }
+        });
     }
 
     saveSession = event => {
@@ -89,6 +96,19 @@ class Sessions extends Component {
 
     cancelEdit = () => {
         this.setState({ editing: false });
+    }
+
+    delete = () => {
+        this.setState({ loading: true });
+        const id = this.props.data.id
+        deleteSession(id, (error, response) => {
+            if (error) {
+                console.log(error);
+                // TODO: display error
+            } else {
+                this.props.forceRefresh();
+            }
+        });
     }
 
     render() {
@@ -136,9 +156,8 @@ class Sessions extends Component {
                             </div>
 
                             <div className="session-buttons">
-                                <Button onClick={this.editSession} bsStyle="warning" disabled={loading}>
-                                    {loading && <Glyphicon glyph="pencil" />}
-                                    {!loading && <Glyphicon glyph="save" />}
+                                <Button onClick={this.editSession} bsStyle="default" disabled={loading}>
+                                    <Glyphicon glyph="pencil" />
                                     {' '}Edit
                                 </Button>
                             </div>
@@ -158,6 +177,7 @@ class Sessions extends Component {
                                             endDate={sessionEdit.date_start ? moment(sessionEdit.date_end) : moment(selectedEvent.date_end)}
                                             timePicker={true}
                                             timePicker24Hour={true}
+                                            opens={'left'}
                                             onApply={this.onDateChange} onHide={this.onDateChange} onHideCalendar={this.onDateChange}
                                         >
                                             <FormControl
@@ -185,7 +205,16 @@ class Sessions extends Component {
                                 </div>
 
                                 <div className="session-speakers">
-                                    {/* TODO: multiselect with all this event's speakers */}
+                                    <Select
+                                        onChange={this.handleSpeakerChange}
+                                        isMulti
+                                        isSearchable
+                                        isDisabled={loading}
+                                        placeholder={this.state.possibleSpeakers.length ? 'Speakers' : 'Create some speakers first!'}
+                                        closeMenuOnSelect={false}
+                                        styles={styles}
+                                        options={this.state.possibleSpeakers}
+                                    />
                                 </div>
 
                                 <div className="session-description">
@@ -200,12 +229,19 @@ class Sessions extends Component {
                                     </FormGroup>
                                 </div>
 
+                                <div className="session-buttons-remove">
+                                    <Button onClick={this.delete} bsStyle="danger" disabled={loading}>
+                                        <Glyphicon glyph="trash" />
+                                        {' '}Delete
+                                    </Button>
 
+                                </div>
                                 <div className="session-buttons">
-                                    <Button onClick={this.cancelEdit} bsStyle="danger" disabled={loading}>
+                                    <Button onClick={this.cancelEdit} bsStyle="warning" disabled={loading}>
                                         <Glyphicon glyph="remove" />
                                         {' '}Cancel
                                     </Button>
+
                                     <Button className='margin-left' bsStyle="primary" disabled={loading} type="submit">
                                         {loading && <Glyphicon glyph="refresh" />}
                                         {!loading && <Glyphicon glyph="save" />}

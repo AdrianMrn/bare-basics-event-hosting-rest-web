@@ -59,9 +59,8 @@ class Sessions extends Component {
                 </div>
                 <div className="y-padding">
                     {this.props.loading && <div className="lds-dual-ring"></div>}
-                    {store.state.selectedEventSessions.map((data, index) => (
-                        /* TODO: order by date_start (in backend?) */
-                        <Session data={data} key={index} />
+                    {store.get('selectedEventSessions').map((data, index) => (
+                        <Session data={data} key={index} forceRefresh={this.props.forceRefresh} />
                     ))}
                 </div>
 

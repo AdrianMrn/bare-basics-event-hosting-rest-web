@@ -35,10 +35,19 @@
 .session-speakers {
   margin-top: 10px;
   padding-bottom: 10px;
+  font-size: 13px !important;
 }
 .session-buttons {
   float: right;
   margin-top: 20px;
+}
+.session-buttons-remove {
+  float: left;
+  margin-top: 20px;
+}
+
+.form-group-sm .form-control {
+  font-size: 13px;
 }
 
 .panel-heading {
@@ -66,7 +75,11 @@
 }
 
 .date-time-input {
-  min-width: 270px;
+  min-width: 300px;
+}
+
+textarea {
+  min-height: 80px;
 }
 
 h3 {

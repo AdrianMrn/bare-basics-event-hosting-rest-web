@@ -107,7 +107,7 @@ class Dashboard extends Component {
 
                                     <Tab eventKey={'sessions'} title="Sessions" disabled={this.state.fetchingEvent}>
                                         <div className='event-edit-tab'>
-                                            <SessionsTab loading={this.state.loading} />
+                                            <SessionsTab loading={this.state.loading} forceRefresh={() => this.handleChangeTabs('sessions')} />
                                         </div>
                                     </Tab>
 

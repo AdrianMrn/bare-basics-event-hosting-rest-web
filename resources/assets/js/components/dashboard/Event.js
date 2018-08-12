@@ -10,7 +10,7 @@ export default class Event extends Component {
                     <Panel.Heading>
                         <Panel.Title componentClass="h3">
                             {data.name}
-                            <Button className='pull-right' bsStyle='warning' onClick={() => this.props.navigateToEventEdit(data.slug)}>Edit</Button>
+                            <Button className='pull-right' bsStyle='default' onClick={() => this.props.navigateToEventEdit(data.slug)}>Edit</Button>
                         </Panel.Title>
                         {data.date_start && <div>
                             <span>{data.date_start}</span> - <span>{data.date_end}</span> {/* TODO: display human readable dates */}
