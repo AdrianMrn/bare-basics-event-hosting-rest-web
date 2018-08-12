@@ -3,7 +3,7 @@ import { Button, FormGroup, FormControl, Checkbox } from "react-bootstrap";
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import moment from 'moment';
 
-import Store from '../../Store';
+import Store from '../../../Store';
 
 class General extends Component {
     constructor() {

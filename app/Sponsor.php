@@ -5,15 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Speaker extends Model 
+class Sponsor extends Model 
 {
 
-    protected $table = 'speakers';
+    protected $table = 'sponsors';
     public $timestamps = true;
 
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-    protected $fillable = array('user_id', 'session_id');
+    protected $fillable = array('event_id', 'name', 'tier', 'url');
 
 }

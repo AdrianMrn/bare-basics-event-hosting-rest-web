@@ -8,7 +8,7 @@ export default createConnectedStore({
   myEvents: [],
 
   selectedEvent: {
-    id: '',
+    id: 0,
     name: '',
     slug: '',
     address: '',
@@ -18,9 +18,9 @@ export default createConnectedStore({
     description: '',
     date_start: '',
     date_end: '',
-    type: '',
-    is_private: '',
-    is_published: '',
+    type: 0,
+    is_private: false,
+    is_published: false,
   },
   eventEdit: {
     name: '',
@@ -31,15 +31,21 @@ export default createConnectedStore({
     description: '',
     date_start: '',
     date_end: '',
-    type: '',
-    is_private: '',
-    is_published: '',
+    type: 0,
+    is_private: false,
+    is_published: false,
   },
 
 
   selectedEventSessions: [],
   sessionEdit: {
-
+    id: 0,
+    event_id: 0,
+    name: '',
+    description: '',
+    type: 0,
+    date_start: '',
+    date_end: '',
   },
 
   selectedEventSpeakers: [],

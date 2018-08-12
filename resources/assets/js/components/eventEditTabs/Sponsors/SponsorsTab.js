@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 
-import Store from '../../Store';
+import Store from '../../../Store';
 
-class Sessions extends Component {
+class Sponsors extends Component {
     validateForm() {
         //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
     }
@@ -47,4 +47,4 @@ class Sessions extends Component {
     }
 }
 
-export default Store.withStore(Sessions);
+export default Store.withStore(Sponsors);

@@ -45,16 +45,17 @@ class Dashboard extends Component {
                 if (error) {
                     // TODO: display error
                     console.log(error);
-                    this.setState({ loading: false });
                 } else {
-                    this.setState({ loading: false });
                     store.set('selectedEvent')({ ...selectedEvent, ...eventEdit });
                 }
+                this.setState({ loading: false });
             });
     }
 
     handleChangeTabs = tab => {
         if (tab != 'general') {
+            this.setState({ loading: true });
+
             let store = this.props.store;
             const selectedEvent = store.get('selectedEvent');
             getEventExtraDetails(tab, selectedEvent.id, (error, response) => {
@@ -62,9 +63,9 @@ class Dashboard extends Component {
                     // TODO: display error
                     console.log(error);
                 } else {
-                    // TODO: store response data in store
-                    console.log(response);
+                    store.set(`selectedEvent${tab.charAt(0).toUpperCase() + tab.slice(1)}`)(response.data);
                 }
+                this.setState({ loading: false });
             });
         }
 

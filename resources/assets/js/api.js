@@ -108,6 +108,17 @@ export function getEventExtraDetails(type, eventId, next) {
         });
 }
 
+export function getSessionSpeakers(sessionId, next) {
+    setAccessToken();
+    axios.get(`${apiUrl}/getsessionspeakers/${sessionId}`)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
 /* export function getUserInfo(next) {
     setAccessToken();
     axios.get(`${apiUrl}/getuserprofile`)

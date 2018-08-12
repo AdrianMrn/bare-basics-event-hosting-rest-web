@@ -6729,7 +6729,7 @@ SafeAnchor.defaultProps = defaultProps;
   myEvents: [],
 
   selectedEvent: {
-    id: '',
+    id: 0,
     name: '',
     slug: '',
     address: '',
@@ -6739,9 +6739,9 @@ SafeAnchor.defaultProps = defaultProps;
     description: '',
     date_start: '',
     date_end: '',
-    type: '',
-    is_private: '',
-    is_published: ''
+    type: 0,
+    is_private: false,
+    is_published: false
   },
   eventEdit: {
     name: '',
@@ -6752,13 +6752,21 @@ SafeAnchor.defaultProps = defaultProps;
     description: '',
     date_start: '',
     date_end: '',
-    type: '',
-    is_private: '',
-    is_published: ''
+    type: 0,
+    is_private: false,
+    is_published: false
   },
 
   selectedEventSessions: [],
-  sessionEdit: {},
+  sessionEdit: {
+    id: 0,
+    event_id: 0,
+    name: '',
+    description: '',
+    type: 0,
+    date_start: '',
+    date_end: ''
+  },
 
   selectedEventSpeakers: [],
   speakerEdit: {},
@@ -20932,13 +20940,14 @@ function identity(x) {
 
 "use strict";
 /* unused harmony export setAccessToken */
-/* harmony export (immutable) */ __webpack_exports__["f"] = registerAccount;
+/* harmony export (immutable) */ __webpack_exports__["g"] = registerAccount;
 /* harmony export (immutable) */ __webpack_exports__["a"] = authenticateAccount;
-/* harmony export (immutable) */ __webpack_exports__["e"] = getUserEvents;
+/* harmony export (immutable) */ __webpack_exports__["f"] = getUserEvents;
 /* harmony export (immutable) */ __webpack_exports__["b"] = createNewEvent;
-/* harmony export (immutable) */ __webpack_exports__["g"] = saveEventGeneralInfo;
+/* harmony export (immutable) */ __webpack_exports__["h"] = saveEventGeneralInfo;
 /* harmony export (immutable) */ __webpack_exports__["c"] = getEventData;
 /* harmony export (immutable) */ __webpack_exports__["d"] = getEventExtraDetails;
+/* harmony export (immutable) */ __webpack_exports__["e"] = getSessionSpeakers;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(130);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_cookies__ = __webpack_require__(83);
@@ -21034,6 +21043,15 @@ function getEventData(id, next) {
 function getEventExtraDetails(type, eventId, next) {
     setAccessToken();
     __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/eventinfo/' + type + '/' + eventId).then(function (response) {
+        next(false, response);
+    }).catch(function (error) {
+        next(error);
+    });
+}
+
+function getSessionSpeakers(sessionId, next) {
+    setAccessToken();
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/getsessionspeakers/' + sessionId).then(function (response) {
         next(false, response);
     }).catch(function (error) {
         next(error);
@@ -89657,7 +89675,7 @@ var Authenticate = function (_Component) {
 
                 var store = _this.props.store;
                 _this.setState({ disableSubmit: true });
-                Object(__WEBPACK_IMPORTED_MODULE_2__api__["f" /* registerAccount */])({
+                Object(__WEBPACK_IMPORTED_MODULE_2__api__["g" /* registerAccount */])({
                     first_name: store.get('first_name'),
                     last_name: store.get('last_name'),
                     email: store.get('email'),
@@ -101788,7 +101806,7 @@ var Dashboard = function (_Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            Object(__WEBPACK_IMPORTED_MODULE_4__api__["e" /* getUserEvents */])(function (error, response) {
+            Object(__WEBPACK_IMPORTED_MODULE_4__api__["f" /* getUserEvents */])(function (error, response) {
                 _this2.setState({ fetchingEvents: false });
                 if (error) {
                     // TODO: display error
@@ -101819,17 +101837,13 @@ var Dashboard = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
                                 { bsStyle: 'info', onClick: this.createEvent, disabled: this.state.disableCreateEventButton },
-                                this.state.disableCreateEventButton && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'span',
                                     null,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'refresh' }),
-                                    ' Create an event'
-                                ),
-                                !this.state.disableCreateEventButton && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'span',
-                                    null,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'plus' }),
-                                    ' Create an event'
+                                    this.props.disableCreateEventButton && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'refresh' }),
+                                    !this.props.disableCreateEventButton && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'plus' }),
+                                    " ",
+                                    'Create an event'
                                 )
                             )
                         ),
@@ -101990,15 +102004,14 @@ var Dashboard = function (_Component) {
 
                 var selectedEvent = store.get('selectedEvent');
                 var eventEdit = store.get('eventEdit');
-                Object(__WEBPACK_IMPORTED_MODULE_3__api__["g" /* saveEventGeneralInfo */])(selectedEvent.id, eventEdit, function (error, response) {
+                Object(__WEBPACK_IMPORTED_MODULE_3__api__["h" /* saveEventGeneralInfo */])(selectedEvent.id, eventEdit, function (error, response) {
                     if (error) {
                         // TODO: display error
                         console.log(error);
-                        _this.setState({ loading: false });
                     } else {
-                        _this.setState({ loading: false });
                         store.set('selectedEvent')(_extends({}, selectedEvent, eventEdit));
                     }
+                    _this.setState({ loading: false });
                 });
             }
         });
@@ -102007,6 +102020,8 @@ var Dashboard = function (_Component) {
             writable: true,
             value: function value(tab) {
                 if (tab != 'general') {
+                    _this.setState({ loading: true });
+
                     var store = _this.props.store;
                     var selectedEvent = store.get('selectedEvent');
                     Object(__WEBPACK_IMPORTED_MODULE_3__api__["d" /* getEventExtraDetails */])(tab, selectedEvent.id, function (error, response) {
@@ -102014,9 +102029,9 @@ var Dashboard = function (_Component) {
                             // TODO: display error
                             console.log(error);
                         } else {
-                            // TODO: store response data in store
-                            console.log(response);
+                            store.set('selectedEvent' + (tab.charAt(0).toUpperCase() + tab.slice(1)))(response.data);
                         }
+                        _this.setState({ loading: false });
                     });
                 }
 
@@ -102152,14 +102167,17 @@ var Dashboard = function (_Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GeneralTab__ = __webpack_require__(628);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SessionsTab__ = __webpack_require__(632);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SpeakersTab__ = __webpack_require__(633);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SponsorsTab__ = __webpack_require__(634);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__GeneralTab__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__SessionsTab__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2__SpeakersTab__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__SponsorsTab__["a"]; });
+/* unused harmony export Session */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__General_GeneralTab__ = __webpack_require__(649);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Sessions_SessionsTab__ = __webpack_require__(650);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Sessions_Session__ = __webpack_require__(651);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Speakers_SpeakersTab__ = __webpack_require__(652);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Sponsors_SponsorsTab__ = __webpack_require__(653);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__General_GeneralTab__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__Sessions_SessionsTab__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__Speakers_SpeakersTab__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_4__Sponsors_SponsorsTab__["a"]; });
+
 
 
 
@@ -102168,188 +102186,7 @@ var Dashboard = function (_Component) {
 
 
 /***/ }),
-/* 628 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_bootstrap_daterangepicker__ = __webpack_require__(629);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_bootstrap_daterangepicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap_daterangepicker__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Store__ = __webpack_require__(25);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-
-
-var General = function (_Component) {
-    _inherits(General, _Component);
-
-    function General() {
-        _classCallCheck(this, General);
-
-        var _this = _possibleConstructorReturn(this, (General.__proto__ || Object.getPrototypeOf(General)).call(this));
-
-        Object.defineProperty(_this, 'componentDidMount', {
-            enumerable: true,
-            writable: true,
-            value: function value() {
-                // TODO: fill store's eventEdit with data from selectedEvent
-                var selectedEvent = _this.props.store.get('selectedEvent');
-                _this.props.store.set('eventEdit')(selectedEvent);
-            }
-        });
-        Object.defineProperty(_this, 'onDateRangeEvent', {
-            enumerable: true,
-            writable: true,
-            value: function value(e, picker) {
-                var eventEdit = _this.props.store.get('eventEdit');
-                _this.props.store.set('eventEdit')(_extends({}, eventEdit, {
-                    'date_start': picker.startDate.format('YYYY-MM-DD HH:mm:ss'),
-                    'date_end': picker.endDate.format('YYYY-MM-DD HH:mm:ss')
-                }));
-            }
-        });
-        Object.defineProperty(_this, 'handleChange', {
-            enumerable: true,
-            writable: true,
-            value: function value(field, event) {
-                var eventEdit = _this.props.store.get('eventEdit');
-                _this.props.store.set('eventEdit')(_extends({}, eventEdit, _defineProperty({}, field, event.target.value)));
-            }
-        });
-        Object.defineProperty(_this, 'addressLookup', {
-            enumerable: true,
-            writable: true,
-            value: function value(event) {
-                _this.setState({ addressInput: event.target.value });
-                // TODO: autocomplete address and set it in store: address, city & country
-            }
-        });
-
-
-        _this.state = {
-            addressInput: ''
-        };
-        return _this;
-    }
-
-    _createClass(General, [{
-        key: 'validateForm',
-        value: function validateForm() {
-            //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
-            return true;
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var store = this.props.store;
-            var eventEdit = store.get('eventEdit');
-            var loading = this.props.loading;
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'form',
-                    { onSubmit: this.props.handleSave },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
-                        { controlId: 'name', bsSize: 'lg' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
-                            autoFocus: true,
-                            type: 'text',
-                            value: eventEdit.name || '',
-                            onChange: function onChange(e) {
-                                return _this2.handleChange('name', e);
-                            },
-                            disabled: loading,
-                            placeholder: 'Event Name'
-                        })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
-                        { controlId: 'description', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
-                            componentClass: 'textarea',
-                            value: eventEdit.description || '',
-                            onChange: function onChange(e) {
-                                return _this2.handleChange('description', e);
-                            },
-                            disabled: loading,
-                            placeholder: 'Description'
-                        })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
-                        { controlId: 'dates', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_2_react_bootstrap_daterangepicker___default.a,
-                            {
-                                startDate: eventEdit.date_start ? __WEBPACK_IMPORTED_MODULE_3_moment___default()(eventEdit.date_start) : undefined,
-                                endDate: eventEdit.date_end ? __WEBPACK_IMPORTED_MODULE_3_moment___default()(eventEdit.date_end) : undefined,
-                                timePicker: true,
-                                timePicker24Hour: true,
-                                onApply: this.onDateRangeEvent, onHide: this.onDateRangeEvent, onHideCalendar: this.onDateRangeEvent
-                            },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
-                                type: 'text',
-                                value: eventEdit.date_start ? eventEdit.date_start + ' - ' + eventEdit.date_end : 'Click here to set the start and end dates',
-                                disabled: loading,
-                                readOnly: true,
-                                className: 'date-time-input'
-                            })
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
-                        { controlId: 'name', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
-                            type: 'text',
-                            value: this.state.addressInput,
-                            onChange: this.addressLookup,
-                            disabled: loading,
-                            placeholder: 'Location (address)'
-                        })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'event-edit-savebutton-bottom' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
-                            { bsStyle: 'primary', disabled: !this.validateForm() || loading, type: 'submit' },
-                            'Save'
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return General;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_4__Store__["a" /* default */].withStore(General));
-
-/***/ }),
+/* 628 */,
 /* 629 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -104427,7 +104264,211 @@ module.exports = webpackContext;
 webpackContext.id = 631;
 
 /***/ }),
-/* 632 */
+/* 632 */,
+/* 633 */,
+/* 634 */,
+/* 635 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 636 */,
+/* 637 */,
+/* 638 */,
+/* 639 */,
+/* 640 */,
+/* 641 */,
+/* 642 */,
+/* 643 */,
+/* 644 */,
+/* 645 */,
+/* 646 */,
+/* 647 */,
+/* 648 */,
+/* 649 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_bootstrap_daterangepicker__ = __webpack_require__(629);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_bootstrap_daterangepicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap_daterangepicker__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Store__ = __webpack_require__(25);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+var General = function (_Component) {
+    _inherits(General, _Component);
+
+    function General() {
+        _classCallCheck(this, General);
+
+        var _this = _possibleConstructorReturn(this, (General.__proto__ || Object.getPrototypeOf(General)).call(this));
+
+        Object.defineProperty(_this, 'componentDidMount', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                // TODO: fill store's eventEdit with data from selectedEvent
+                var selectedEvent = _this.props.store.get('selectedEvent');
+                _this.props.store.set('eventEdit')(selectedEvent);
+            }
+        });
+        Object.defineProperty(_this, 'onDateRangeEvent', {
+            enumerable: true,
+            writable: true,
+            value: function value(e, picker) {
+                var eventEdit = _this.props.store.get('eventEdit');
+                _this.props.store.set('eventEdit')(_extends({}, eventEdit, {
+                    'date_start': picker.startDate.format('YYYY-MM-DD HH:mm:ss'),
+                    'date_end': picker.endDate.format('YYYY-MM-DD HH:mm:ss')
+                }));
+            }
+        });
+        Object.defineProperty(_this, 'handleChange', {
+            enumerable: true,
+            writable: true,
+            value: function value(field, event) {
+                var eventEdit = _this.props.store.get('eventEdit');
+                _this.props.store.set('eventEdit')(_extends({}, eventEdit, _defineProperty({}, field, event.target.value)));
+            }
+        });
+        Object.defineProperty(_this, 'addressLookup', {
+            enumerable: true,
+            writable: true,
+            value: function value(event) {
+                _this.setState({ addressInput: event.target.value });
+                // TODO: autocomplete address and set it in store: address, city & country
+            }
+        });
+
+
+        _this.state = {
+            addressInput: ''
+        };
+        return _this;
+    }
+
+    _createClass(General, [{
+        key: 'validateForm',
+        value: function validateForm() {
+            //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
+            return true;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var store = this.props.store;
+            var eventEdit = store.get('eventEdit');
+            var loading = this.props.loading;
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'form',
+                    { onSubmit: this.props.handleSave },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        { controlId: 'name', bsSize: 'lg' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                            autoFocus: true,
+                            type: 'text',
+                            value: eventEdit.name || '',
+                            onChange: function onChange(e) {
+                                return _this2.handleChange('name', e);
+                            },
+                            disabled: loading,
+                            placeholder: 'Event Name'
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        { controlId: 'description', bsSize: 'sm' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                            componentClass: 'textarea',
+                            value: eventEdit.description || '',
+                            onChange: function onChange(e) {
+                                return _this2.handleChange('description', e);
+                            },
+                            disabled: loading,
+                            placeholder: 'Description'
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        { controlId: 'dates', bsSize: 'sm' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_2_react_bootstrap_daterangepicker___default.a,
+                            {
+                                startDate: eventEdit.date_start ? __WEBPACK_IMPORTED_MODULE_3_moment___default()(eventEdit.date_start) : undefined,
+                                endDate: eventEdit.date_end ? __WEBPACK_IMPORTED_MODULE_3_moment___default()(eventEdit.date_end) : undefined,
+                                timePicker: true,
+                                timePicker24Hour: true,
+                                onApply: this.onDateRangeEvent, onHide: this.onDateRangeEvent, onHideCalendar: this.onDateRangeEvent
+                            },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                                type: 'text',
+                                value: eventEdit.date_start ? eventEdit.date_start + ' - ' + eventEdit.date_end : 'Click here to set the start and end dates',
+                                disabled: loading,
+                                readOnly: true,
+                                className: 'date-time-input'
+                            })
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        { controlId: 'name', bsSize: 'sm' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                            type: 'text',
+                            value: this.state.addressInput,
+                            onChange: this.addressLookup,
+                            disabled: loading,
+                            placeholder: 'Location (address)'
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'event-edit-savebutton-bottom' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                            { bsStyle: 'primary', disabled: !this.validateForm() || loading, type: 'submit' },
+                            'Save'
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return General;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_4__Store__["a" /* default */].withStore(General));
+
+/***/ }),
+/* 650 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -104435,6 +104476,7 @@ webpackContext.id = 631;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Store__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Session__ = __webpack_require__(651);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -104442,6 +104484,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
 
 
 
@@ -104466,7 +104510,34 @@ var Sessions = function (_Component) {
         key: 'render',
         value: function render() {
             var store = this.props.store;
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'y-padding' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                        { bsStyle: 'info', onClick: this.createEvent, disabled: this.props.loading },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            null,
+                            this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'refresh' }),
+                            !this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'plus' }),
+                            " ",
+                            'Create a session'
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'y-padding' },
+                    this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'lds-dual-ring' }),
+                    store.state.selectedEventSessions.map(function (data, index) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Session__["a" /* default */], { data: data, key: index });
+                    })
+                )
+            );
         }
     }]);
 
@@ -104476,7 +104547,129 @@ var Sessions = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_2__Store__["a" /* default */].withStore(Sessions));
 
 /***/ }),
-/* 633 */
+/* 651 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__api__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Store__ = __webpack_require__(25);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+var Sessions = function (_Component) {
+    _inherits(Sessions, _Component);
+
+    function Sessions() {
+        _classCallCheck(this, Sessions);
+
+        var _this = _possibleConstructorReturn(this, (Sessions.__proto__ || Object.getPrototypeOf(Sessions)).call(this));
+
+        Object.defineProperty(_this, 'componentDidMount', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                _this.getSpeakers();
+            }
+        });
+        Object.defineProperty(_this, 'getSpeakers', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                Object(__WEBPACK_IMPORTED_MODULE_3__api__["e" /* getSessionSpeakers */])(_this.props.data.id, function (error, response) {
+                    if (error) {
+                        // TODO: display error
+                        console.log(error);
+                    } else {
+                        console.log(response);
+                        _this.setState({ speakers: response.data });
+                    }
+                    _this.setState({ loading: false });
+                });
+            }
+        });
+
+
+        _this.state = {
+            loading: true,
+            speakers: []
+        };
+        return _this;
+    }
+
+    _createClass(Sessions, [{
+        key: 'render',
+        value: function render() {
+            var store = this.props.store;
+            var data = this.props.data;
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Panel */],
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Panel */].Body,
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'h3',
+                        null,
+                        data.name
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'calendar' }),
+                        " ",
+                        __WEBPACK_IMPORTED_MODULE_2_moment___default()(data.date_start).format('dddd, MMMM Do')
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'time' }),
+                        " ",
+                        __WEBPACK_IMPORTED_MODULE_2_moment___default()(data.date_start).format('HH:mm'),
+                        " ",
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'arrow-right' }),
+                        " ",
+                        __WEBPACK_IMPORTED_MODULE_2_moment___default()(data.date_end).format('HH:mm')
+                    ),
+                    this.state.speakers.map(function (speaker, index) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'p',
+                            { key: index },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'user' }),
+                            " ",
+                            speaker.speakerName
+                        );
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null)
+                )
+            );
+        }
+    }]);
+
+    return Sessions;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_4__Store__["a" /* default */].withStore(Sessions));
+
+/***/ }),
+/* 652 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -104525,7 +104718,7 @@ var Speakers = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_2__Store__["a" /* default */].withStore(Speakers));
 
 /***/ }),
-/* 634 */
+/* 653 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -104572,12 +104765,6 @@ var Sponsors = function (_Component) {
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_2__Store__["a" /* default */].withStore(Sponsors));
-
-/***/ }),
-/* 635 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

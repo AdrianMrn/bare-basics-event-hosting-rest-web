@@ -1,6 +1,7 @@
-import GeneralTab from './GeneralTab';
-import SessionsTab from './SessionsTab';
-import SpeakersTab from './SpeakersTab';
-import SponsorsTab from './SponsorsTab';
+import GeneralTab from './General/GeneralTab';
+import SessionsTab from './Sessions/SessionsTab';
+import Sessions from './Sessions/Session';
+import SpeakersTab from './Speakers/SpeakersTab';
+import SponsorsTab from './Sponsors/SponsorsTab';
 
-export { GeneralTab, SessionsTab, SpeakersTab, SponsorsTab };
+export { GeneralTab, SessionsTab, Session, SpeakersTab, SponsorsTab };
