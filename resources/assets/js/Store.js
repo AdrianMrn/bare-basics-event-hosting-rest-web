@@ -47,6 +47,7 @@ export default createConnectedStore({
     date_start: '',
     date_end: '',
   },
+  sessionSpeakersEdit: [], // List of speaker id's that will speak at this session
 
   selectedEventSpeakers: [],
   speakerEdit: {

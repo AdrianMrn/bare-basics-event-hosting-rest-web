@@ -14,7 +14,7 @@ class SpeakerController extends Controller
 {
 
     public function getEventSpeakers($id, Request $request){
-        $event = Event::find($id);
+        $event = Event::findOrFail($id);
         if ($event->owner_id === $request->user()->id) {
             $speakers = Speaker::where('event_id', $id)->get();
             return $speakers;
@@ -24,14 +24,15 @@ class SpeakerController extends Controller
     }
 
     public function getSessionSpeakers($id, Request $request){
-        $session = Session::find($id);
-        $event = Event::find($session->event_id);
+        $session = Session::findOrFail($id);
+        $event = Event::findOrFail($session->event_id);
         if ($event->owner_id === $request->user()->id) {
             $speakers = Speaker::where('session_id', $id)->get();
             foreach ($speakers as $speaker) {
-                $user = User::find($speaker->user_id);
+                $user = User::findOrFail($speaker->user_id);
                 $speaker->speakerName = $user->first_name . ' ' . $user->last_name;
             }
+            
             return $speakers;
         } else {
             abort(401);

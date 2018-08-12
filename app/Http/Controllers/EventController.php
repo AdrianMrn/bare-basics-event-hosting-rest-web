@@ -51,7 +51,6 @@ class EventController extends Controller
         } else {
             abort(401);
         }
-
     }
 
     public function delete(Request $request){

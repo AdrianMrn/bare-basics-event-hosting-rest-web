@@ -11,10 +11,43 @@ use App\Event;
 class SessionController extends Controller 
 {
 
-    public function getEventSessions($id, Request $request){
-        $event = Event::find($id);
+    public function store(Request $request){
+        if ($request->has('eventId')) {
+            
+            $session = new Session;
+            $session->event_id = $request->input('eventId');
+            $session->name = 'Unnamed Session';
+            $session->type = 0;
+    
+            $session->save();
+            return $session;
+        } else {
+            abort(401);
+        }
+    }
+
+    public function update($id, Request $request){
+        $session = Session::findOrFail($id);
+        $event = Event::findOrFail($session->event_id);
+
         if ($event->owner_id === $request->user()->id) {
-            $sessions = Session::where('event_id', $id)->get();
+            $session->name = $request->name;
+            $session->description = $request->description;
+            $session->date_start = $request->date_start;
+            $session->date_end = $request->date_end;
+            $session->type = $request->type;
+
+            $session->save();
+            return JsonResponse::create(['error' => false, 'sessionData' => $session]);
+        } else {
+            abort(401);
+        }
+    }
+
+    public function getEventSessions($id, Request $request){
+        $event = Event::findOrFail($id);
+        if ($event->owner_id === $request->user()->id) {
+            $sessions = Session::where('event_id', $id)->orderBy('date_start')->get();
             return $sessions;
         } else {
             abort(401);

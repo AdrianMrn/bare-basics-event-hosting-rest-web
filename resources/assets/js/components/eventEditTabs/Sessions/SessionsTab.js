@@ -3,11 +3,41 @@ import { Button, Glyphicon, FormGroup, FormControl } from "react-bootstrap";
 
 import Store from '../../../Store';
 
+import { createNewSession } from '../../../api';
+
 import Session from './Session';
 
 class Sessions extends Component {
-    validateForm() {
-        //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
+    constructor() {
+        super();
+
+        this.state = {
+            loading: false,
+        }
+    }
+
+    createSession = () => {
+        this.setState({ loading: true });
+
+        let store = this.props.store;
+        const selectedEvent = store.get('selectedEvent');
+        createNewSession(selectedEvent.id, (error, response) => {
+            if (error) {
+                console.log(error);
+                // TODO: display error
+            } else {
+                const sessions = store.get('selectedEventSessions');
+                sessions.push(response.data);
+                store.set('selectedEventSessions')(sessions);
+                // TODO: scroll to and start editing session
+            }
+            this.setState({ loading: false });
+            this.scrollToBottom();
+        });
+    }
+
+    scrollToBottom() {
+        this.scrollTarget.scrollIntoView({ behavior: 'smooth' });
     }
 
     render() {
@@ -15,7 +45,7 @@ class Sessions extends Component {
         return (
             <div>
                 <div className="y-padding">
-                    <Button bsStyle="info" onClick={this.createEvent} disabled={this.props.loading}>
+                    <Button bsStyle="info" onClick={this.createSession} disabled={this.props.loading || this.state.loading}>
                         <span>
                             {this.props.loading &&
                                 <Glyphicon glyph="refresh" />
@@ -30,10 +60,12 @@ class Sessions extends Component {
                 <div className="y-padding">
                     {this.props.loading && <div className="lds-dual-ring"></div>}
                     {store.state.selectedEventSessions.map((data, index) => (
+                        /* TODO: order by date_start (in backend?) */
                         <Session data={data} key={index} />
                     ))}
                 </div>
 
+                <div ref={scrollTarget => { this.scrollTarget = scrollTarget; }} />
             </div>
         );
     }

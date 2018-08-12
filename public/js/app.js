@@ -6767,6 +6767,7 @@ SafeAnchor.defaultProps = defaultProps;
     date_start: '',
     date_end: ''
   },
+  sessionSpeakersEdit: [], // List of speaker id's that will speak at this session
 
   selectedEventSpeakers: [],
   speakerEdit: {},
@@ -20940,14 +20941,15 @@ function identity(x) {
 
 "use strict";
 /* unused harmony export setAccessToken */
-/* harmony export (immutable) */ __webpack_exports__["g"] = registerAccount;
+/* harmony export (immutable) */ __webpack_exports__["h"] = registerAccount;
 /* harmony export (immutable) */ __webpack_exports__["a"] = authenticateAccount;
-/* harmony export (immutable) */ __webpack_exports__["f"] = getUserEvents;
+/* harmony export (immutable) */ __webpack_exports__["g"] = getUserEvents;
 /* harmony export (immutable) */ __webpack_exports__["b"] = createNewEvent;
-/* harmony export (immutable) */ __webpack_exports__["h"] = saveEventGeneralInfo;
-/* harmony export (immutable) */ __webpack_exports__["c"] = getEventData;
-/* harmony export (immutable) */ __webpack_exports__["d"] = getEventExtraDetails;
-/* harmony export (immutable) */ __webpack_exports__["e"] = getSessionSpeakers;
+/* harmony export (immutable) */ __webpack_exports__["i"] = saveEventGeneralInfo;
+/* harmony export (immutable) */ __webpack_exports__["d"] = getEventData;
+/* harmony export (immutable) */ __webpack_exports__["e"] = getEventExtraDetails;
+/* harmony export (immutable) */ __webpack_exports__["f"] = getSessionSpeakers;
+/* harmony export (immutable) */ __webpack_exports__["c"] = createNewSession;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(130);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_cookies__ = __webpack_require__(83);
@@ -21052,6 +21054,15 @@ function getEventExtraDetails(type, eventId, next) {
 function getSessionSpeakers(sessionId, next) {
     setAccessToken();
     __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/getsessionspeakers/' + sessionId).then(function (response) {
+        next(false, response);
+    }).catch(function (error) {
+        next(error);
+    });
+}
+
+function createNewSession(eventId, next) {
+    setAccessToken();
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/sessions?eventId=' + eventId).then(function (response) {
         next(false, response);
     }).catch(function (error) {
         next(error);
@@ -89675,7 +89686,7 @@ var Authenticate = function (_Component) {
 
                 var store = _this.props.store;
                 _this.setState({ disableSubmit: true });
-                Object(__WEBPACK_IMPORTED_MODULE_2__api__["g" /* registerAccount */])({
+                Object(__WEBPACK_IMPORTED_MODULE_2__api__["h" /* registerAccount */])({
                     first_name: store.get('first_name'),
                     last_name: store.get('last_name'),
                     email: store.get('email'),
@@ -101806,7 +101817,7 @@ var Dashboard = function (_Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            Object(__WEBPACK_IMPORTED_MODULE_4__api__["f" /* getUserEvents */])(function (error, response) {
+            Object(__WEBPACK_IMPORTED_MODULE_4__api__["g" /* getUserEvents */])(function (error, response) {
                 _this2.setState({ fetchingEvents: false });
                 if (error) {
                     // TODO: display error
@@ -102004,7 +102015,7 @@ var Dashboard = function (_Component) {
 
                 var selectedEvent = store.get('selectedEvent');
                 var eventEdit = store.get('eventEdit');
-                Object(__WEBPACK_IMPORTED_MODULE_3__api__["h" /* saveEventGeneralInfo */])(selectedEvent.id, eventEdit, function (error, response) {
+                Object(__WEBPACK_IMPORTED_MODULE_3__api__["i" /* saveEventGeneralInfo */])(selectedEvent.id, eventEdit, function (error, response) {
                     if (error) {
                         // TODO: display error
                         console.log(error);
@@ -102024,7 +102035,7 @@ var Dashboard = function (_Component) {
 
                     var store = _this.props.store;
                     var selectedEvent = store.get('selectedEvent');
-                    Object(__WEBPACK_IMPORTED_MODULE_3__api__["d" /* getEventExtraDetails */])(tab, selectedEvent.id, function (error, response) {
+                    Object(__WEBPACK_IMPORTED_MODULE_3__api__["e" /* getEventExtraDetails */])(tab, selectedEvent.id, function (error, response) {
                         if (error) {
                             // TODO: display error
                             console.log(error);
@@ -102068,7 +102079,7 @@ var Dashboard = function (_Component) {
             var _this2 = this;
 
             this.setState({ fetchingEvent: true });
-            Object(__WEBPACK_IMPORTED_MODULE_3__api__["c" /* getEventData */])(this.props.match.params.slug, function (error, response) {
+            Object(__WEBPACK_IMPORTED_MODULE_3__api__["d" /* getEventData */])(this.props.match.params.slug, function (error, response) {
                 if (error) {
                     // TODO: display error
                     console.log(error);
@@ -104334,7 +104345,7 @@ var General = function (_Component) {
                 _this.props.store.set('eventEdit')(selectedEvent);
             }
         });
-        Object.defineProperty(_this, 'onDateRangeEvent', {
+        Object.defineProperty(_this, 'onDateChange', {
             enumerable: true,
             writable: true,
             value: function value(e, picker) {
@@ -104426,7 +104437,7 @@ var General = function (_Component) {
                                 endDate: eventEdit.date_end ? __WEBPACK_IMPORTED_MODULE_3_moment___default()(eventEdit.date_end) : undefined,
                                 timePicker: true,
                                 timePicker24Hour: true,
-                                onApply: this.onDateRangeEvent, onHide: this.onDateRangeEvent, onHideCalendar: this.onDateRangeEvent
+                                onApply: this.onDateChange, onHide: this.onDateChange, onHideCalendar: this.onDateChange
                             },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
                                 type: 'text',
@@ -104454,6 +104465,8 @@ var General = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
                             { bsStyle: 'primary', disabled: !this.validateForm() || loading, type: 'submit' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'save' }),
+                            ' ',
                             'Save'
                         )
                     )
@@ -104476,7 +104489,8 @@ var General = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Store__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Session__ = __webpack_require__(651);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__api__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Session__ = __webpack_require__(651);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -104492,23 +104506,57 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
 var Sessions = function (_Component) {
     _inherits(Sessions, _Component);
 
     function Sessions() {
         _classCallCheck(this, Sessions);
 
-        return _possibleConstructorReturn(this, (Sessions.__proto__ || Object.getPrototypeOf(Sessions)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Sessions.__proto__ || Object.getPrototypeOf(Sessions)).call(this));
+
+        Object.defineProperty(_this, 'createSession', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                _this.setState({ loading: true });
+
+                var store = _this.props.store;
+                var selectedEvent = store.get('selectedEvent');
+                Object(__WEBPACK_IMPORTED_MODULE_3__api__["c" /* createNewSession */])(selectedEvent.id, function (error, response) {
+                    if (error) {
+                        console.log(error);
+                        // TODO: display error
+                    } else {
+                        var sessions = store.get('selectedEventSessions');
+                        sessions.push(response.data);
+                        store.set('selectedEventSessions')(sessions);
+                        // TODO: scroll to and start editing session
+                    }
+                    _this.setState({ loading: false });
+                    _this.scrollToBottom();
+                });
+            }
+        });
+
+
+        _this.state = {
+            loading: false
+        };
+        return _this;
     }
 
     _createClass(Sessions, [{
-        key: 'validateForm',
-        value: function validateForm() {
-            //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
+        key: 'scrollToBottom',
+        value: function scrollToBottom() {
+            this.scrollTarget.scrollIntoView({ behavior: 'smooth' });
         }
     }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var store = this.props.store;
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -104518,7 +104566,7 @@ var Sessions = function (_Component) {
                     { className: 'y-padding' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
-                        { bsStyle: 'info', onClick: this.createEvent, disabled: this.props.loading },
+                        { bsStyle: 'info', onClick: this.createSession, disabled: this.props.loading || this.state.loading },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'span',
                             null,
@@ -104534,9 +104582,15 @@ var Sessions = function (_Component) {
                     { className: 'y-padding' },
                     this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'lds-dual-ring' }),
                     store.state.selectedEventSessions.map(function (data, index) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Session__["a" /* default */], { data: data, key: index });
+                        return (
+                            /* TODO: order by date_start (in backend?) */
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Session__["a" /* default */], { data: data, key: index })
+                        );
                     })
-                )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: function ref(scrollTarget) {
+                        _this2.scrollTarget = scrollTarget;
+                    } })
             );
         }
     }]);
@@ -104556,15 +104610,22 @@ var Sessions = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__api__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Store__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_bootstrap_daterangepicker__ = __webpack_require__(629);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_bootstrap_daterangepicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_bootstrap_daterangepicker__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__api__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Store__ = __webpack_require__(25);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -104593,7 +104654,7 @@ var Sessions = function (_Component) {
             enumerable: true,
             writable: true,
             value: function value() {
-                Object(__WEBPACK_IMPORTED_MODULE_3__api__["e" /* getSessionSpeakers */])(_this.props.data.id, function (error, response) {
+                Object(__WEBPACK_IMPORTED_MODULE_4__api__["f" /* getSessionSpeakers */])(_this.props.data.id, function (error, response) {
                     if (error) {
                         // TODO: display error
                         console.log(error);
@@ -104605,11 +104666,82 @@ var Sessions = function (_Component) {
                 });
             }
         });
+        Object.defineProperty(_this, 'handleChange', {
+            enumerable: true,
+            writable: true,
+            value: function value(field, event) {
+                var sessionEdit = _this.props.store.get('sessionEdit');
+                _this.props.store.set('sessionEdit')(_extends({}, sessionEdit, _defineProperty({}, field, event.target.value)));
+            }
+        });
+        Object.defineProperty(_this, 'onDateChange', {
+            enumerable: true,
+            writable: true,
+            value: function value(e, picker) {
+                var sessionEdit = _this.props.store.get('sessionEdit');
+                _this.props.store.set('sessionEdit')(_extends({}, sessionEdit, {
+                    'date_start': picker.startDate.format('YYYY-MM-DD HH:mm:ss'),
+                    'date_end': picker.endDate.format('YYYY-MM-DD HH:mm:ss')
+                }));
+            }
+        });
+        Object.defineProperty(_this, 'editSession', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                // Disable control to allow the component to change (especially waiting for the possible speakers)
+                _this.setState({ loading: true });
+
+                // Fill store.sessionEdit with this session's info
+                _this.props.store.set('sessionEdit')(_this.props.data);
+
+                // Get a list of all possible speakers and populate the multiselect with this
+                // API call blabla .then(...
+
+                // Change the component's layout to editing mode and enable the controls again
+                _this.setState({ editing: true, loading: false });
+
+                /* TODO:
+                    -Fill store.sessionEdit with this session's info
+                    -Change the component's layout to editing mode (in render method)
+                    -Get a list of all possible speakers and populate the multiselect with this
+                    -Change the Edit button to a Cancel and Save button (this.cancelEdit() and this.saveSession()) (in render)
+                */
+            }
+        });
+        Object.defineProperty(_this, 'saveSession', {
+            enumerable: true,
+            writable: true,
+            value: function value(event) {
+                event.preventDefault();
+                // Disable controls while POSTing the updates
+                _this.setState({ loading: true });
+
+                /* TODO:
+                    -PUT the changes to the session (not the speakers)
+                    -POST the speakers, in backend: first delete all speakers for this session, then add the new ones
+                    -Fill the event in the store.selectedEventSessions with the new information (the information we get from the response's session object)
+                        (GET selectedEventSessions, find the event in the array and change it, SET selectedEventSessions back to store)
+                    -Disable editing mode (changing this.state.editing to false should do this)
+                */
+
+                // Enable controls again and display the component in its normal non-editing state
+                _this.setState({ editing: false, loading: false });
+            }
+        });
+        Object.defineProperty(_this, 'cancelEdit', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                _this.setState({ editing: false });
+            }
+        });
 
 
         _this.state = {
             loading: true,
-            speakers: []
+            speakers: [],
+            editing: true
         };
         return _this;
     }
@@ -104617,47 +104749,173 @@ var Sessions = function (_Component) {
     _createClass(Sessions, [{
         key: 'render',
         value: function render() {
-            var store = this.props.store;
+            var _this2 = this;
+
             var data = this.props.data;
+            var sessionEdit = this.props.store.get('sessionEdit');
+            var selectedEvent = this.props.store.get('selectedEvent');
+            var loading = this.state.loading || this.props.loading;
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Panel */],
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Panel */].Body,
                     null,
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'h3',
+                    !this.state.editing && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
                         null,
-                        data.name
+                        data.date_start && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'session-date' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'span',
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'calendar' }),
+                                " ",
+                                __WEBPACK_IMPORTED_MODULE_2_moment___default()(data.date_start).format('dddd, MMMM Do')
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'span',
+                                { className: 'margin-left' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'time' }),
+                                " ",
+                                __WEBPACK_IMPORTED_MODULE_2_moment___default()(data.date_start).format('HH:mm'),
+                                " ",
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'arrow-right' }),
+                                " ",
+                                __WEBPACK_IMPORTED_MODULE_2_moment___default()(data.date_end).format('HH:mm')
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'session-name' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'h3',
+                                null,
+                                data.name
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'session-speakers' },
+                            this.state.speakers.map(function (speaker, index) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'p',
+                                    { key: index },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'user' }),
+                                    " ",
+                                    speaker.speakerName
+                                );
+                            })
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'session-description' },
+                            data.description
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'session-buttons' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                                { onClick: this.editSession, bsStyle: 'warning', disabled: loading },
+                                loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'pencil' }),
+                                !loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'save' }),
+                                ' ',
+                                'Edit'
+                            )
+                        )
                     ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'p',
+                    this.state.editing && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
                         null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'calendar' }),
-                        " ",
-                        __WEBPACK_IMPORTED_MODULE_2_moment___default()(data.date_start).format('dddd, MMMM Do')
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'p',
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'time' }),
-                        " ",
-                        __WEBPACK_IMPORTED_MODULE_2_moment___default()(data.date_start).format('HH:mm'),
-                        " ",
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'arrow-right' }),
-                        " ",
-                        __WEBPACK_IMPORTED_MODULE_2_moment___default()(data.date_end).format('HH:mm')
-                    ),
-                    this.state.speakers.map(function (speaker, index) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'p',
-                            { key: index },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'user' }),
-                            " ",
-                            speaker.speakerName
-                        );
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null)
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'form',
+                            { onSubmit: this.saveSession },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'session-date' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                                    { controlId: 'dates', bsSize: 'sm' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        __WEBPACK_IMPORTED_MODULE_3_react_bootstrap_daterangepicker___default.a,
+                                        {
+                                            minDate: selectedEvent.date_start,
+                                            maxDate: selectedEvent.date_end,
+                                            startDate: sessionEdit.date_start ? __WEBPACK_IMPORTED_MODULE_2_moment___default()(sessionEdit.date_start) : __WEBPACK_IMPORTED_MODULE_2_moment___default()(selectedEvent.date_start),
+                                            endDate: sessionEdit.date_start ? __WEBPACK_IMPORTED_MODULE_2_moment___default()(sessionEdit.date_end) : __WEBPACK_IMPORTED_MODULE_2_moment___default()(selectedEvent.date_end),
+                                            timePicker: true,
+                                            timePicker24Hour: true,
+                                            onApply: this.onDateChange, onHide: this.onDateChange, onHideCalendar: this.onDateChange
+                                        },
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                                            type: 'text',
+                                            value: sessionEdit.date_start ? sessionEdit.date_start + ' - ' + sessionEdit.date_end : 'Click here to set the start and end times',
+                                            disabled: loading,
+                                            readOnly: true,
+                                            className: 'date-time-input'
+                                        })
+                                    )
+                                )
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'session-name' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                                    { controlId: 'name', bsSize: 'lg' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                                        autoFocus: true,
+                                        type: 'text',
+                                        value: sessionEdit.name || '',
+                                        onChange: function onChange(e) {
+                                            return _this2.handleChange('name', e);
+                                        },
+                                        disabled: loading,
+                                        placeholder: 'Session Name'
+                                    })
+                                )
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'session-speakers' }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'session-description' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                                    { controlId: 'description', bsSize: 'sm' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                                        componentClass: 'textarea',
+                                        value: sessionEdit.description || '',
+                                        onChange: function onChange(e) {
+                                            return _this2.handleChange('description', e);
+                                        },
+                                        disabled: loading,
+                                        placeholder: 'Description'
+                                    })
+                                )
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'session-buttons' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                                    { onClick: this.cancelEdit, bsStyle: 'danger', disabled: loading },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'remove' }),
+                                    ' ',
+                                    'Cancel'
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                                    { className: 'margin-left', bsStyle: 'primary', disabled: loading, type: 'submit' },
+                                    loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'refresh' }),
+                                    !loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'save' }),
+                                    ' ',
+                                    'Save'
+                                )
+                            )
+                        )
+                    )
                 )
             );
         }
@@ -104666,7 +104924,7 @@ var Sessions = function (_Component) {
     return Sessions;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_4__Store__["a" /* default */].withStore(Sessions));
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_5__Store__["a" /* default */].withStore(Sessions));
 
 /***/ }),
 /* 652 */

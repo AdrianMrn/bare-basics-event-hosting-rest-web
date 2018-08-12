@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, FormControl, Checkbox } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Checkbox, Glyphicon } from "react-bootstrap";
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import moment from 'moment';
 
@@ -25,7 +25,7 @@ class General extends Component {
         this.props.store.set('eventEdit')(selectedEvent);
     }
 
-    onDateRangeEvent = (e, picker) => {
+    onDateChange = (e, picker) => {
         let eventEdit = this.props.store.get('eventEdit');
         this.props.store.set('eventEdit')({
             ...eventEdit,
@@ -78,7 +78,7 @@ class General extends Component {
                             endDate={eventEdit.date_end ? moment(eventEdit.date_end) : undefined}
                             timePicker={true}
                             timePicker24Hour={true}
-                            onApply={this.onDateRangeEvent} onHide={this.onDateRangeEvent} onHideCalendar={this.onDateRangeEvent}
+                            onApply={this.onDateChange} onHide={this.onDateChange} onHideCalendar={this.onDateChange}
                         >
                             <FormControl
                                 type="text"
@@ -109,7 +109,10 @@ class General extends Component {
 
 
                     <div className="event-edit-savebutton-bottom">
-                        <Button bsStyle="primary" disabled={!this.validateForm() || loading} type="submit">Save</Button>
+                        <Button bsStyle="primary" disabled={!this.validateForm() || loading} type="submit">
+                            <Glyphicon glyph="save" />
+                            {' '}Save
+                        </Button>
                     </div>
                 </form>
             </div>

@@ -119,6 +119,17 @@ export function getSessionSpeakers(sessionId, next) {
         });
 }
 
+export function createNewSession(eventId, next) {
+    setAccessToken();
+    axios.post(`${apiUrl}/sessions?eventId=${eventId}`)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
 /* export function getUserInfo(next) {
     setAccessToken();
     axios.get(`${apiUrl}/getuserprofile`)
