@@ -20951,6 +20951,8 @@ function identity(x) {
 /* harmony export (immutable) */ __webpack_exports__["g"] = getSessionSpeakers;
 /* harmony export (immutable) */ __webpack_exports__["c"] = createNewSession;
 /* harmony export (immutable) */ __webpack_exports__["d"] = deleteSession;
+/* harmony export (immutable) */ __webpack_exports__["k"] = updateSession;
+/* harmony export (immutable) */ __webpack_exports__["l"] = updateSessionSpeakers;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(130);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_cookies__ = __webpack_require__(83);
@@ -21009,7 +21011,7 @@ function authenticateAccount(data, next) {
 
 function getUserEvents(next) {
     setAccessToken();
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/getuserevents').then(function (response) {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/get-user-events').then(function (response) {
         next(false, response);
     }).catch(function (error) {
         next(error);
@@ -21054,7 +21056,7 @@ function getEventExtraDetails(type, eventId, next) {
 
 function getSessionSpeakers(sessionId, next) {
     setAccessToken();
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/getsessionspeakers/' + sessionId).then(function (response) {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/get-session-speakers/' + sessionId).then(function (response) {
         next(false, response);
     }).catch(function (error) {
         next(error);
@@ -21079,9 +21081,27 @@ function deleteSession(id, next) {
     });
 }
 
+function updateSession(id, postData, next) {
+    setAccessToken();
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/sessions/' + id, postData).then(function (response) {
+        next(false, response);
+    }).catch(function (error) {
+        next(error);
+    });
+}
+
+function updateSessionSpeakers(id, postData, next) {
+    setAccessToken();
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/set-session-speakers/' + id, postData).then(function (response) {
+        next(false, response);
+    }).catch(function (error) {
+        next(error);
+    });
+}
+
 /* export function getUserInfo(next) {
     setAccessToken();
-    axios.get(`${apiUrl}/getuserprofile`)
+    axios.get(`${apiUrl}/get-user-profile`)
         .then(response => {
             next(false, response);
         })
@@ -104553,10 +104573,18 @@ var Sessions = function (_Component) {
                 });
             }
         });
+        Object.defineProperty(_this, 'toggleEditingSession', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                _this.setState({ editingSession: !_this.state.editingSession });
+            }
+        });
 
 
         _this.state = {
-            loading: false
+            loading: false,
+            editingSession: false
         };
         return _this;
     }
@@ -104596,7 +104624,7 @@ var Sessions = function (_Component) {
                     { className: 'y-padding' },
                     this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'lds-dual-ring' }),
                     store.get('selectedEventSessions').map(function (data, index) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Session__["a" /* default */], { data: data, key: index, forceRefresh: _this2.props.forceRefresh });
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Session__["a" /* default */], { disableEdit: _this2.state.editingSession, data: data, key: index, forceRefresh: _this2.props.forceRefresh, toggleEditingSession: _this2.toggleEditingSession });
                     })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: function ref(scrollTarget) {
@@ -104693,7 +104721,9 @@ var Sessions = function (_Component) {
             enumerable: true,
             writable: true,
             value: function value(speakers) {
-                _this.setState({ speakers: speakers });
+                _this.setState({ editSpeakers: speakers.map(function (speaker) {
+                        return speaker.value;
+                    }) });
             }
         });
         Object.defineProperty(_this, 'onDateChange', {
@@ -104713,6 +104743,7 @@ var Sessions = function (_Component) {
             value: function value() {
                 // Disable control to allow the component to change (especially waiting for the possible speakers)
                 _this.setState({ loading: true });
+                _this.props.toggleEditingSession();
 
                 // Fill store.sessionEdit with this session's info
                 _this.props.store.set('sessionEdit')(_this.props.data);
@@ -104737,19 +104768,33 @@ var Sessions = function (_Component) {
             writable: true,
             value: function value(event) {
                 event.preventDefault();
-                // Disable controls while POSTing the updates
                 _this.setState({ loading: true });
 
-                /* TODO:
-                    -PUT the changes to the session (not the speakers)
-                    -POST the speakers, in backend: first delete all speakers for this session, then add the new ones
-                    -Fill the event in the store.selectedEventSessions with the new information (the information we get from the response's session object)
-                        (GET selectedEventSessions, find the event in the array and change it, SET selectedEventSessions back to store)
-                    -Disable editing mode (changing this.state.editing to false should do this)
-                */
+                var sessionId = _this.props.data.id;
+                var sessionEdit = _this.props.store.get('sessionEdit');
+                var sessionSpeakers = _this.state.editSpeakers;
 
-                // Enable controls again and display the component in its normal non-editing state
-                _this.setState({ editing: false, loading: false });
+                Promise.all([Object(__WEBPACK_IMPORTED_MODULE_6__api__["k" /* updateSession */])(sessionId, sessionEdit, function (error, response) {
+                    if (error) {
+                        // TODO: display error
+                        console.log(error);
+                        Promise.reject(error);
+                    } else {
+                        Promise.resolve(response);
+                    }
+                }), Object(__WEBPACK_IMPORTED_MODULE_6__api__["l" /* updateSessionSpeakers */])(sessionId, { sessionSpeakers: sessionSpeakers }, function (error, response) {
+                    if (error) {
+                        // TODO: display error
+                        console.log(error);
+                        Promise.reject(error);
+                    } else {
+                        Promise.resolve(response);
+                    }
+                })]).then(function (values) {
+                    _this.setState({ editing: false, loading: false });
+                    _this.props.toggleEditingSession();
+                    _this.props.forceRefresh();
+                });
             }
         });
         Object.defineProperty(_this, 'cancelEdit', {
@@ -104757,6 +104802,7 @@ var Sessions = function (_Component) {
             writable: true,
             value: function value() {
                 _this.setState({ editing: false });
+                _this.props.toggleEditingSession();
             }
         });
         Object.defineProperty(_this, 'delete', {
@@ -104781,7 +104827,8 @@ var Sessions = function (_Component) {
             loading: true,
             editing: false,
             speakers: [],
-            possibleSpeakers: []
+            possibleSpeakers: [],
+            editSpeakers: []
         };
         return _this;
     }
@@ -104858,7 +104905,7 @@ var Sessions = function (_Component) {
                             { className: 'session-buttons' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
-                                { onClick: this.editSession, bsStyle: 'default', disabled: loading },
+                                { onClick: this.editSession, bsStyle: 'default', disabled: loading || this.props.disableEdit },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'pencil' }),
                                 ' ',
                                 'Edit'

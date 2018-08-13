@@ -13,6 +13,7 @@ class Sessions extends Component {
 
         this.state = {
             loading: false,
+            editingSession: false,
         }
     }
 
@@ -34,6 +35,10 @@ class Sessions extends Component {
             this.setState({ loading: false });
             this.scrollToBottom();
         });
+    }
+
+    toggleEditingSession = () => {
+        this.setState({ editingSession: !this.state.editingSession });
     }
 
     scrollToBottom() {
@@ -60,7 +65,7 @@ class Sessions extends Component {
                 <div className="y-padding">
                     {this.props.loading && <div className="lds-dual-ring"></div>}
                     {store.get('selectedEventSessions').map((data, index) => (
-                        <Session data={data} key={index} forceRefresh={this.props.forceRefresh} />
+                        <Session disableEdit={this.state.editingSession} data={data} key={index} forceRefresh={this.props.forceRefresh} toggleEditingSession={this.toggleEditingSession} />
                     ))}
                 </div>
 

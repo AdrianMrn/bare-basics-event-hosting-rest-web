@@ -26,20 +26,19 @@ export default class Root extends Component {
 
         return (
             <BrowserRouter>
-                {/* TODO: make sure undux store persists (if cookies with a user's details exists and they're not in the store, fill the store with the user's details (getting the data from the cookies)) */}
+                {/* TODO: make sure undux store persists (if cookies with a user's details exists and they're not in the store, fill the store with the user's details (getting the data from the cookies)) (eg for displaying name at the top, ...) */}
                 {/* TODO: header with topnav component goes here */}
                 <div className="container">
                     <Store.Container>
                         <Switch>
-                            {/* <Route exact path='/' component={Home} /> */}
+                            {/* TODO: <Route exact path='/' component={Home} /> */}
                             <Route exact path='/register' component={Authenticate} /> {/* TODO: if user is already logged in, block the register & login routes & redirect to dashboard */}
                             <Route exact path='/login' component={Authenticate} />
 
-                            {/* TODO: for everything with /dashboard: first check if logged in (through render and check if there's a cookie with access token?), otherwise send to /login */}
                             <PrivateRoute exact path='/dashboard' component={Dashboard} />
                             <PrivateRoute exact path='/dashboard/event-detail/:slug' component={EventEdit} />
 
-                            {/* Redirect to 404 or home when route doesn't match */}
+                            {/* TODO: Redirect to 404 or home when route doesn't match */}
                         </Switch>
                     </Store.Container>
                 </div>

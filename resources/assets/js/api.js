@@ -55,7 +55,7 @@ export function authenticateAccount(data, next) {
 
 export function getUserEvents(next) {
     setAccessToken();
-    axios.get(`${apiUrl}/getuserevents`)
+    axios.get(`${apiUrl}/get-user-events`)
         .then(response => {
             next(false, response);
         })
@@ -110,7 +110,7 @@ export function getEventExtraDetails(type, eventId, next) {
 
 export function getSessionSpeakers(sessionId, next) {
     setAccessToken();
-    axios.get(`${apiUrl}/getsessionspeakers/${sessionId}`)
+    axios.get(`${apiUrl}/get-session-speakers/${sessionId}`)
         .then(response => {
             next(false, response);
         })
@@ -141,9 +141,32 @@ export function deleteSession(id, next) {
         });
 }
 
+export function updateSession(id, postData, next) {
+    setAccessToken();
+    axios.put(`${apiUrl}/sessions/${id}`, postData)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
+export function updateSessionSpeakers(id, postData, next) {
+    setAccessToken();
+    axios.post(`${apiUrl}/set-session-speakers/${id}`, postData)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
+
 /* export function getUserInfo(next) {
     setAccessToken();
-    axios.get(`${apiUrl}/getuserprofile`)
+    axios.get(`${apiUrl}/get-user-profile`)
         .then(response => {
             next(false, response);
         })

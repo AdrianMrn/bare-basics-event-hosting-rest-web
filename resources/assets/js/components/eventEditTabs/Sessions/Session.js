@@ -5,7 +5,7 @@ import DateRangePicker from 'react-bootstrap-daterangepicker';
 import Select from 'react-select';
 import { styles } from 'react-select-bootstrap3';
 
-import { getSessionSpeakers, getEventExtraDetails, deleteSession } from '../../../api';
+import { getSessionSpeakers, getEventExtraDetails, deleteSession, updateSession, updateSessionSpeakers } from '../../../api';
 
 import Store from '../../../Store';
 
@@ -18,6 +18,7 @@ class Sessions extends Component {
             editing: false,
             speakers: [],
             possibleSpeakers: [],
+            editSpeakers: [],
         }
     }
 
@@ -43,7 +44,7 @@ class Sessions extends Component {
     }
 
     handleSpeakerChange = speakers => {
-        this.setState({ speakers });
+        this.setState({ editSpeakers: speakers.map(speaker => {return speaker.value}) });
     }
 
     onDateChange = (e, picker) => {
@@ -58,6 +59,7 @@ class Sessions extends Component {
     editSession = () => {
         // Disable control to allow the component to change (especially waiting for the possible speakers)
         this.setState({ loading: true });
+        this.props.toggleEditingSession();
 
         // Fill store.sessionEdit with this session's info
         this.props.store.set('sessionEdit')(this.props.data);
@@ -79,23 +81,41 @@ class Sessions extends Component {
 
     saveSession = event => {
         event.preventDefault();
-        // Disable controls while POSTing the updates
         this.setState({ loading: true });
 
-        /* TODO:
-            -PUT the changes to the session (not the speakers)
-            -POST the speakers, in backend: first delete all speakers for this session, then add the new ones
-            -Fill the event in the store.selectedEventSessions with the new information (the information we get from the response's session object)
-                (GET selectedEventSessions, find the event in the array and change it, SET selectedEventSessions back to store)
-            -Disable editing mode (changing this.state.editing to false should do this)
-        */
+        const sessionId = this.props.data.id;
+        const sessionEdit = this.props.store.get('sessionEdit')
+        const sessionSpeakers = this.state.editSpeakers;
 
-        // Enable controls again and display the component in its normal non-editing state
-        this.setState({ editing: false, loading: false });
+        Promise.all([
+            updateSession(sessionId, sessionEdit, (error, response) => {
+                if (error) {
+                    // TODO: display error
+                    console.log(error);
+                    Promise.reject(error);
+                } else {
+                    Promise.resolve(response);
+                }
+            }),
+            updateSessionSpeakers(sessionId, { sessionSpeakers }, (error, response) => {
+                if (error) {
+                    // TODO: display error
+                    console.log(error);
+                    Promise.reject(error);
+                } else {
+                    Promise.resolve(response);
+                }
+            })
+        ]).then((values) => {
+            this.setState({ editing: false, loading: false });
+            this.props.toggleEditingSession();
+            this.props.forceRefresh();
+        });
     }
 
     cancelEdit = () => {
         this.setState({ editing: false });
+        this.props.toggleEditingSession();
     }
 
     delete = () => {
@@ -156,7 +176,7 @@ class Sessions extends Component {
                             </div>
 
                             <div className="session-buttons">
-                                <Button onClick={this.editSession} bsStyle="default" disabled={loading}>
+                                <Button onClick={this.editSession} bsStyle="default" disabled={loading || this.props.disableEdit}>
                                     <Glyphicon glyph="pencil" />
                                     {' '}Edit
                                 </Button>
