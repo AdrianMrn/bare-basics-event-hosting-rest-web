@@ -12,18 +12,20 @@ class SessionController extends Controller
 {
 
     public function store(Request $request){
-        if ($request->has('eventId')) {
-            
-            $session = new Session;
-            $session->event_id = $request->input('eventId');
-            $session->name = 'Unnamed Session';
-            $session->type = 0;
-    
-            $session->save();
-            return $session;
-        } else {
-            abort(401);
+        if ($request->has('eventId')){
+            $event = Event::findOrFail($request->input('eventId'));
+            if ($event->owner_id === $request->user()->id) {
+                $session = new Session;
+                $session->event_id = $request->input('eventId');
+                $session->name = 'Unnamed Session';
+                $session->type = 0;
+        
+                $session->save();
+                return $session;
+            }
         }
+        
+        abort(401);
     }
 
     public function update($id, Request $request){

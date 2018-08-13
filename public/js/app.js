@@ -6770,7 +6770,9 @@ SafeAnchor.defaultProps = defaultProps;
   sessionSpeakersEdit: [], // List of speaker id's that will speak at this session
 
   selectedEventSpeakers: [],
-  speakerEdit: {},
+  speakerEdit: {
+    email: ''
+  },
 
   selectedEventSponsors: [],
 
@@ -20941,18 +20943,20 @@ function identity(x) {
 
 "use strict";
 /* unused harmony export setAccessToken */
-/* harmony export (immutable) */ __webpack_exports__["i"] = registerAccount;
+/* harmony export (immutable) */ __webpack_exports__["j"] = registerAccount;
 /* harmony export (immutable) */ __webpack_exports__["a"] = authenticateAccount;
-/* harmony export (immutable) */ __webpack_exports__["h"] = getUserEvents;
+/* harmony export (immutable) */ __webpack_exports__["i"] = getUserEvents;
 /* harmony export (immutable) */ __webpack_exports__["b"] = createNewEvent;
-/* harmony export (immutable) */ __webpack_exports__["j"] = saveEventGeneralInfo;
+/* harmony export (immutable) */ __webpack_exports__["k"] = saveEventGeneralInfo;
 /* harmony export (immutable) */ __webpack_exports__["e"] = getEventData;
 /* harmony export (immutable) */ __webpack_exports__["f"] = getEventExtraDetails;
 /* harmony export (immutable) */ __webpack_exports__["g"] = getSessionSpeakers;
 /* harmony export (immutable) */ __webpack_exports__["c"] = createNewSession;
 /* harmony export (immutable) */ __webpack_exports__["d"] = deleteSession;
-/* harmony export (immutable) */ __webpack_exports__["k"] = updateSession;
-/* harmony export (immutable) */ __webpack_exports__["l"] = updateSessionSpeakers;
+/* harmony export (immutable) */ __webpack_exports__["l"] = updateSession;
+/* harmony export (immutable) */ __webpack_exports__["m"] = updateSessionSpeakers;
+/* unused harmony export createNewSpeaker */
+/* harmony export (immutable) */ __webpack_exports__["h"] = getSpeakerInfo;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(130);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_cookies__ = __webpack_require__(83);
@@ -21093,6 +21097,24 @@ function updateSession(id, postData, next) {
 function updateSessionSpeakers(id, postData, next) {
     setAccessToken();
     __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/set-session-speakers/' + id, postData).then(function (response) {
+        next(false, response);
+    }).catch(function (error) {
+        next(error);
+    });
+}
+
+function createNewSpeaker(eventId, next) {
+    setAccessToken();
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/speakers?eventId=' + eventId).then(function (response) {
+        next(false, response);
+    }).catch(function (error) {
+        next(error);
+    });
+}
+
+function getSpeakerInfo(id, next) {
+    setAccessToken();
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/speakers/' + id).then(function (response) {
         next(false, response);
     }).catch(function (error) {
         next(error);
@@ -89716,7 +89738,7 @@ var Authenticate = function (_Component) {
 
                 var store = _this.props.store;
                 _this.setState({ disableSubmit: true });
-                Object(__WEBPACK_IMPORTED_MODULE_2__api__["i" /* registerAccount */])({
+                Object(__WEBPACK_IMPORTED_MODULE_2__api__["j" /* registerAccount */])({
                     first_name: store.get('first_name'),
                     last_name: store.get('last_name'),
                     email: store.get('email'),
@@ -101847,7 +101869,7 @@ var Dashboard = function (_Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            Object(__WEBPACK_IMPORTED_MODULE_4__api__["h" /* getUserEvents */])(function (error, response) {
+            Object(__WEBPACK_IMPORTED_MODULE_4__api__["i" /* getUserEvents */])(function (error, response) {
                 _this2.setState({ fetchingEvents: false });
                 if (error) {
                     // TODO: display error
@@ -102045,7 +102067,7 @@ var Dashboard = function (_Component) {
 
                 var selectedEvent = store.get('selectedEvent');
                 var eventEdit = store.get('eventEdit');
-                Object(__WEBPACK_IMPORTED_MODULE_3__api__["j" /* saveEventGeneralInfo */])(selectedEvent.id, eventEdit, function (error, response) {
+                Object(__WEBPACK_IMPORTED_MODULE_3__api__["k" /* saveEventGeneralInfo */])(selectedEvent.id, eventEdit, function (error, response) {
                     if (error) {
                         // TODO: display error
                         console.log(error);
@@ -102071,6 +102093,7 @@ var Dashboard = function (_Component) {
                             console.log(error);
                         } else {
                             store.set('selectedEvent' + (tab.charAt(0).toUpperCase() + tab.slice(1)))(response.data);
+                            console.log(response.data);
                         }
                         _this.setState({ loading: false });
                     });
@@ -102181,7 +102204,9 @@ var Dashboard = function (_Component) {
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'div',
                                             { className: 'event-edit-tab' },
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_eventEditTabs_index__["c" /* SpeakersTab */], { loading: this.state.loading })
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_eventEditTabs_index__["c" /* SpeakersTab */], { loading: this.state.loading, forceRefresh: function forceRefresh() {
+                                                    return _this3.handleChangeTabs('speakers');
+                                                } })
                                         )
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -104566,7 +104591,7 @@ var Sessions = function (_Component) {
                         var sessions = store.get('selectedEventSessions');
                         sessions.push(response.data);
                         store.set('selectedEventSessions')(sessions);
-                        // TODO: scroll to and start editing session
+                        // TODO: start editing session?
                     }
                     _this.setState({ loading: false });
                     _this.scrollToBottom();
@@ -104608,25 +104633,21 @@ var Sessions = function (_Component) {
                     { className: 'y-padding' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
-                        { bsStyle: 'info', onClick: this.createSession, disabled: this.props.loading || this.state.loading },
+                        { bsStyle: 'info', onClick: this.createSpeaker, disabled: this.props.loading || this.state.loading || this.state.editingSession },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'span',
                             null,
                             this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'refresh' }),
                             !this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'plus' }),
                             " ",
-                            'Create a session'
+                            'Create a Session'
                         )
                     )
                 ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'y-padding' },
-                    this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'lds-dual-ring' }),
-                    store.get('selectedEventSessions').map(function (data, index) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Session__["a" /* default */], { disableEdit: _this2.state.editingSession, data: data, key: index, forceRefresh: _this2.props.forceRefresh, toggleEditingSession: _this2.toggleEditingSession });
-                    })
-                ),
+                this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'lds-dual-ring' }),
+                store.get('selectedEventSessions').map(function (data, index) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Session__["a" /* default */], { disableEdit: _this2.state.editingSession, data: data, key: index, forceRefresh: _this2.props.forceRefresh, toggleEditingSession: _this2.toggleEditingSession });
+                }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: function ref(scrollTarget) {
                         _this2.scrollTarget = scrollTarget;
                     } })
@@ -104778,7 +104799,7 @@ var Sessions = function (_Component) {
                 var sessionEdit = _this.props.store.get('sessionEdit');
                 var sessionSpeakers = _this.state.editSpeakers;
 
-                Promise.all([Object(__WEBPACK_IMPORTED_MODULE_6__api__["k" /* updateSession */])(sessionId, sessionEdit, function (error, response) {
+                Promise.all([Object(__WEBPACK_IMPORTED_MODULE_6__api__["l" /* updateSession */])(sessionId, sessionEdit, function (error, response) {
                     if (error) {
                         // TODO: display error
                         console.log(error);
@@ -104786,7 +104807,7 @@ var Sessions = function (_Component) {
                     } else {
                         Promise.resolve(response);
                     }
-                }), Object(__WEBPACK_IMPORTED_MODULE_6__api__["l" /* updateSessionSpeakers */])(sessionId, { sessionSpeakers: sessionSpeakers }, function (error, response) {
+                }), Object(__WEBPACK_IMPORTED_MODULE_6__api__["m" /* updateSessionSpeakers */])(sessionId, { sessionSpeakers: sessionSpeakers }, function (error, response) {
                     if (error) {
                         // TODO: display error
                         console.log(error);
@@ -104846,7 +104867,7 @@ var Sessions = function (_Component) {
             var data = this.props.data;
             var sessionEdit = this.props.store.get('sessionEdit');
             var selectedEvent = this.props.store.get('selectedEvent');
-            var loading = this.state.loading || this.props.loading;
+            var loading = this.state.loading;
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Panel */],
                 null,
@@ -104907,7 +104928,7 @@ var Sessions = function (_Component) {
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
-                            { className: 'session-buttons' },
+                            { className: 'event-component-buttons' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
                                 { onClick: this.editSession, bsStyle: 'default', disabled: loading || this.props.disableEdit },
@@ -105003,7 +105024,7 @@ var Sessions = function (_Component) {
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
-                                { className: 'session-buttons-remove' },
+                                { className: 'event-component-buttons-remove' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
                                     { onClick: this.delete, bsStyle: 'danger', disabled: loading },
@@ -105014,7 +105035,7 @@ var Sessions = function (_Component) {
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
-                                { className: 'session-buttons' },
+                                { className: 'event-component-buttons' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
                                     { onClick: this.cancelEdit, bsStyle: 'warning', disabled: loading },
@@ -105052,6 +105073,8 @@ var Sessions = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Store__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__api__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Speaker__ = __webpack_require__(680);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -105065,25 +105088,79 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
+
+
 var Speakers = function (_Component) {
     _inherits(Speakers, _Component);
 
     function Speakers() {
         _classCallCheck(this, Speakers);
 
-        return _possibleConstructorReturn(this, (Speakers.__proto__ || Object.getPrototypeOf(Speakers)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Speakers.__proto__ || Object.getPrototypeOf(Speakers)).call(this));
+
+        Object.defineProperty(_this, 'createSpeaker', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                /* this.setState({ loading: true });
+                 let store = this.props.store;
+                const selectedEvent = store.get('selectedEvent');
+                createNewSpeaker(selectedEvent.id, (error, response) => {
+                    if (error) {
+                        console.log(error);
+                        // TODO: display error
+                    } else {
+                        const speakers = store.get('selectedEventSpeakers');
+                        speakers.push(response.data);
+                        store.set('selectedEventSpeakers')(speakers);
+                        // TODO: start editing speaker?
+                    }
+                    this.setState({ loading: false });
+                    this.scrollToBottom();
+                }); */
+            }
+        });
+        Object.defineProperty(_this, 'toggleEditingSpeaker', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                _this.setState({ editingSpeaker: !_this.state.editingSpeaker });
+            }
+        });
+
+
+        _this.state = {
+            loading: false,
+            editingSpeaker: false
+        };
+        return _this;
     }
 
     _createClass(Speakers, [{
-        key: 'validateForm',
-        value: function validateForm() {
-            //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
+        key: 'scrollToBottom',
+        value: function scrollToBottom() {
+            this.scrollTarget.scrollIntoView({ behavior: 'smooth' });
         }
     }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var store = this.props.store;
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'y-padding' }),
+                this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'lds-dual-ring' }),
+                store.get('selectedEventSpeakers').map(function (data, index) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Speaker__["a" /* default */], { data: data, key: index, forceRefresh: _this2.props.forceRefresh });
+                }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: function ref(scrollTarget) {
+                        _this2.scrollTarget = scrollTarget;
+                    } })
+            );
         }
     }]);
 
@@ -112559,6 +112636,137 @@ function getNextChildMapping(nextProps, prevChildMapping, onExited) {
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(e,r){if(true)module.exports=r();else if("function"==typeof define&&define.amd)define([],r);else{var o=r();for(var t in o)("object"==typeof exports?exports:e)[t]=o[t]}}(window,function(){return function(e){var r={};function o(t){if(r[t])return r[t].exports;var n=r[t]={i:t,l:!1,exports:{}};return e[t].call(n.exports,n,n.exports,o),n.l=!0,n.exports}return o.m=e,o.c=r,o.d=function(e,r,t){o.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:t})},o.r=function(e){Object.defineProperty(e,"__esModule",{value:!0})},o.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(r,"a",r),r},o.o=function(e,r){return Object.prototype.hasOwnProperty.call(e,r)},o.p="",o(o.s=0)}([function(e,r,o){"use strict";function t(e){for(var r=1;r<arguments.length;r++){var o=null!=arguments[r]?arguments[r]:{},t=Object.keys(o);"function"==typeof Object.getOwnPropertySymbols&&(t=t.concat(Object.getOwnPropertySymbols(o).filter(function(e){return Object.getOwnPropertyDescriptor(o,e).enumerable}))),t.forEach(function(r){n(e,r,o[r])})}return e}function n(e,r,o){return r in e?Object.defineProperty(e,r,{value:o,enumerable:!0,configurable:!0,writable:!0}):e[r]=o,e}Object.defineProperty(r,"__esModule",{value:!0}),r.styles=void 0;var c={control:function(e){return t({},e,{height:34,minHeight:34,backgroundColor:"#ffffff",borderWidth:0,boxShadow:"none",color:"#555555"})},valueContainer:function(e,r){return t({},e,{borderWidth:1,borderStyle:"solid",borderColor:r.selectProps.menuIsOpen?"#66afe9":"#cccccc",borderTopLeftRadius:4,borderBottomLeftRadius:4,boxShadow:r.selectProps.menuIsOpen?"inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);":"inset 0 1px 1px rgba(0,0,0,.075);",paddingLeft:10})},input:function(e){return t({},e,{color:"#555555"})},singleValue:function(e){return t({},e,{color:"#555555"})},placeholder:function(e,r){return{display:r.selectProps.menuIsOpen?"none":"inline",color:"#999999",paddingLeft:3}},indicatorSeparator:function(e){return{display:"none"}},clearIndicator:function(e){return t({},e,{borderWidth:1,borderLeftWidth:0,borderStyle:"solid",borderColor:"#cccccc",backgroundColor:"#eeeeee",height:34,width:39,color:"#555555",":hover":{color:"#555555"}})},dropdownIndicator:function(e){return t({},e,{borderWidth:1,borderLeftWidth:0,borderStyle:"solid",borderColor:"#cccccc",borderTopRightRadius:4,borderBottomRightRadius:4,backgroundColor:"#eeeeee",height:34,width:39,color:"#555555",":hover":{color:"#555555"}})},option:function(e,r){return t({},e,{color:"#555555",backgroundColor:r.isSelected?"#eeeeee":r.isFocused?"#f8f9fa":"#ffffff"})}};r.styles=c}])});
+
+/***/ }),
+/* 680 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Store__ = __webpack_require__(25);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+var Speaker = function (_Component) {
+    _inherits(Speaker, _Component);
+
+    function Speaker() {
+        _classCallCheck(this, Speaker);
+
+        var _this = _possibleConstructorReturn(this, (Speaker.__proto__ || Object.getPrototypeOf(Speaker)).call(this));
+
+        Object.defineProperty(_this, 'componentDidMount', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                _this.getSpeakerDetails();
+            }
+        });
+        Object.defineProperty(_this, 'getSpeakerDetails', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                _this.setState({ loading: true });
+                Object(__WEBPACK_IMPORTED_MODULE_2__api__["h" /* getSpeakerInfo */])(_this.props.data.id, function (error, response) {
+                    if (error) {
+                        // TODO: display error
+                        console.log(error);
+                    } else {
+                        _this.setState({ speakerDetails: response.data, loading: false });
+                    }
+                });
+            }
+        });
+        Object.defineProperty(_this, 'delete', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                // TODO: make sure deleting a speaker also removes their entry in sessionspeakers (all backend/db)
+
+                _this.setState({ loading: true });
+                var id = _this.props.data.id;
+                deleteSession(id, function (error, response) {
+                    if (error) {
+                        console.log(error);
+                        // TODO: display error
+                    } else {
+                        _this.props.forceRefresh();
+                    }
+                });
+            }
+        });
+
+
+        _this.state = {
+            loading: true,
+
+            speakerDetails: {
+                first_name: '',
+                last_name: '',
+                company: '',
+                position: '',
+                description: '',
+                linkedin: '',
+                facebook: '',
+                website: '',
+                twitter: '',
+                email: ''
+            }
+        };
+        return _this;
+    }
+
+    _createClass(Speaker, [{
+        key: 'render',
+        value: function render() {
+            var speakerEdit = this.props.store.get('speakerEdit');
+            var loading = this.state.loading;
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Panel */],
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Panel */].Body,
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'user-info' }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'event-component-buttons-remove' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                                { onClick: this.delete, bsStyle: 'danger', disabled: loading },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'trash' }),
+                                ' ',
+                                'Delete'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Speaker;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_3__Store__["a" /* default */].withStore(Speaker));
 
 /***/ })
 /******/ ]);

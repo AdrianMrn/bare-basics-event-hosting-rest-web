@@ -163,6 +163,27 @@ export function updateSessionSpeakers(id, postData, next) {
         });
 }
 
+export function createNewSpeaker(eventId, next) {
+    setAccessToken();
+    axios.post(`${apiUrl}/speakers?eventId=${eventId}`)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
+export function getSpeakerInfo(id, next) {
+    setAccessToken();
+    axios.get(`${apiUrl}/speakers/${id}`)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
 
 /* export function getUserInfo(next) {
     setAccessToken();

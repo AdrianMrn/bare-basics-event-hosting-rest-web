@@ -51,7 +51,7 @@ export default createConnectedStore({
 
   selectedEventSpeakers: [],
   speakerEdit: {
-
+    email: ''
   },
 
   selectedEventSponsors: [],

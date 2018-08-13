@@ -140,7 +140,7 @@ class Sessions extends Component {
         const data = this.props.data;
         const sessionEdit = this.props.store.get('sessionEdit');
         const selectedEvent = this.props.store.get('selectedEvent');
-        const loading = this.state.loading || this.props.loading;
+        const loading = this.state.loading;
         return (
             <Panel>
                 <Panel.Body>
@@ -180,7 +180,7 @@ class Sessions extends Component {
                                 {data.description}
                             </div>
 
-                            <div className="session-buttons">
+                            <div className="event-component-buttons">
                                 <Button onClick={this.editSession} bsStyle="default" disabled={loading || this.props.disableEdit}>
                                     <Glyphicon glyph="pencil" />
                                     {' '}Edit
@@ -189,7 +189,7 @@ class Sessions extends Component {
                         </div>
                     }
 
-
+                    {/* TODO: form validation  */}
                     {this.state.editing &&
                         <div>
                             <form onSubmit={this.saveSession}>
@@ -255,14 +255,15 @@ class Sessions extends Component {
                                     </FormGroup>
                                 </div>
 
-                                <div className="session-buttons-remove">
+                                <div className="event-component-buttons-remove">
+                                    {/* TODO: When pressed, ask for confirmation */}
                                     <Button onClick={this.delete} bsStyle="danger" disabled={loading}>
                                         <Glyphicon glyph="trash" />
                                         {' '}Delete
                                     </Button>
 
                                 </div>
-                                <div className="session-buttons">
+                                <div className="event-component-buttons">
                                     <Button onClick={this.cancelEdit} bsStyle="warning" disabled={loading}>
                                         <Glyphicon glyph="remove" />
                                         {' '}Cancel

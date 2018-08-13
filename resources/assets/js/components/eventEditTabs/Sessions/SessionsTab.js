@@ -30,7 +30,7 @@ class Sessions extends Component {
                 const sessions = store.get('selectedEventSessions');
                 sessions.push(response.data);
                 store.set('selectedEventSessions')(sessions);
-                // TODO: scroll to and start editing session
+                // TODO: start editing session?
             }
             this.setState({ loading: false });
             this.scrollToBottom();
@@ -50,7 +50,7 @@ class Sessions extends Component {
         return (
             <div>
                 <div className="y-padding">
-                    <Button bsStyle="info" onClick={this.createSession} disabled={this.props.loading || this.state.loading}>
+                    <Button bsStyle="info" onClick={this.createSpeaker} disabled={this.props.loading || this.state.loading || this.state.editingSession}>
                         <span>
                             {this.props.loading &&
                                 <Glyphicon glyph="refresh" />
@@ -58,16 +58,15 @@ class Sessions extends Component {
                             {!this.props.loading &&
                                 <Glyphicon glyph="plus" />
                             }
-                            {" "}Create a session
+                            {" "}Create a Session
                         </span>
                     </Button>
                 </div>
-                <div className="y-padding">
-                    {this.props.loading && <div className="lds-dual-ring"></div>}
-                    {store.get('selectedEventSessions').map((data, index) => (
-                        <Session disableEdit={this.state.editingSession} data={data} key={index} forceRefresh={this.props.forceRefresh} toggleEditingSession={this.toggleEditingSession} />
-                    ))}
-                </div>
+
+                {this.props.loading && <div className="lds-dual-ring"></div>}
+                {store.get('selectedEventSessions').map((data, index) => (
+                    <Session disableEdit={this.state.editingSession} data={data} key={index} forceRefresh={this.props.forceRefresh} toggleEditingSession={this.toggleEditingSession} />
+                ))}
 
                 <div ref={scrollTarget => { this.scrollTarget = scrollTarget; }} />
             </div>

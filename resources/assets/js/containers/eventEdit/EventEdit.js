@@ -64,6 +64,7 @@ class Dashboard extends Component {
                     console.log(error);
                 } else {
                     store.set(`selectedEvent${tab.charAt(0).toUpperCase() + tab.slice(1)}`)(response.data);
+                    console.log(response.data);
                 }
                 this.setState({ loading: false });
             });
@@ -113,7 +114,7 @@ class Dashboard extends Component {
 
                                     <Tab eventKey={'speakers'} title="Speakers" disabled={this.state.fetchingEvent}>
                                         <div className='event-edit-tab'>
-                                            <SpeakersTab loading={this.state.loading} />
+                                            <SpeakersTab loading={this.state.loading} forceRefresh={() => this.handleChangeTabs('speakers')} />
                                         </div>
                                     </Tab>
 
