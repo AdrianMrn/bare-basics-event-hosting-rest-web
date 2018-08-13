@@ -104703,7 +104703,11 @@ var Sessions = function (_Component) {
                         // TODO: display error
                         console.log(error);
                     } else {
-                        _this.setState({ speakers: response.data });
+                        _this.setState({
+                            speakers: response.data.map(function (speaker) {
+                                return { value: speaker.id, label: speaker.speakerName };
+                            })
+                        });
                     }
                     _this.setState({ loading: false });
                 });
@@ -104794,6 +104798,7 @@ var Sessions = function (_Component) {
                     _this.setState({ editing: false, loading: false });
                     _this.props.toggleEditingSession();
                     _this.props.forceRefresh();
+                    _this.getSpeakers();
                 });
             }
         });
@@ -104891,7 +104896,7 @@ var Sessions = function (_Component) {
                                     { key: index },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'user' }),
                                     " ",
-                                    speaker.speakerName
+                                    speaker.label
                                 );
                             })
                         ),
@@ -104969,6 +104974,7 @@ var Sessions = function (_Component) {
                                 { className: 'session-speakers' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_select__["a" /* default */], {
                                     onChange: this.handleSpeakerChange,
+                                    defaultValue: this.state.speakers,
                                     isMulti: true,
                                     isSearchable: true,
                                     isDisabled: loading,

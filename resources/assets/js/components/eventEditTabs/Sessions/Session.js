@@ -32,7 +32,11 @@ class Sessions extends Component {
                 // TODO: display error
                 console.log(error)
             } else {
-                this.setState({ speakers: response.data });
+                this.setState({
+                    speakers: response.data.map(speaker => {
+                        return { value: speaker.id, label: speaker.speakerName }
+                    })
+                });
             }
             this.setState({ loading: false });
         });
@@ -44,7 +48,7 @@ class Sessions extends Component {
     }
 
     handleSpeakerChange = speakers => {
-        this.setState({ editSpeakers: speakers.map(speaker => {return speaker.value}) });
+        this.setState({ editSpeakers: speakers.map(speaker => { return speaker.value }) });
     }
 
     onDateChange = (e, picker) => {
@@ -110,6 +114,7 @@ class Sessions extends Component {
             this.setState({ editing: false, loading: false });
             this.props.toggleEditingSession();
             this.props.forceRefresh();
+            this.getSpeakers();
         });
     }
 
@@ -165,7 +170,7 @@ class Sessions extends Component {
                                 {this.state.speakers.map((speaker, index) => (
                                     <p key={index}>
                                         <Glyphicon glyph="user" />
-                                        {" "}{speaker.speakerName}
+                                        {" "}{speaker.label}
                                         {/* TODO: clicking these should link to speaker tab and start editing that speaker */}
                                     </p>
                                 ))}
@@ -227,6 +232,7 @@ class Sessions extends Component {
                                 <div className="session-speakers">
                                     <Select
                                         onChange={this.handleSpeakerChange}
+                                        defaultValue={this.state.speakers}
                                         isMulti
                                         isSearchable
                                         isDisabled={loading}
