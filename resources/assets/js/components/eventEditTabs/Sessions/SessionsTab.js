@@ -50,7 +50,7 @@ class Sessions extends Component {
         return (
             <div>
                 <div className="y-padding">
-                    <Button bsStyle="info" onClick={this.createSpeaker} disabled={this.props.loading || this.state.loading || this.state.editingSession}>
+                    <Button bsStyle="info" onClick={this.createSession} disabled={this.props.loading || this.state.loading || this.state.editingSession}>
                         <span>
                             {this.props.loading &&
                                 <Glyphicon glyph="refresh" />

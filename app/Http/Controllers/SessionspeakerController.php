@@ -22,12 +22,13 @@ class SessionspeakerController extends Controller
             foreach ($speakers as $speaker) {
                 $user = User::findOrFail($speaker->user_id);
                 $speaker->speakerName = $user->first_name . ' ' . $user->last_name;
+                $speaker->email = $user->email;
             }
             
             return $speakers;
-        } else {
-            abort(401);
         }
+
+        abort(401);
     }
     
     public function setSessionSpeakers($sessionId, Request $request){
@@ -50,9 +51,9 @@ class SessionspeakerController extends Controller
             }
             
             return JsonResponse::create(['error' => false]);
-        } else {
-            abort(401);
         }
+        
+        abort(401);
     }
 
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Panel, Button, Glyphicon, FormGroup, FormControl } from 'react-bootstrap';
+import { Panel, Button, Glyphicon } from 'react-bootstrap';
 
-import { getSpeakerInfo } from '../../../api';
+import { getSpeakerInfo, deleteSpeaker } from '../../../api';
 
 import Store from '../../../Store';
 
@@ -44,29 +44,29 @@ class Speaker extends Component {
     }
 
     delete = () => {
-        // TODO: make sure deleting a speaker also removes their entry in sessionspeakers (all backend/db)
-
         this.setState({ loading: true });
         const id = this.props.data.id
-        deleteSession(id, (error, response) => {
+        deleteSpeaker(id, (error, response) => {
             if (error) {
                 console.log(error);
                 // TODO: display error
             } else {
                 this.props.forceRefresh();
+                this.setState({ loading: false });
             }
         });
     }
 
     render() {
-        const speakerEdit = this.props.store.get('speakerEdit');
         const loading = this.state.loading;
+        const speaker = this.state.speakerDetails;
         return (
             <Panel>
                 <Panel.Body>
                     <div>
                         <div className="user-info">
                             {/* TODO: display user info, media (image) description, company, ... from this.state.speakerDetails */}
+                            {speaker.first_name}
                         </div>
 
                         {/* TODO: Disclaimer that only the speaker can edit their details through the app/website

@@ -163,9 +163,9 @@ export function updateSessionSpeakers(id, postData, next) {
         });
 }
 
-export function createNewSpeaker(eventId, next) {
+export function createNewSpeaker(eventId, postData, next) {
     setAccessToken();
-    axios.post(`${apiUrl}/speakers?eventId=${eventId}`)
+    axios.post(`${apiUrl}/speakers?eventId=${eventId}`, postData)
         .then(response => {
             next(false, response);
         })
@@ -177,6 +177,17 @@ export function createNewSpeaker(eventId, next) {
 export function getSpeakerInfo(id, next) {
     setAccessToken();
     axios.get(`${apiUrl}/speakers/${id}`)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
+export function deleteSpeaker(id, next) {
+    setAccessToken();
+    axios.delete(`${apiUrl}/speakers/${id}`)
         .then(response => {
             next(false, response);
         })

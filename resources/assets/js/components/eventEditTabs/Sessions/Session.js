@@ -34,7 +34,7 @@ class Sessions extends Component {
             } else {
                 this.setState({
                     speakers: response.data.map(speaker => {
-                        return { value: speaker.id, label: speaker.speakerName }
+                        return { value: speaker.id, label: `${speaker.speakerName} - ${speaker.email}` }
                     })
                 });
             }
@@ -75,7 +75,7 @@ class Sessions extends Component {
                 // TODO: display error
             } else {
                 const s = response.data.map(speaker => {
-                    return { label: speaker.speakerName, value: speaker.id }
+                    return { value: speaker.id, label: `${speaker.speakerName} - ${speaker.email}` }
                 });
 
                 this.setState({ possibleSpeakers: s, editing: true, loading: false });
@@ -132,6 +132,8 @@ class Sessions extends Component {
                 // TODO: display error
             } else {
                 this.props.forceRefresh();
+                this.props.toggleEditingSession();
+                this.setState({ loading: false, editing: false });
             }
         });
     }
