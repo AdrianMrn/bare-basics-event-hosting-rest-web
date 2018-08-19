@@ -41,6 +41,8 @@ class SpeakerController extends Controller
                     }
                 }
 
+                // TODO: when adding a speaker, check if they're already an attendee at the event, if not, add them.
+
                 $speaker = new Speaker;
                 $speaker->event_id = $request->eventId;
                 $speaker->user_id = $user->id;

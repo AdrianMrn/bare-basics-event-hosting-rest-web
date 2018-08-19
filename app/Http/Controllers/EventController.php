@@ -54,7 +54,6 @@ class EventController extends Controller
     }
 
     public function delete(Request $request){
-
     }
 
     public function getUserEvents(Request $request){

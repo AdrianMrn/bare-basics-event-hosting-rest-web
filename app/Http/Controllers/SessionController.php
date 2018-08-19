@@ -52,6 +52,7 @@ class SessionController extends Controller
 
         if ($event->owner_id === $request->user()->id) {
             $session->delete();
+            // TODO: remove all Sessionspeaker rows that have this session's id
             return JsonResponse::create(['error' => false]);
         } else {
             abort(401);
