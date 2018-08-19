@@ -112716,7 +112716,11 @@ var Speaker = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'user-info' },
-                            speaker.first_name
+                            speaker.first_name,
+                            ' ',
+                            speaker.last_name,
+                            ' - ',
+                            speaker.email
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',

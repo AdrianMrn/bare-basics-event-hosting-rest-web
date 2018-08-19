@@ -44,5 +44,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/eventinfo/sessions/{id}', 'SessionController@getEventSessions');
     Route::get('/eventinfo/speakers/{id}', 'SpeakerController@getEventSpeakers');
     Route::get('/eventinfo/sponsors/{id}', 'SponsorController@getEventSponsors');
+    Route::get('/eventinfo/attendees/{id}', 'AttendeeController@getEventAttendees');
 
 });

@@ -12,13 +12,8 @@ class SponsorController extends Controller
 {
 
     public function getEventSponsors($id, Request $request){
-        $event = Event::findOrFail($id);
-        if ($event->owner_id === $request->user()->id) {
-            $sponsors = Sponsor::where('event_id', $id)->get();
-            return $sponsors;
-        } else {
-            abort(401);
-        }
+        $sponsors = Sponsor::where('event_id', $id)->get();
+        return $sponsors;
     }
   
 }

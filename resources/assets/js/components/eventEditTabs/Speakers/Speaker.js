@@ -66,11 +66,11 @@ class Speaker extends Component {
                     <div>
                         <div className="user-info">
                             {/* TODO: display user info, media (image) description, company, ... from this.state.speakerDetails */}
-                            {speaker.first_name}
+                            {speaker.first_name} {speaker.last_name} - {speaker.email}
                         </div>
 
                         {/* TODO: Disclaimer that only the speaker can edit their details through the app/website
-                                      AND if you want to add a new speaker, you should use the form at the top of the page
+                                      AND if you want to add a new speaker, you should use the email input at the top of the page
                             */}
                         <div className="event-component-buttons-remove">
                             {/* TODO: When pressed, ask for confirmation */}

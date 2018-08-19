@@ -12,6 +12,7 @@ use App\Event;
 use App\Session;
 use App\Sessionspeaker;
 use App\User;
+use App\Attendee;
 
 class SpeakerController extends Controller 
 {
@@ -32,6 +33,7 @@ class SpeakerController extends Controller
                         'password' => Hash::make($password),
                     ]);
 
+                    // TODO: 
                     Mail::to($request->email)->send(new \App\Mail\AccountCreated($password));
                 } else {
                     // If this user is already a speaker at this event, don't add them again
@@ -41,7 +43,15 @@ class SpeakerController extends Controller
                     }
                 }
 
-                // TODO: when adding a speaker, check if they're already an attendee at the event, if not, add them.
+                // when adding a speaker, check if they're already an attendee at the event, if not, add them.
+                $isAttending = Attendee::where('user_id', $user->id)->first();
+                if (!$isAttending) {
+                    Attendee::create([
+                        'user_id' => $user->id,
+                        'event_id' => $event->id,
+                        'is_speaker' => 1,
+                    ]);
+                }
 
                 $speaker = new Speaker;
                 $speaker->event_id = $request->eventId;
@@ -57,14 +67,9 @@ class SpeakerController extends Controller
 
     public function show($id, Request $request){
         $speaker = Speaker::findOrFail($id);
-        $event = Event::findOrFail($speaker->event_id);
-        if ($event->owner_id === $request->user()->id) {
-            $user = User::where('id', $speaker->user_id)->first();
+        $user = User::where('id', $speaker->user_id)->first();
 
-            return $user;
-        }
-
-        abort(401);
+        return $user;
     }
 
     public function destroy($id, Request $request){
@@ -81,18 +86,13 @@ class SpeakerController extends Controller
     }
 
     public function getEventSpeakers($id, Request $request){
-        $event = Event::findOrFail($id);
-        if ($event->owner_id === $request->user()->id) {
-            $speakers = Speaker::where('event_id', $id)->get();
-            foreach ($speakers as $speaker) {
-                $user = User::findOrFail($speaker->user_id);
-                $speaker->speakerName = $user->first_name . ' ' . $user->last_name;
-                $speaker->email = $user->email;
-            }
-            return $speakers;
+        $speakers = Speaker::where('event_id', $id)->get();
+        foreach ($speakers as $speaker) {
+            $user = User::findOrFail($speaker->user_id);
+            $speaker->speakerName = $user->first_name . ' ' . $user->last_name;
+            $speaker->email = $user->email;
         }
-        
-        abort(401);
+        return $speakers;
     }
   
 }

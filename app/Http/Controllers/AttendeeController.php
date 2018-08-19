@@ -48,6 +48,11 @@ class AttendeeController extends Controller
     public function delete(Request $request){
 
     }
+
+    public function getEventAttendees($id, Request $request){
+        $attendees = Attendee::where('event_id', $id)->get();
+        return $attendees;
+    }
   
 }
 

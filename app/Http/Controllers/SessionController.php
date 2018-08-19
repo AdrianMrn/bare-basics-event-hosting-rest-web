@@ -60,13 +60,8 @@ class SessionController extends Controller
     }
 
     public function getEventSessions($id, Request $request){
-        $event = Event::findOrFail($id);
-        if ($event->owner_id === $request->user()->id) {
-            $sessions = Session::where('event_id', $id)->orderBy('date_start')->get();
-            return $sessions;
-        } else {
-            abort(401);
-        }
+        $sessions = Session::where('event_id', $id)->orderBy('date_start')->get();
+        return $sessions;
     }
   
 }
