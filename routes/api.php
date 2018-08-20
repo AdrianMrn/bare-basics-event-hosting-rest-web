@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     * Other routes (not CRUD)
     */
     Route::get('/get-user-events', 'EventController@getUserEvents');
-    //Route::get('/get-user-profile', 'UserController@get');
+    Route::get('/get-user-profile/{id}', 'UserController@getUserProfile');
     Route::get('/get-session-speakers/{id}', 'SessionspeakerController@getSessionSpeakers');
     Route::post('/set-session-speakers/{id}', 'SessionspeakerController@setSessionSpeakers');
     
