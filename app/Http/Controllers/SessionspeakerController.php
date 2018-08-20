@@ -15,20 +15,14 @@ class SessionspeakerController extends Controller
 {
 
     public function getSessionSpeakers($id, Request $request){
-        $session = Session::findOrFail($id);
-        $event = Event::findOrFail($session->event_id);
-        if ($event->owner_id === $request->user()->id) {
-            $speakers = Sessionspeaker::where('session_id', $id)->get();
-            foreach ($speakers as $speaker) {
-                $user = User::findOrFail($speaker->user_id);
-                $speaker->speakerName = $user->first_name . ' ' . $user->last_name;
-                $speaker->email = $user->email;
-            }
-            
-            return $speakers;
+        $speakers = Sessionspeaker::where('session_id', $id)->get();
+        foreach ($speakers as $speaker) {
+            $user = User::findOrFail($speaker->user_id);
+            $speaker->speakerName = $user->first_name . ' ' . $user->last_name;
+            $speaker->email = $user->email;
         }
-
-        abort(401);
+        
+        return $speakers;
     }
     
     public function setSessionSpeakers($sessionId, Request $request){

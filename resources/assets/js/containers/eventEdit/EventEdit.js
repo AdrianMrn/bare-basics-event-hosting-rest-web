@@ -64,7 +64,6 @@ class Dashboard extends Component {
                     console.log(error);
                 } else {
                     store.set(`selectedEvent${tab.charAt(0).toUpperCase() + tab.slice(1)}`)(response.data);
-                    console.log(response.data);
                 }
                 this.setState({ loading: false });
             });
