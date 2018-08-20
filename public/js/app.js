@@ -41282,6 +41282,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Sessions = function (_Component) {
     _inherits(Sessions, _Component);
 
+    /* 
+        TODO: Fix bugs with react-select:
+        -The options and defaultValue props should come from the same array, otherwise we'll get duplicates in the list after a save.
+            Options should have the complete array, defaultValue should just be list with indexes from the array, eg:
+                options={possibleSpeakers}
+                defaultValue={[possibleSpeakers[1], possibleSpeakers[2]]}
+        
+        -When saving the session, don't use the list from 'state.editSpeakers' to update the speakers, as that only gets updated
+            when the react-select object is touched. Find a way to get the list from the object (ref?)
+            or make sure 'state.editSpeakers' is filled with the initial speakers on componentDidMount, so we don't send an empty list
+    */
+
     function Sessions() {
         _classCallCheck(this, Sessions);
 
@@ -102993,7 +103005,6 @@ var Dashboard = function (_Component) {
                             console.log(error);
                         } else {
                             store.set('selectedEvent' + (tab.charAt(0).toUpperCase() + tab.slice(1)))(response.data);
-                            console.log(response.data);
                         }
                         _this.setState({ loading: false });
                     });
