@@ -51,6 +51,12 @@ class AttendeeController extends Controller
 
     public function getEventAttendees($id, Request $request){
         $attendees = Attendee::where('event_id', $id)->get();
+        foreach ($attendees as $attendee) {
+            $user = User::findOrFail($attendee->user_id);
+            $attendee->speakerName = $user->first_name . ' ' . $user->last_name;
+            $attendee->email = $user->email;
+            // TODO: add media
+        }
         return $attendees;
     }
   
