@@ -177,6 +177,8 @@ class Sessions extends Component {
                                 </div>
                             }
 
+                            {/* TODO: disclaimer/warning that the session will not show up in the app unless it has a start and end date */}
+
                             <div className="session-name">
                                 <h3>{data.name}</h3>
                             </div>
@@ -186,7 +188,7 @@ class Sessions extends Component {
                                     <p key={index}>
                                         <Glyphicon glyph="user" />
                                         {" "}{speaker.label}
-                                        {/* TODO: clicking these should link to speaker tab and start editing that speaker */}
+                                        {/* TODO: clicking these should link to speaker tab and start editing that speaker (maybe) */}
                                     </p>
                                 ))}
                             </div>
@@ -210,6 +212,7 @@ class Sessions extends Component {
                             <form onSubmit={this.saveSession}>
                                 <div className="session-date">
                                     <FormGroup controlId="dates" bsSize="sm">
+                                        {/* TODO: enforce minDate and maxDate by not allowing the user to pick outside this range */}
                                         <DateRangePicker
                                             minDate={selectedEvent.date_start}
                                             maxDate={selectedEvent.date_end}

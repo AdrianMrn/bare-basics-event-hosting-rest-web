@@ -65,7 +65,7 @@ class Sessions extends Component {
 
                 {this.props.loading && <div className="lds-dual-ring"></div>}
                 {store.get('selectedEventSessions').map((data, index) => (
-                    <Session disableEdit={this.state.editingSession} data={data} key={index} forceRefresh={this.props.forceRefresh} toggleEditingSession={this.toggleEditingSession} />
+                    <Session disableEdit={this.state.editingSession} data={data} key={data.id} forceRefresh={this.props.forceRefresh} toggleEditingSession={this.toggleEditingSession} />
                 ))}
 
                 <div ref={scrollTarget => { this.scrollTarget = scrollTarget; }} />

@@ -105257,7 +105257,7 @@ var Sessions = function (_Component) {
                 ),
                 this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'lds-dual-ring' }),
                 store.get('selectedEventSessions').map(function (data, index) {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Session__["a" /* default */], { disableEdit: _this2.state.editingSession, data: data, key: index, forceRefresh: _this2.props.forceRefresh, toggleEditingSession: _this2.toggleEditingSession });
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Session__["a" /* default */], { disableEdit: _this2.state.editingSession, data: data, key: data.id, forceRefresh: _this2.props.forceRefresh, toggleEditingSession: _this2.toggleEditingSession });
                 }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: function ref(scrollTarget) {
                         _this2.scrollTarget = scrollTarget;
