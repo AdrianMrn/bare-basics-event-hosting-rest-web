@@ -103210,7 +103210,6 @@ var General = function (_Component) {
             enumerable: true,
             writable: true,
             value: function value() {
-                // TODO: fill store's eventEdit with data from selectedEvent
                 var selectedEvent = _this.props.store.get('selectedEvent');
                 _this.props.store.set('eventEdit')(selectedEvent);
             }
@@ -103239,7 +103238,9 @@ var General = function (_Component) {
             writable: true,
             value: function value(event) {
                 _this.setState({ addressInput: event.target.value });
-                // TODO: autocomplete address and set it in store: address, city & country
+                /*  TODO: (google geocode) autocomplete address and set it in store: address, city & country
+                    and set coords_lat & coords_lon
+                */
             }
         });
 

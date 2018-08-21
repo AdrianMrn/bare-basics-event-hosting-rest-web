@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('facebook')->nullable();
             $table->string('website')->nullable();
             $table->string('twitter')->nullable();
+            $table->boolean('public_email')->default(false);
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();

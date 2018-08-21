@@ -20,6 +20,8 @@ class CreateEventsTable extends Migration {
 			$table->datetime('date_end')->nullable();
 			$table->integer('owner_id');
 			$table->integer('type')->default(1);
+			$table->decimal('coords_lon', 10, 7);
+			$table->decimal('coords_lat', 10, 7);
 			$table->boolean('is_private')->default(false);
 			$table->boolean('is_published')->default(false);
 			$table->timestamps();

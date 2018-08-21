@@ -20,7 +20,6 @@ class General extends Component {
     }
 
     componentDidMount = () => {
-        // TODO: fill store's eventEdit with data from selectedEvent
         let selectedEvent = this.props.store.get('selectedEvent');
         this.props.store.set('eventEdit')(selectedEvent);
     }
@@ -41,7 +40,9 @@ class General extends Component {
 
     addressLookup = event => {
         this.setState({ addressInput: event.target.value });
-        // TODO: autocomplete address and set it in store: address, city & country
+        /*  TODO: (google geocode) autocomplete address and set it in store: address, city & country
+            and set coords_lat & coords_lon
+        */
     }
 
     render() {
