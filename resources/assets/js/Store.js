@@ -47,6 +47,7 @@ export default createConnectedStore({
     type: 0,
     is_private: false,
     is_published: false,
+    image: '',
   },
 
 

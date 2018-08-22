@@ -54,11 +54,19 @@ class EventController extends Controller
     }
 
     public function delete(Request $request){
+        // TODO: create this (in front end as well)
     }
 
     public function getUserEvents(Request $request){
         $events = Event::where('owner_id', $request->user()->id)->get();
         return $events;
+    }
+
+    public function linkImage($id, Request $request){
+        $event = Event::findOrFail($id);
+
+        $event->clearMediaCollection();
+        $event->addMediaFromRequest('image')->toMediaCollection();
     }
   
 }

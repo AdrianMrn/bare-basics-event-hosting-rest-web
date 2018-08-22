@@ -216,6 +216,30 @@ export function deleteSpeaker(id, next) {
         });
 }
 
+export function uploadImage(image, eventId, next) {
+    setAccessToken();
+
+    // TODO: check if user is event owner
+    console.log(image);
+    
+    const formData = new FormData();
+    formData.append("image", image);
+
+    axios.post(`${apiUrl}/events/link-image/${eventId}`,
+        formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+
+}
+
 /* export function getUserInfo(next) {
     setAccessToken();
     axios.get(`${apiUrl}/get-user-profile`)

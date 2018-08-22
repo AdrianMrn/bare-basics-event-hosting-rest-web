@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, Checkbox, Glyphicon } from "react-bootstrap";
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import moment from 'moment';
+import ImageUploader from 'react-images-upload';
+import { debounce } from "debounce";
 
 import Store from '../../../Store';
+
+import { uploadImage } from '../../../api';
 
 class General extends Component {
     constructor() {
@@ -11,11 +15,13 @@ class General extends Component {
 
         this.state = {
             addressInput: '',
+            loading: false
         }
     }
 
     validateForm() {
         //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
+        /* TODO: validation; title and dates should not be empty. */
         return true;
     }
 
@@ -45,13 +51,45 @@ class General extends Component {
         */
     }
 
+    onImageDrop = debounce((pictureFile, pictureDataURL) => {
+        this.setState({ loading: true });
+
+        let eventEdit = this.props.store.get('eventEdit');
+        this.props.store.set('eventEdit')({ ...eventEdit, image: pictureDataURL[0] });
+
+        uploadImage(pictureFile[0], eventEdit.id, (error, response) => {
+            if (error) {
+                // TODO: display error
+                console.log(error);
+            } else {
+                console.log(response);
+            }
+            this.setState({ loading: false });
+        });
+    }, 100);
+
     render() {
         let store = this.props.store;
         let eventEdit = store.get('eventEdit');
-        let loading = this.props.loading;
+        let loading = this.props.loading || this.state.loading;
         return (
             <div>
                 <form onSubmit={this.props.handleSave}>
+                    <FormGroup>
+                        <ImageUploader
+                            buttonText='Event logo'
+                            label={'Max file size: 5MB, accepted: jpg|png, square'}
+                            onChange={this.onImageDrop}
+                            imgExtension={['.jpg', '.jpeg', '.png']}
+                            maxFileSize={5242880}
+                        />
+                        {!!eventEdit.image &&
+                            <div className='image-display'>
+                                <img src={eventEdit.image} height="130" width="130" />
+                            </div>
+                        }
+                    </FormGroup>
+
                     <FormGroup controlId="name" bsSize="lg">
                         <FormControl
                             autoFocus
@@ -116,6 +154,7 @@ class General extends Component {
                         </Button>
                     </div>
                     {/* TODO: buttons for Publish/Unpublish and Delete */}
+                    {/* To Publish, the event should have: an image, a title, a start & end date */}
                 </form>
             </div>
         );
