@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tabs, Tab, Button, Glyphicon } from 'react-bootstrap';
+import { Tabs, Tab, Button, Glyphicon, PageHeader } from 'react-bootstrap';
 
 import Store from '../../Store';
 
@@ -90,6 +90,9 @@ class Dashboard extends Component {
             <div>
                 <div className="row">
                     <div className="col-md-10 col-md-offset-1">
+                        <PageHeader>
+                            {event.name} <small></small>
+                        </PageHeader>
                         <div className="y-padding">
                             <div className="y-padding">
                                 <Button onClick={this.navigateToDashboard}><Glyphicon glyph="menu-left" /> to Dashboard</Button>

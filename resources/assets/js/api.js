@@ -25,7 +25,7 @@ export function registerAccount(data, next) {
             cookie.save('accessToken', response.data.access_token);
             cookie.save('refreshToken', response.data.refresh_token);
 
-            next(false);
+            next(false, data);
         })
         .catch(error => {
             next(error);
@@ -46,7 +46,27 @@ export function authenticateAccount(data, next) {
             cookie.save('accessToken', response.data.access_token);
             cookie.save('refreshToken', response.data.refresh_token);
 
-            next(false);
+            getMyProfile((error, response) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    cookie.save('firstName', response.data.first_name);
+                    cookie.save('lastName', response.data.last_name);
+                    next(false, response.data);
+                }
+            })
+
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
+export function getMyProfile(next) {
+    setAccessToken();
+    axios.get(`${apiUrl}/get-my-profile`)
+        .then(response => {
+            next(false, response);
         })
         .catch(error => {
             next(error);

@@ -7,6 +7,19 @@ export default createConnectedStore({
   password: '',
   myEvents: [],
 
+  user: {
+    email: '',
+    first_name: '',
+    last_name: '',
+    company: '',
+    position: '',
+    description: '',
+    linkedin: '',
+    facebook: '',
+    website: '',
+    twitter: '',
+  },
+
   selectedEvent: {
     id: 0,
     name: '',

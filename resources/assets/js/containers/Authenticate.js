@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cookie from 'react-cookies';
 
 import Store from '../Store';
 
@@ -16,12 +17,35 @@ class Authenticate extends Component {
         };
     }
 
-    afterLoginOrRegister = error => {
+    componentDidMount = () => {
+        if (this.props.location.pathname === '/logout') {
+            cookie.remove('accessToken');
+            cookie.remove('refreshToken');
+            cookie.remove('firstName');
+            cookie.remove('lastName');
+            cookie.remove('email');
+
+            const store = this.props.store;
+            store.set('user')({});
+
+            this.props.history.push('/');
+        }
+    }
+
+    afterLoginOrRegister = (error, data) => {
         this.setState({ disableSubmit: false });
         if (error) {
             console.log(error);
             // TODO: display error message to user
         } else {
+            // Seting the user info in the store
+            const store = this.props.store;
+            const user = store.get('user');
+            store.set('user')({
+                ...user,
+                first_name: data.first_name
+            })
+
             this.props.history.push('/dashboard');
         }
     }
@@ -36,8 +60,8 @@ class Authenticate extends Component {
             last_name: store.get('last_name'),
             email: store.get('email'),
             password: store.get('password')
-        }, (error) => {
-            this.afterLoginOrRegister(error);
+        }, (error, data) => {
+            this.afterLoginOrRegister(error, data);
         });
     }
 
@@ -49,8 +73,8 @@ class Authenticate extends Component {
         authenticateAccount({
             email: store.get('email'),
             password: store.get('password')
-        }, (error) => {
-            this.afterLoginOrRegister(error);
+        }, (error, data) => {
+            this.afterLoginOrRegister(error, data);
         });
     }
 

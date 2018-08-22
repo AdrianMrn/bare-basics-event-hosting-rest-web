@@ -57,8 +57,9 @@ class Register extends Component {
                         type="submit"
                     >
                         Register
-          </Button>
+                    </Button>
                 </form>
+                {/* TODO: link to login */}
             </div>
         );
     }

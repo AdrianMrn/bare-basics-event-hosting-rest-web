@@ -9,7 +9,7 @@ import { getSessionSpeakers, getEventExtraDetails, deleteSession, updateSession,
 
 import Store from '../../../Store';
 
-class Sessions extends Component {
+class Session extends Component {
     /* 
         TODO: Fix bugs with react-select:
         -The options and defaultValue props should come from the same array, otherwise we'll get duplicates in the list after a save.
@@ -302,4 +302,4 @@ class Sessions extends Component {
     }
 }
 
-export default Store.withStore(Sessions);
+export default Store.withStore(Session);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Glyphicon } from 'react-bootstrap';
+import { Button, Glyphicon, PageHeader } from 'react-bootstrap';
 
 import Store from '../Store';
 
@@ -54,6 +54,9 @@ class Dashboard extends Component {
             <div>
                 <div className="row">
                     <div className="col-md-10 col-md-offset-1">
+                        <PageHeader>
+                            Your Dashboard <small></small>
+                        </PageHeader>
                         <div className="y-padding">
                             <Button bsStyle="info" onClick={this.createEvent} disabled={this.state.disableCreateEventButton}>
                                 <span>

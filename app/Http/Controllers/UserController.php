@@ -15,6 +15,11 @@ class UserController extends Controller
         return $user;
     }
 
+    public function getMyProfile(Request $request) {
+        $user = User::where('id', $request->user()->id)->first();
+        return $user;
+    }
+
     public function update(Request $request){
         
     }

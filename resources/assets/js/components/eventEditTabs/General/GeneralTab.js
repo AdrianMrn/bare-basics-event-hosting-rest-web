@@ -115,6 +115,7 @@ class General extends Component {
                             {' '}Save
                         </Button>
                     </div>
+                    {/* TODO: buttons for Publish/Unpublish and Delete */}
                 </form>
             </div>
         );

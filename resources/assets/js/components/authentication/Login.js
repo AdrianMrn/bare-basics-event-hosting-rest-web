@@ -39,8 +39,9 @@ class Login extends Component {
                         type="submit"
                     >
                         Login
-          </Button>
+                    </Button>
                 </form>
+                {/* TODO: link to register */}
             </div>
         );
     }
