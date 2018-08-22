@@ -7230,23 +7230,24 @@ module.exports = exports['default'];
 
 "use strict";
 /* unused harmony export setAccessToken */
-/* harmony export (immutable) */ __webpack_exports__["l"] = registerAccount;
+/* harmony export (immutable) */ __webpack_exports__["m"] = registerAccount;
 /* harmony export (immutable) */ __webpack_exports__["a"] = authenticateAccount;
 /* unused harmony export getMyProfile */
-/* harmony export (immutable) */ __webpack_exports__["k"] = getUserEvents;
+/* harmony export (immutable) */ __webpack_exports__["l"] = getUserEvents;
 /* harmony export (immutable) */ __webpack_exports__["b"] = createNewEvent;
-/* harmony export (immutable) */ __webpack_exports__["m"] = saveEventGeneralInfo;
-/* harmony export (immutable) */ __webpack_exports__["g"] = getEventData;
-/* harmony export (immutable) */ __webpack_exports__["h"] = getEventExtraDetails;
-/* harmony export (immutable) */ __webpack_exports__["i"] = getSessionSpeakers;
+/* harmony export (immutable) */ __webpack_exports__["n"] = saveEventGeneralInfo;
+/* harmony export (immutable) */ __webpack_exports__["h"] = getEventData;
+/* harmony export (immutable) */ __webpack_exports__["i"] = getEventExtraDetails;
+/* harmony export (immutable) */ __webpack_exports__["j"] = getSessionSpeakers;
 /* harmony export (immutable) */ __webpack_exports__["c"] = createNewSession;
-/* harmony export (immutable) */ __webpack_exports__["e"] = deleteSession;
-/* harmony export (immutable) */ __webpack_exports__["n"] = updateSession;
-/* harmony export (immutable) */ __webpack_exports__["o"] = updateSessionSpeakers;
+/* harmony export (immutable) */ __webpack_exports__["f"] = deleteSession;
+/* harmony export (immutable) */ __webpack_exports__["e"] = deleteEvent;
+/* harmony export (immutable) */ __webpack_exports__["o"] = updateSession;
+/* harmony export (immutable) */ __webpack_exports__["p"] = updateSessionSpeakers;
 /* harmony export (immutable) */ __webpack_exports__["d"] = createNewSpeaker;
-/* harmony export (immutable) */ __webpack_exports__["j"] = getSpeakerInfo;
-/* harmony export (immutable) */ __webpack_exports__["f"] = deleteSpeaker;
-/* harmony export (immutable) */ __webpack_exports__["p"] = uploadImage;
+/* harmony export (immutable) */ __webpack_exports__["k"] = getSpeakerInfo;
+/* harmony export (immutable) */ __webpack_exports__["g"] = deleteSpeaker;
+/* harmony export (immutable) */ __webpack_exports__["q"] = uploadImage;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(131);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_cookies__ = __webpack_require__(86);
@@ -7386,6 +7387,15 @@ function createNewSession(eventId, next) {
 function deleteSession(id, next) {
     setAccessToken();
     __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/sessions/' + id).then(function (response) {
+        next(false, response);
+    }).catch(function (error) {
+        next(error);
+    });
+}
+
+function deleteEvent(id, next) {
+    setAccessToken();
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* apiUrl */] + '/events/' + id).then(function (response) {
         next(false, response);
     }).catch(function (error) {
         next(error);
@@ -41363,7 +41373,7 @@ var Session = function (_Component) {
             enumerable: true,
             writable: true,
             value: function value() {
-                Object(__WEBPACK_IMPORTED_MODULE_6__api__["i" /* getSessionSpeakers */])(_this.props.data.id, function (error, response) {
+                Object(__WEBPACK_IMPORTED_MODULE_6__api__["j" /* getSessionSpeakers */])(_this.props.data.id, function (error, response) {
                     if (error) {
                         // TODO: display error
                         console.log(error);
@@ -41418,7 +41428,7 @@ var Session = function (_Component) {
                 _this.props.store.set('sessionEdit')(_this.props.data);
 
                 // Get a list of all possible speakers and populate the multiselect with them
-                Object(__WEBPACK_IMPORTED_MODULE_6__api__["h" /* getEventExtraDetails */])('speakers', _this.props.store.get('selectedEvent').id, function (error, response) {
+                Object(__WEBPACK_IMPORTED_MODULE_6__api__["i" /* getEventExtraDetails */])('speakers', _this.props.store.get('selectedEvent').id, function (error, response) {
                     if (error) {
                         console.log(error);
                         // TODO: display error
@@ -41443,7 +41453,7 @@ var Session = function (_Component) {
                 var sessionEdit = _this.props.store.get('sessionEdit');
                 var sessionSpeakers = _this.state.editSpeakers;
 
-                Promise.all([Object(__WEBPACK_IMPORTED_MODULE_6__api__["n" /* updateSession */])(sessionId, sessionEdit, function (error, response) {
+                Promise.all([Object(__WEBPACK_IMPORTED_MODULE_6__api__["o" /* updateSession */])(sessionId, sessionEdit, function (error, response) {
                     if (error) {
                         // TODO: display error
                         console.log(error);
@@ -41451,7 +41461,7 @@ var Session = function (_Component) {
                     } else {
                         Promise.resolve(response);
                     }
-                }), Object(__WEBPACK_IMPORTED_MODULE_6__api__["o" /* updateSessionSpeakers */])(sessionId, { sessionSpeakers: sessionSpeakers }, function (error, response) {
+                }), Object(__WEBPACK_IMPORTED_MODULE_6__api__["p" /* updateSessionSpeakers */])(sessionId, { sessionSpeakers: sessionSpeakers }, function (error, response) {
                     if (error) {
                         // TODO: display error
                         console.log(error);
@@ -41481,7 +41491,7 @@ var Session = function (_Component) {
             value: function value() {
                 _this.setState({ loading: true });
                 var id = _this.props.data.id;
-                Object(__WEBPACK_IMPORTED_MODULE_6__api__["e" /* deleteSession */])(id, function (error, response) {
+                Object(__WEBPACK_IMPORTED_MODULE_6__api__["f" /* deleteSession */])(id, function (error, response) {
                     if (error) {
                         console.log(error);
                         // TODO: display error
@@ -91014,7 +91024,7 @@ var Authenticate = function (_Component) {
 
                 var store = _this.props.store;
                 _this.setState({ disableSubmit: true });
-                Object(__WEBPACK_IMPORTED_MODULE_3__api__["l" /* registerAccount */])({
+                Object(__WEBPACK_IMPORTED_MODULE_3__api__["m" /* registerAccount */])({
                     first_name: store.get('first_name'),
                     last_name: store.get('last_name'),
                     email: store.get('email'),
@@ -102884,7 +102894,7 @@ var Dashboard = function (_Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            Object(__WEBPACK_IMPORTED_MODULE_4__api__["k" /* getUserEvents */])(function (error, response) {
+            Object(__WEBPACK_IMPORTED_MODULE_4__api__["l" /* getUserEvents */])(function (error, response) {
                 _this2.setState({ fetchingEvents: false });
                 if (error) {
                     // TODO: display error
@@ -103088,7 +103098,7 @@ var Dashboard = function (_Component) {
 
                 var selectedEvent = store.get('selectedEvent');
                 var eventEdit = store.get('eventEdit');
-                Object(__WEBPACK_IMPORTED_MODULE_3__api__["m" /* saveEventGeneralInfo */])(selectedEvent.id, eventEdit, function (error, response) {
+                Object(__WEBPACK_IMPORTED_MODULE_3__api__["n" /* saveEventGeneralInfo */])(selectedEvent.id, eventEdit, function (error, response) {
                     if (error) {
                         // TODO: display error
                         console.log(error);
@@ -103108,7 +103118,7 @@ var Dashboard = function (_Component) {
 
                     var store = _this.props.store;
                     var selectedEvent = store.get('selectedEvent');
-                    Object(__WEBPACK_IMPORTED_MODULE_3__api__["h" /* getEventExtraDetails */])(tab, selectedEvent.id, function (error, response) {
+                    Object(__WEBPACK_IMPORTED_MODULE_3__api__["i" /* getEventExtraDetails */])(tab, selectedEvent.id, function (error, response) {
                         if (error) {
                             // TODO: display error
                             console.log(error);
@@ -103152,7 +103162,7 @@ var Dashboard = function (_Component) {
             var _this2 = this;
 
             this.setState({ fetchingEvent: true });
-            Object(__WEBPACK_IMPORTED_MODULE_3__api__["g" /* getEventData */])(this.props.match.params.slug, function (error, response) {
+            Object(__WEBPACK_IMPORTED_MODULE_3__api__["h" /* getEventData */])(this.props.match.params.slug, function (error, response) {
                 if (error) {
                     // TODO: display error
                     console.log(error);
@@ -103211,7 +103221,7 @@ var Dashboard = function (_Component) {
                                             'div',
                                             { className: 'event-edit-tab' },
                                             this.state.fetchingEvent && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'lds-dual-ring' }),
-                                            !this.state.fetchingEvent && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_eventEditTabs_index__["a" /* GeneralTab */], { handleSave: this.handleSaveGeneralInfo, loading: this.state.loading })
+                                            !this.state.fetchingEvent && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_eventEditTabs_index__["a" /* GeneralTab */], { navigateToDashboard: this.navigateToDashboard, handleSave: this.handleSaveGeneralInfo, loading: this.state.loading })
                                         )
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -103377,7 +103387,7 @@ var General = function (_Component) {
                 var eventEdit = _this.props.store.get('eventEdit');
                 _this.props.store.set('eventEdit')(_extends({}, eventEdit, { image: pictureDataURL[0] }));
 
-                Object(__WEBPACK_IMPORTED_MODULE_7__api__["p" /* uploadImage */])(pictureFile[0], eventEdit.id, function (error, response) {
+                Object(__WEBPACK_IMPORTED_MODULE_7__api__["q" /* uploadImage */])(pictureFile[0], eventEdit.id, function (error, response) {
                     if (error) {
                         // TODO: display error
                         console.log(error);
@@ -103387,6 +103397,22 @@ var General = function (_Component) {
                     _this.setState({ loading: false });
                 });
             }, 100)
+        });
+        Object.defineProperty(_this, 'delete', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                _this.setState({ loading: true });
+                var id = _this.props.store.get('eventEdit').id;
+                Object(__WEBPACK_IMPORTED_MODULE_7__api__["e" /* deleteEvent */])(id, function (error, response) {
+                    if (error) {
+                        console.log(error);
+                        // TODO: display error
+                    } else {
+                        _this.props.navigateToDashboard();
+                    }
+                });
+            }
         });
 
 
@@ -103428,10 +103454,10 @@ var General = function (_Component) {
                             imgExtension: ['.jpg', '.jpeg', '.png'],
                             maxFileSize: 5242880
                         }),
-                        !!eventEdit.image && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        (!!eventEdit.image || !!eventEdit.imageUrl) && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'image-display' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: eventEdit.image, height: '130', width: '130' })
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: eventEdit.image || eventEdit.imageUrl, height: '130', width: '130' })
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -103492,6 +103518,17 @@ var General = function (_Component) {
                             disabled: loading,
                             placeholder: 'Location (address)'
                         })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'event-edit-removebutton-bottom' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                            { onClick: this.delete, bsStyle: 'danger', disabled: loading },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'trash' }),
+                            ' ',
+                            'Delete'
+                        )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
@@ -112826,7 +112863,7 @@ var Speaker = function (_Component) {
             writable: true,
             value: function value() {
                 _this.setState({ loading: true });
-                Object(__WEBPACK_IMPORTED_MODULE_2__api__["j" /* getSpeakerInfo */])(_this.props.data.id, function (error, response) {
+                Object(__WEBPACK_IMPORTED_MODULE_2__api__["k" /* getSpeakerInfo */])(_this.props.data.id, function (error, response) {
                     if (error) {
                         // TODO: display error
                         console.log(error);
@@ -112842,7 +112879,7 @@ var Speaker = function (_Component) {
             value: function value() {
                 _this.setState({ loading: true });
                 var id = _this.props.data.id;
-                Object(__WEBPACK_IMPORTED_MODULE_2__api__["f" /* deleteSpeaker */])(id, function (error, response) {
+                Object(__WEBPACK_IMPORTED_MODULE_2__api__["g" /* deleteSpeaker */])(id, function (error, response) {
                     if (error) {
                         console.log(error);
                         // TODO: display error

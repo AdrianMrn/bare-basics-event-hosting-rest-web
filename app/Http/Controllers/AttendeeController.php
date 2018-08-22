@@ -23,10 +23,12 @@ class AttendeeController extends Controller
 
         foreach ($attModels as $attMod) {
             $event = Event::find($attMod->event_id);
-            if ($event->date_end > date("Y-m-d H:i:s")) {
-                array_push($upcomingEvents, $event);
-            } else {
-                array_push($pastEvents, $event);
+            if ($event) {
+                if ($event->date_end > date("Y-m-d H:i:s")) {
+                    array_push($upcomingEvents, $event);
+                } else {
+                    array_push($pastEvents, $event);
+                }
             }
         }
 
@@ -55,7 +57,6 @@ class AttendeeController extends Controller
             $user = User::findOrFail($attendee->user_id);
             $attendee->speakerName = $user->first_name . ' ' . $user->last_name;
             $attendee->email = $user->email;
-            // TODO: add media
         }
         return $attendees;
     }

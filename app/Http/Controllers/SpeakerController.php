@@ -94,7 +94,6 @@ class SpeakerController extends Controller
             $user = User::findOrFail($speaker->user_id);
             $speaker->speakerName = $user->first_name . ' ' . $user->last_name;
             $speaker->email = $user->email;
-            // TODO: add media
         }
         return $speakers;
     }

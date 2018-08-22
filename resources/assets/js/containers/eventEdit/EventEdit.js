@@ -103,7 +103,7 @@ class Dashboard extends Component {
                                         <div className='event-edit-tab'>
                                             {this.state.fetchingEvent && <div className="lds-dual-ring"></div>}
                                             {!this.state.fetchingEvent &&
-                                                <GeneralTab handleSave={this.handleSaveGeneralInfo} loading={this.state.loading} />
+                                                <GeneralTab navigateToDashboard={this.navigateToDashboard} handleSave={this.handleSaveGeneralInfo} loading={this.state.loading} />
                                             }
                                         </div>
                                     </Tab>

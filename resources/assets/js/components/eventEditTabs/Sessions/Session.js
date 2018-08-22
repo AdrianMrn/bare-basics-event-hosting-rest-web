@@ -279,8 +279,8 @@ class Session extends Component {
                                         <Glyphicon glyph="trash" />
                                         {' '}Delete
                                     </Button>
-
                                 </div>
+                                
                                 <div className="event-component-buttons">
                                     <Button onClick={this.cancelEdit} bsStyle="warning" disabled={loading}>
                                         <Glyphicon glyph="remove" />

@@ -161,6 +161,17 @@ export function deleteSession(id, next) {
         });
 }
 
+export function deleteEvent(id, next) {
+    setAccessToken();
+    axios.delete(`${apiUrl}/events/${id}`)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
 export function updateSession(id, postData, next) {
     setAccessToken();
     axios.put(`${apiUrl}/sessions/${id}`, postData)

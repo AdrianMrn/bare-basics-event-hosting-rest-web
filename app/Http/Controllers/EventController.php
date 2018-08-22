@@ -23,16 +23,15 @@ class EventController extends Controller
 
     public function show($id, Request $request){
         $event = Event::where('slug', $id)->firstOrFail();
+        $event->imageUrl = $event->getFirstMediaUrl();
 
-        if ($event->owner_id === $request->user()->id) {
-            return JsonResponse::create(['error' => false, 'eventData' => $event]);
-        } else {
-            abort(401);
-        }
+        return JsonResponse::create(['error' => false, 'eventData' => $event]);
     }
 
     public function update($id, Request $request){
         $event = Event::findOrFail($id);
+        
+        /* TODO: maybe some validation like no 1000 character event names etc, same for profile, sessions and sponsors */
 
         if ($event->owner_id === $request->user()->id) {
             $event->name = $request->name;
@@ -48,13 +47,20 @@ class EventController extends Controller
             
             $event->save();
             return JsonResponse::create(['error' => false, 'eventData' => $event]);
-        } else {
-            abort(401);
         }
+
+        abort(401);
     }
 
-    public function delete(Request $request){
-        // TODO: create this (in front end as well)
+    public function destroy($id, Request $request){
+        $event = Event::findOrFail($id);
+
+        if ($event->owner_id === $request->user()->id) {
+            $event->delete();
+            return JsonResponse::create(['error' => false]);
+        }
+
+        abort(401);
     }
 
     public function getUserEvents(Request $request){
@@ -65,8 +71,14 @@ class EventController extends Controller
     public function linkImage($id, Request $request){
         $event = Event::findOrFail($id);
 
-        $event->clearMediaCollection();
-        $event->addMediaFromRequest('image')->toMediaCollection();
+        if ($event->owner_id === $request->user()->id) {
+            $event->clearMediaCollection();
+            $event->addMediaFromRequest('image')->toMediaCollection();
+
+            return JsonResponse::create(['error' => false]);
+        }
+
+        abort(401);
     }
   
 }

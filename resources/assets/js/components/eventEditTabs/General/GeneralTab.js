@@ -7,7 +7,7 @@ import { debounce } from "debounce";
 
 import Store from '../../../Store';
 
-import { uploadImage } from '../../../api';
+import { uploadImage, deleteEvent } from '../../../api';
 
 class General extends Component {
     constructor() {
@@ -68,6 +68,19 @@ class General extends Component {
         });
     }, 100);
 
+    delete = () => {
+        this.setState({ loading: true });
+        const id = this.props.store.get('eventEdit').id;
+        deleteEvent(id, (error, response) => {
+            if (error) {
+                console.log(error);
+                // TODO: display error
+            } else {
+                this.props.navigateToDashboard();
+            }
+        });
+    }
+
     render() {
         let store = this.props.store;
         let eventEdit = store.get('eventEdit');
@@ -83,9 +96,9 @@ class General extends Component {
                             imgExtension={['.jpg', '.jpeg', '.png']}
                             maxFileSize={5242880}
                         />
-                        {!!eventEdit.image &&
+                        {(!!eventEdit.image || !!eventEdit.imageUrl) &&
                             <div className='image-display'>
-                                <img src={eventEdit.image} height="130" width="130" />
+                                <img src={eventEdit.image || eventEdit.imageUrl} height="130" width="130" />
                             </div>
                         }
                     </FormGroup>
@@ -129,13 +142,6 @@ class General extends Component {
                         </DateRangePicker>
                     </FormGroup>
 
-                    {/* TODO: make this disable the address field && stop the address from being sent in the POST request */}
-                    {/* <FormGroup controlId="is_online" bsSize="sm"> 
-                        <Checkbox>
-                            This is an online event (no location)
-                        </Checkbox>
-                    </FormGroup> */}
-
                     <FormGroup controlId="name" bsSize="sm">
                         <FormControl
                             type="text"
@@ -146,6 +152,13 @@ class General extends Component {
                         />
                     </FormGroup>
 
+                    <div className="event-edit-removebutton-bottom">
+                        {/* TODO: When pressed, ask for confirmation */}
+                        <Button onClick={this.delete} bsStyle="danger" disabled={loading}>
+                            <Glyphicon glyph="trash" />
+                            {' '}Delete
+                        </Button>
+                    </div>
 
                     <div className="event-edit-savebutton-bottom">
                         <Button bsStyle="primary" disabled={!this.validateForm() || loading} type="submit">
@@ -153,7 +166,8 @@ class General extends Component {
                             {' '}Save
                         </Button>
                     </div>
-                    {/* TODO: buttons for Publish/Unpublish and Delete */}
+
+                    {/* TODO: buttons for Publish/Unpublish */}
                     {/* To Publish, the event should have: an image, a title, a start & end date */}
                 </form>
             </div>

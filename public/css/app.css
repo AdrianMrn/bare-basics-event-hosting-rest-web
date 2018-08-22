@@ -474,15 +474,15 @@
   padding-bottom: 50px;
 }
 
-.event-edit-savebutton-top {
-  position: absolute;
-  right: 35px;
-  top: 15px;
-}
-
 .event-edit-savebutton-bottom {
   position: absolute;
   right: 35px;
+  bottom: 20px;
+}
+
+.event-edit-removebutton-bottom {
+  position: absolute;
+  left: 35px;
   bottom: 20px;
 }
 
