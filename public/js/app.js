@@ -6320,6 +6320,12 @@ module.exports = {
   password: '',
   myEvents: [],
 
+  errorModal: {
+    showErrorModal: false,
+    isDeletePrompt: false,
+    isAuthError: false
+  },
+
   user: {
     email: '',
     first_name: '',
@@ -6658,7 +6664,7 @@ var isArray = Array.isArray || (function (x) { return x && typeof x.length === '
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Accordion__ = __webpack_require__(481);
 /* unused harmony reexport Accordion */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Alert__ = __webpack_require__(520);
-/* unused harmony reexport Alert */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__Alert__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Badge__ = __webpack_require__(523);
 /* unused harmony reexport Badge */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Breadcrumb__ = __webpack_require__(524);
@@ -6666,7 +6672,7 @@ var isArray = Array.isArray || (function (x) { return x && typeof x.length === '
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__BreadcrumbItem__ = __webpack_require__(184);
 /* unused harmony reexport BreadcrumbItem */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Button__ = __webpack_require__(65);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_5__Button__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_5__Button__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ButtonGroup__ = __webpack_require__(120);
 /* unused harmony reexport ButtonGroup */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ButtonToolbar__ = __webpack_require__(527);
@@ -6696,11 +6702,11 @@ var isArray = Array.isArray || (function (x) { return x && typeof x.length === '
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Form__ = __webpack_require__(553);
 /* unused harmony reexport Form */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__FormControl__ = __webpack_require__(554);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_20__FormControl__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_20__FormControl__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__FormGroup__ = __webpack_require__(557);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_21__FormGroup__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_21__FormGroup__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__Glyphicon__ = __webpack_require__(122);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_22__Glyphicon__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_22__Glyphicon__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__Grid__ = __webpack_require__(194);
 /* unused harmony reexport Grid */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__HelpBlock__ = __webpack_require__(558);
@@ -6720,9 +6726,9 @@ var isArray = Array.isArray || (function (x) { return x && typeof x.length === '
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__Media__ = __webpack_require__(82);
 /* unused harmony reexport Media */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__MenuItem__ = __webpack_require__(572);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_32__MenuItem__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_32__MenuItem__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__Modal__ = __webpack_require__(573);
-/* unused harmony reexport Modal */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_33__Modal__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__ModalBody__ = __webpack_require__(202);
 /* unused harmony reexport ModalBody */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__ModalFooter__ = __webpack_require__(203);
@@ -6732,21 +6738,21 @@ var isArray = Array.isArray || (function (x) { return x && typeof x.length === '
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__ModalTitle__ = __webpack_require__(205);
 /* unused harmony reexport ModalTitle */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__Nav__ = __webpack_require__(206);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_38__Nav__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_38__Nav__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__Navbar__ = __webpack_require__(587);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_39__Navbar__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_39__Navbar__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__NavbarBrand__ = __webpack_require__(207);
 /* unused harmony reexport NavbarBrand */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__NavDropdown__ = __webpack_require__(591);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_41__NavDropdown__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_41__NavDropdown__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__NavItem__ = __webpack_require__(208);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_42__NavItem__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_42__NavItem__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__Overlay__ = __webpack_require__(209);
 /* unused harmony reexport Overlay */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__OverlayTrigger__ = __webpack_require__(598);
 /* unused harmony reexport OverlayTrigger */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__PageHeader__ = __webpack_require__(599);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_45__PageHeader__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return __WEBPACK_IMPORTED_MODULE_45__PageHeader__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__PageItem__ = __webpack_require__(600);
 /* unused harmony reexport PageItem */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__Pager__ = __webpack_require__(602);
@@ -6754,7 +6760,7 @@ var isArray = Array.isArray || (function (x) { return x && typeof x.length === '
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__Pagination__ = __webpack_require__(603);
 /* unused harmony reexport Pagination */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__Panel__ = __webpack_require__(605);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_49__Panel__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return __WEBPACK_IMPORTED_MODULE_49__Panel__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__PanelGroup__ = __webpack_require__(180);
 /* unused harmony reexport PanelGroup */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__Popover__ = __webpack_require__(611);
@@ -6772,7 +6778,7 @@ var isArray = Array.isArray || (function (x) { return x && typeof x.length === '
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_57__SplitButton__ = __webpack_require__(616);
 /* unused harmony reexport SplitButton */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__Tab__ = __webpack_require__(618);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return __WEBPACK_IMPORTED_MODULE_58__Tab__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return __WEBPACK_IMPORTED_MODULE_58__Tab__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__TabContainer__ = __webpack_require__(128);
 /* unused harmony reexport TabContainer */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__TabContent__ = __webpack_require__(129);
@@ -6782,7 +6788,7 @@ var isArray = Array.isArray || (function (x) { return x && typeof x.length === '
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__TabPane__ = __webpack_require__(215);
 /* unused harmony reexport TabPane */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_63__Tabs__ = __webpack_require__(620);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return __WEBPACK_IMPORTED_MODULE_63__Tabs__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return __WEBPACK_IMPORTED_MODULE_63__Tabs__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_64__Thumbnail__ = __webpack_require__(621);
 /* unused harmony reexport Thumbnail */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_65__ToggleButton__ = __webpack_require__(216);
@@ -41525,10 +41531,10 @@ var Session = function (_Component) {
             var selectedEvent = this.props.store.get('selectedEvent');
             var loading = this.state.loading;
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["k" /* Panel */],
+                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["m" /* Panel */],
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["k" /* Panel */].Body,
+                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["m" /* Panel */].Body,
                     null,
                     !this.state.editing && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
@@ -41539,18 +41545,18 @@ var Session = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'span',
                                 null,
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'calendar' }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'calendar' }),
                                 " ",
                                 __WEBPACK_IMPORTED_MODULE_2_moment___default()(data.date_start).format('dddd, MMMM Do')
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'span',
                                 { className: 'margin-left' },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'time' }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'time' }),
                                 " ",
                                 __WEBPACK_IMPORTED_MODULE_2_moment___default()(data.date_start).format('HH:mm'),
                                 " ",
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'arrow-right' }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'arrow-right' }),
                                 " ",
                                 __WEBPACK_IMPORTED_MODULE_2_moment___default()(data.date_end).format('HH:mm')
                             )
@@ -41571,7 +41577,7 @@ var Session = function (_Component) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'p',
                                     { key: index },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'user' }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'user' }),
                                     " ",
                                     speaker.label
                                 );
@@ -41586,9 +41592,9 @@ var Session = function (_Component) {
                             'div',
                             { className: 'event-component-buttons' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                                 { onClick: this.editSession, bsStyle: 'default', disabled: loading || this.props.disableEdit },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'pencil' }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'pencil' }),
                                 ' ',
                                 'Edit'
                             )
@@ -41604,7 +41610,7 @@ var Session = function (_Component) {
                                 'div',
                                 { className: 'session-date' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                                     { controlId: 'dates', bsSize: 'sm' },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         __WEBPACK_IMPORTED_MODULE_3_react_bootstrap_daterangepicker___default.a,
@@ -41618,7 +41624,7 @@ var Session = function (_Component) {
                                             opens: 'left',
                                             onApply: this.onDateChange, onHide: this.onDateChange, onHideCalendar: this.onDateChange
                                         },
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                                             type: 'text',
                                             value: sessionEdit.date_start ? sessionEdit.date_start + ' - ' + sessionEdit.date_end : 'Click here to set the start and end times',
                                             disabled: loading,
@@ -41632,9 +41638,9 @@ var Session = function (_Component) {
                                 'div',
                                 { className: 'session-name' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                                     { controlId: 'name', bsSize: 'lg' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                                         autoFocus: true,
                                         type: 'text',
                                         value: sessionEdit.name || '',
@@ -41665,9 +41671,9 @@ var Session = function (_Component) {
                                 'div',
                                 { className: 'session-description' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                                     { controlId: 'description', bsSize: 'sm' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                                         componentClass: 'textarea',
                                         value: sessionEdit.description || '',
                                         onChange: function onChange(e) {
@@ -41682,9 +41688,9 @@ var Session = function (_Component) {
                                 'div',
                                 { className: 'event-component-buttons-remove' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                                     { onClick: this.delete, bsStyle: 'danger', disabled: loading },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'trash' }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'trash' }),
                                     ' ',
                                     'Delete'
                                 )
@@ -41693,17 +41699,17 @@ var Session = function (_Component) {
                                 'div',
                                 { className: 'event-component-buttons' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                                     { onClick: this.cancelEdit, bsStyle: 'warning', disabled: loading },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'remove' }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'remove' }),
                                     ' ',
                                     'Cancel'
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                                     { className: 'margin-left', bsStyle: 'primary', disabled: loading, type: 'submit' },
-                                    loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'refresh' }),
-                                    !loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'save' }),
+                                    loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'refresh' }),
+                                    !loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'save' }),
                                     ' ',
                                     'Save'
                                 )
@@ -65216,6 +65222,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__containers_Dashboard__ = __webpack_require__(627);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__containers_eventEdit_EventEdit__ = __webpack_require__(629);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_TopNav__ = __webpack_require__(669);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_ErrorModal__ = __webpack_require__(677);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -65227,6 +65234,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -65289,6 +65297,7 @@ var Root = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_4__Store__["a" /* default */].Container,
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_TopNav__["a" /* default */], null),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_ErrorModal__["a" /* default */], null),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'container' },
@@ -91004,6 +91013,10 @@ var Authenticate = function (_Component) {
                 if (error) {
                     console.log(error);
                     // TODO: display error message to user
+                    _this.props.store.set('errorModal')({
+                        showErrorModal: true,
+                        isAuthError: true
+                    });
                 } else {
                     // Seting the user info in the store
                     var store = _this.props.store;
@@ -91144,9 +91157,9 @@ var Login = function (_Component) {
                     'form',
                     { onSubmit: this.props.handleSubmitLogin },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                         { controlId: 'email', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                             autoFocus: true,
                             type: 'email',
                             value: store.get('email'),
@@ -91158,9 +91171,9 @@ var Login = function (_Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                         { controlId: 'password', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                             value: store.get('password'),
                             onChange: function onChange(e) {
                                 return store.set('password')(e.target.value);
@@ -91171,7 +91184,7 @@ var Login = function (_Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                         {
                             block: true,
                             bsSize: 'large',
@@ -92445,7 +92458,7 @@ var Alert = function (_React$Component) {
 Alert.propTypes = propTypes;
 Alert.defaultProps = defaultProps;
 
-/* unused harmony default export */ var _unused_webpack_default_export = (Object(__WEBPACK_IMPORTED_MODULE_9__utils_bootstrapUtils__["c" /* bsStyles */])(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_values___default()(__WEBPACK_IMPORTED_MODULE_10__utils_StyleConfig__["d" /* State */]), __WEBPACK_IMPORTED_MODULE_10__utils_StyleConfig__["d" /* State */].INFO, Object(__WEBPACK_IMPORTED_MODULE_9__utils_bootstrapUtils__["a" /* bsClass */])('alert', Alert)));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_9__utils_bootstrapUtils__["c" /* bsStyles */])(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_values___default()(__WEBPACK_IMPORTED_MODULE_10__utils_StyleConfig__["d" /* State */]), __WEBPACK_IMPORTED_MODULE_10__utils_StyleConfig__["d" /* State */].INFO, Object(__WEBPACK_IMPORTED_MODULE_9__utils_bootstrapUtils__["a" /* bsClass */])('alert', Alert)));
 
 /***/ }),
 /* 521 */
@@ -96793,7 +96806,7 @@ Modal.Dialog = __WEBPACK_IMPORTED_MODULE_18__ModalDialog__["a" /* default */];
 Modal.TRANSITION_DURATION = 300;
 Modal.BACKDROP_TRANSITION_DURATION = 150;
 
-/* unused harmony default export */ var _unused_webpack_default_export = (Object(__WEBPACK_IMPORTED_MODULE_22__utils_bootstrapUtils__["a" /* bsClass */])('modal', Object(__WEBPACK_IMPORTED_MODULE_22__utils_bootstrapUtils__["b" /* bsSizes */])([__WEBPACK_IMPORTED_MODULE_25__utils_StyleConfig__["c" /* Size */].LARGE, __WEBPACK_IMPORTED_MODULE_25__utils_StyleConfig__["c" /* Size */].SMALL], Modal)));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_22__utils_bootstrapUtils__["a" /* bsClass */])('modal', Object(__WEBPACK_IMPORTED_MODULE_22__utils_bootstrapUtils__["b" /* bsSizes */])([__WEBPACK_IMPORTED_MODULE_25__utils_StyleConfig__["c" /* Size */].LARGE, __WEBPACK_IMPORTED_MODULE_25__utils_StyleConfig__["c" /* Size */].SMALL], Modal)));
 
 /***/ }),
 /* 574 */
@@ -102748,9 +102761,9 @@ var Register = function (_Component) {
                     'form',
                     { onSubmit: this.props.handleSubmitRegister },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                         { controlId: 'first_name', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                             autoFocus: true,
                             type: 'text',
                             value: store.get('first_name'),
@@ -102762,9 +102775,9 @@ var Register = function (_Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                         { controlId: 'last_name', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                             type: 'text',
                             value: store.get('last_name'),
                             onChange: function onChange(e) {
@@ -102775,9 +102788,9 @@ var Register = function (_Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                         { controlId: 'email', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                             type: 'email',
                             value: store.get('email'),
                             onChange: function onChange(e) {
@@ -102788,9 +102801,9 @@ var Register = function (_Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                         { controlId: 'password', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                             value: store.get('password'),
                             onChange: function onChange(e) {
                                 return store.set('password')(e.target.value);
@@ -102801,7 +102814,7 @@ var Register = function (_Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                         {
                             block: true,
                             bsSize: 'large',
@@ -102920,7 +102933,7 @@ var Dashboard = function (_Component) {
                         'div',
                         { className: 'col-md-10 col-md-offset-1' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["j" /* PageHeader */],
+                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["l" /* PageHeader */],
                             null,
                             'Your Dashboard ',
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('small', null)
@@ -102929,13 +102942,13 @@ var Dashboard = function (_Component) {
                             'div',
                             { className: 'y-padding' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                                 { bsStyle: 'info', onClick: this.createEvent, disabled: this.state.disableCreateEventButton },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'span',
                                     null,
-                                    this.props.disableCreateEventButton && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'refresh' }),
-                                    !this.props.disableCreateEventButton && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'plus' }),
+                                    this.props.disableCreateEventButton && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'refresh' }),
+                                    !this.props.disableCreateEventButton && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'plus' }),
                                     " ",
                                     'Create an event'
                                 )
@@ -102999,17 +103012,17 @@ var Event = function (_Component) {
                 'div',
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["k" /* Panel */],
+                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["m" /* Panel */],
                     null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["k" /* Panel */].Heading,
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["m" /* Panel */].Heading,
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["k" /* Panel */].Title,
+                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["m" /* Panel */].Title,
                             { componentClass: 'h3' },
                             data.name,
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                                 { className: 'pull-right', bsStyle: 'default', onClick: function onClick() {
                                         return _this2.props.navigateToEventEdit(data.slug);
                                     } },
@@ -103034,7 +103047,7 @@ var Event = function (_Component) {
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["k" /* Panel */].Body,
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["m" /* Panel */].Body,
                         null,
                         data.description
                     )
@@ -103189,7 +103202,7 @@ var Dashboard = function (_Component) {
                         'div',
                         { className: 'col-md-10 col-md-offset-1' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["j" /* PageHeader */],
+                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["l" /* PageHeader */],
                             null,
                             event.name,
                             ' ',
@@ -103202,9 +103215,9 @@ var Dashboard = function (_Component) {
                                 'div',
                                 { className: 'y-padding' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                                     { onClick: this.navigateToDashboard },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'menu-left' }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'menu-left' }),
                                     ' to Dashboard'
                                 )
                             ),
@@ -103212,10 +103225,10 @@ var Dashboard = function (_Component) {
                                 'div',
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["m" /* Tabs */],
+                                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["o" /* Tabs */],
                                     { activeKey: this.state.key, onSelect: this.handleChangeTabs, id: 'controlled-tabs' },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["l" /* Tab */],
+                                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["n" /* Tab */],
                                         { eventKey: 'general', title: 'General info', disabled: this.state.fetchingEvent },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'div',
@@ -103225,7 +103238,7 @@ var Dashboard = function (_Component) {
                                         )
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["l" /* Tab */],
+                                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["n" /* Tab */],
                                         { eventKey: 'sessions', title: 'Sessions', disabled: this.state.fetchingEvent },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'div',
@@ -103236,7 +103249,7 @@ var Dashboard = function (_Component) {
                                         )
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["l" /* Tab */],
+                                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["n" /* Tab */],
                                         { eventKey: 'speakers', title: 'Speakers', disabled: this.state.fetchingEvent },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'div',
@@ -103247,7 +103260,7 @@ var Dashboard = function (_Component) {
                                         )
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["l" /* Tab */],
+                                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["n" /* Tab */],
                                         { eventKey: 'sponsors', title: 'Sponsors', disabled: this.state.fetchingEvent },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'div',
@@ -103445,7 +103458,7 @@ var General = function (_Component) {
                     'form',
                     { onSubmit: this.props.handleSave },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_images_upload___default.a, {
                             buttonText: 'Event logo',
@@ -103461,9 +103474,9 @@ var General = function (_Component) {
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                         { controlId: 'name', bsSize: 'lg' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                             autoFocus: true,
                             type: 'text',
                             value: eventEdit.name || '',
@@ -103475,9 +103488,9 @@ var General = function (_Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                         { controlId: 'description', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                             componentClass: 'textarea',
                             value: eventEdit.description || '',
                             onChange: function onChange(e) {
@@ -103488,7 +103501,7 @@ var General = function (_Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                         { controlId: 'dates', bsSize: 'sm' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_2_react_bootstrap_daterangepicker___default.a,
@@ -103499,7 +103512,7 @@ var General = function (_Component) {
                                 timePicker24Hour: true,
                                 onApply: this.onDateChange, onHide: this.onDateChange, onHideCalendar: this.onDateChange
                             },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                                 type: 'text',
                                 value: eventEdit.date_start ? eventEdit.date_start + ' - ' + eventEdit.date_end : 'Click here to set the start and end dates',
                                 disabled: loading,
@@ -103509,9 +103522,9 @@ var General = function (_Component) {
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                         { controlId: 'name', bsSize: 'sm' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                             type: 'text',
                             value: this.state.addressInput,
                             onChange: this.addressLookup,
@@ -103523,9 +103536,9 @@ var General = function (_Component) {
                         'div',
                         { className: 'event-edit-removebutton-bottom' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                             { onClick: this.delete, bsStyle: 'danger', disabled: loading },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'trash' }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'trash' }),
                             ' ',
                             'Delete'
                         )
@@ -103534,9 +103547,9 @@ var General = function (_Component) {
                         'div',
                         { className: 'event-edit-savebutton-bottom' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                             { bsStyle: 'primary', disabled: !this.validateForm() || loading, type: 'submit' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'save' }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'save' }),
                             ' ',
                             'Save'
                         )
@@ -105444,13 +105457,13 @@ var Sessions = function (_Component) {
                     'div',
                     { className: 'y-padding' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                         { bsStyle: 'info', onClick: this.createSession, disabled: this.props.loading || this.state.loading || this.state.editingSession },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'span',
                             null,
-                            this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'refresh' }),
-                            !this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'plus' }),
+                            this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'refresh' }),
+                            !this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'plus' }),
                             " ",
                             'Create a Session'
                         )
@@ -112776,9 +112789,9 @@ var Speakers = function (_Component) {
                         'form',
                         { onSubmit: this.props.handleSubmitRegister },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormGroup */],
+                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormGroup */],
                             { controlId: 'email', bsSize: 'sm' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* FormControl */], {
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* FormControl */], {
                                 type: 'email',
                                 value: this.state.email,
                                 onChange: function onChange(e) {
@@ -112789,13 +112802,13 @@ var Speakers = function (_Component) {
                             })
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                             { type: 'submit', bsStyle: 'info', onClick: this.createSpeaker, disabled: loading || !this.state.email.length || !this.validateForm() },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'span',
                                 null,
-                                this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'refresh' }),
-                                !this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'plus' }),
+                                this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'refresh' }),
+                                !this.props.loading && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'plus' }),
                                 " ",
                                 'Create a Speaker'
                             )
@@ -112917,10 +112930,10 @@ var Speaker = function (_Component) {
             var loading = this.state.loading;
             var speaker = this.state.speakerDetails;
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["k" /* Panel */],
+                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["m" /* Panel */],
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["k" /* Panel */].Body,
+                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["m" /* Panel */].Body,
                     null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
@@ -112938,9 +112951,9 @@ var Speaker = function (_Component) {
                             'div',
                             { className: 'event-component-buttons-remove' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Button */],
+                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
                                 { onClick: this.delete, bsStyle: 'danger', disabled: loading },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* Glyphicon */], { glyph: 'trash' }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* Glyphicon */], { glyph: 'trash' }),
                                 ' ',
                                 'Delete'
                             )
@@ -113624,13 +113637,13 @@ var TopNav = function (_Component) {
 
             var firstName = this.props.store.get('user').first_name;
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["i" /* Navbar */],
+                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["k" /* Navbar */],
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["i" /* Navbar */].Header,
+                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["k" /* Navbar */].Header,
                     null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["i" /* Navbar */].Brand,
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["k" /* Navbar */].Brand,
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* NavLink */],
@@ -113641,10 +113654,10 @@ var TopNav = function (_Component) {
                     )
                 ),
                 !firstName && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Nav */],
+                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["h" /* Nav */],
                     { pullRight: true },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["h" /* NavItem */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["j" /* NavItem */],
                         { href: '#', onClick: function onClick() {
                                 return _this2.props.history.push('/login');
                             } },
@@ -113652,28 +113665,28 @@ var TopNav = function (_Component) {
                     )
                 ),
                 !!firstName && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Nav */],
+                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["h" /* Nav */],
                     { pullRight: true },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["h" /* NavItem */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["j" /* NavItem */],
                         { href: '#', onClick: function onClick() {
                                 return _this2.props.history.push('/dashboard');
                             } },
                         'My Dashboard'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* NavDropdown */],
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["i" /* NavDropdown */],
                         { title: firstName, id: 'basic-nav-dropdown' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* MenuItem */],
+                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* MenuItem */],
                             { onClick: function onClick() {
                                     return _this2.props.history.push('/profile');
                                 } },
                             'My Profile'
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* MenuItem */], { divider: true }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* MenuItem */], { divider: true }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* MenuItem */],
+                            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* MenuItem */],
                             { onClick: function onClick() {
                                     return _this2.props.history.push('/logout');
                                 } },
@@ -115734,6 +115747,139 @@ debounce.debounce = debounce;
 
 module.exports = debounce;
 
+
+/***/ }),
+/* 677 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Store__ = __webpack_require__(21);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+var ErrorModal = function (_Component) {
+    _inherits(ErrorModal, _Component);
+
+    function ErrorModal() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, ErrorModal);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ErrorModal.__proto__ || Object.getPrototypeOf(ErrorModal)).call.apply(_ref, [this].concat(args))), _this), Object.defineProperty(_this, 'handleClose', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+                _this.props.store.set('errorModal')(__WEBPACK_IMPORTED_MODULE_2__Store__["a" /* default */].errorModal);
+            }
+        }), _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(ErrorModal, [{
+        key: 'render',
+        value: function render() {
+            var errorModal = this.props.store.get('errorModal');
+            var showErrorModal = errorModal.showErrorModal,
+                isDeletePrompt = errorModal.isDeletePrompt,
+                isAuthError = errorModal.isAuthError;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */],
+                { show: showErrorModal, onHide: this.handleClose },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Body,
+                    null,
+                    isDeletePrompt && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Alert */],
+                        { bsStyle: 'danger', onDismiss: this.handleDismiss },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Are you sure want to delete this?'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'p',
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */] /* TODO: onClick... */,
+                                { bsStyle: 'danger' },
+                                'Yes'
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'span',
+                                null,
+                                ' or '
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
+                                { onClick: this.handleDismiss },
+                                'Hide Alert'
+                            )
+                        )
+                    ),
+                    !isDeletePrompt && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Alert */],
+                        { bsStyle: 'danger', onDismiss: this.handleDismiss },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Oops! We ran into an error we couldn\'t deal with, sorry!'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'p',
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
+                                { onClick: this.handleClose },
+                                'Close'
+                            )
+                        )
+                    ),
+                    !isDeletePrompt && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Alert */],
+                        { bsStyle: 'danger', onDismiss: this.handleDismiss },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Oops! We ran into an error we couldn\'t deal with, sorry!'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'p',
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
+                                { onClick: this.handleClose },
+                                'Close'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return ErrorModal;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_2__Store__["a" /* default */].withStore(ErrorModal));
 
 /***/ })
 /******/ ]);

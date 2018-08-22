@@ -7,6 +7,12 @@ export default createConnectedStore({
   password: '',
   myEvents: [],
 
+  errorModal: {
+    showErrorModal: false,
+    isDeletePrompt: false,
+    isAuthError: false,
+  },
+
   user: {
     email: '',
     first_name: '',

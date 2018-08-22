@@ -486,6 +486,21 @@
   bottom: 20px;
 }
 
+/* Error Modal */
+
+.modal-body {
+  padding: 0px;
+}
+
+.modal-content {
+  -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+          box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+.alert-danger {
+  margin-bottom: 0;
+}
+
 .date-time-input {
   min-width: 300px;
 }

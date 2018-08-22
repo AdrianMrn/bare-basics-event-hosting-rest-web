@@ -9,8 +9,10 @@ import Authenticate from './containers/Authenticate';
 import Dashboard from './containers/Dashboard';
 import EventEdit from './containers/eventEdit/EventEdit';
 import TopNav from './components/TopNav';
+import ErrorModal from './components/ErrorModal';
 
 export default class Root extends Component {
+
     render() {
         // Private routes can only be accessed when the user has a valid access token
         const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -41,6 +43,7 @@ export default class Root extends Component {
                 <BrowserRouter>
                     <Store.Container>
                         <TopNav />
+                        <ErrorModal />
                         <div className="container">
                             <Switch>
                                 {/* TODO: <Route exact path='/' component={Home} /> */}

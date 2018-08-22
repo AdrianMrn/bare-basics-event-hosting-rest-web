@@ -37,6 +37,10 @@ class Authenticate extends Component {
         if (error) {
             console.log(error);
             // TODO: display error message to user
+            this.props.store.set('errorModal')({
+                showErrorModal: true,
+                isAuthError: true
+            });
         } else {
             // Seting the user info in the store
             const store = this.props.store;
