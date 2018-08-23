@@ -103180,6 +103180,7 @@ var Dashboard = function (_Component) {
                     // TODO: display error
                     console.log(error);
                 } else {
+                    console.log(response.data);
                     _this2.props.store.set('selectedEvent')(response.data.eventData);
                 }
                 _this2.setState({ fetchingEvent: false });

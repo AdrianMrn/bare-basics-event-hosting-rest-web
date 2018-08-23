@@ -24,6 +24,7 @@ class Dashboard extends Component {
                 // TODO: display error
                 console.log(error)
             } else {
+                console.log(response.data);
                 this.props.store.set('selectedEvent')(response.data.eventData);
             }
             this.setState({ fetchingEvent: false });
