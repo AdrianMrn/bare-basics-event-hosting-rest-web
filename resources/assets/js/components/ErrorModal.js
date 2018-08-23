@@ -5,7 +5,11 @@ import Store from '../Store';
 
 class ErrorModal extends Component {
     handleClose = () => {
-        this.props.store.set('errorModal')(Store.errorModal);
+        this.props.store.set('errorModal')({
+            showErrorModal: false,
+            isDeletePrompt: false,
+            isAuthError: false,
+        });
     }
 
     render() {
@@ -24,15 +28,15 @@ class ErrorModal extends Component {
                             </p>
                         </Alert>
                     }
-                    {!isDeletePrompt &&
+                    {isAuthError &&
                         <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
-                            <h4>Oops! We ran into an error we couldn't deal with, sorry!</h4>
+                            <h4>Those credentials are incorrect.</h4>
                             <p>
                                 <Button onClick={this.handleClose}>Close</Button>
                             </p>
                         </Alert>
                     }
-                    {!isDeletePrompt &&
+                    {(!isDeletePrompt && !isAuthError) &&
                         <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
                             <h4>Oops! We ran into an error we couldn't deal with, sorry!</h4>
                             <p>
