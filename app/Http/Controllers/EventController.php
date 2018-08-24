@@ -23,7 +23,7 @@ class EventController extends Controller
 
     public function show($id, Request $request){
         $event = Event::where('slug', $id)->firstOrFail();
-        $event->imageUrl = $event->getMedia()[0]->getUrl();
+        $event->imageUrl = $event->getFirstMediaUrl();
 
         return JsonResponse::create(['error' => false, 'eventData' => $event]);
     }
