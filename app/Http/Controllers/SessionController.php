@@ -12,9 +12,8 @@ class SessionController extends Controller
 {
 
     public function store(Request $request){
-        return ($request->input('eventId'));
         if ($request->has('eventId')){
-            $event = Event::findOrFail($request->input('eventId'));
+            $event = Event::findOrFail($request->eventId);
             if ($event->owner_id == $request->user()->id) {
                 $session = new Session;
                 $session->event_id = $request->input('eventId');

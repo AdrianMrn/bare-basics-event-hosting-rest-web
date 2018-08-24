@@ -141,7 +141,7 @@ export function getSessionSpeakers(sessionId, next) {
 
 export function createNewSession(eventId, next) {
     setAccessToken();
-    axios.post(`${apiUrl}/sessions?eventId=${eventId}`)
+    axios.post(`${apiUrl}/sessions`, { eventId })
         .then(response => {
             next(false, response);
         })
@@ -232,7 +232,7 @@ export function uploadImage(image, eventId, next) {
 
     // TODO: check if user is event owner
     console.log(image);
-    
+
     const formData = new FormData();
     formData.append("image", image);
 
