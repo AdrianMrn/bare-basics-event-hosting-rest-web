@@ -31,7 +31,6 @@ class Sessions extends Component {
                 const sessions = store.get('selectedEventSessions');
                 sessions.push(response.data);
                 store.set('selectedEventSessions')(sessions);
-                // TODO: start editing session?
             }
             this.setState({ loading: false });
             this.scrollToBottom();

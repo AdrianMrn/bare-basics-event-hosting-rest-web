@@ -18,13 +18,23 @@ class TopNav extends Component {
         }
     }
 
+    profile = () => {
+        this.props.store.set('errorModal')({
+            showErrorModal: true,
+            alertStyle: 'info',
+            errorMessages: ['Download the app to edit your profile!']
+            /* TODO: link to google play store */
+        });
+    }
+
     render() {
         const firstName = this.props.store.get('user').first_name;
         return (
             <Navbar>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <NavLink to="/" exact>BBEvents</NavLink> {/* TODO: insert logo */}
+                        <NavLink to="/" exact>BBEvents</NavLink>
+                        {/* TODO: insert logo */}
                     </Navbar.Brand>
                 </Navbar.Header>
                 {/* <Nav>
@@ -32,12 +42,13 @@ class TopNav extends Component {
                         Explore Events
                     </NavItem>
                 </Nav> */}
+                {/* TODO: "Get the App!" call to action */}
                 {!firstName &&
                     <Nav pullRight>
                         <NavItem href="#" onClick={() => this.props.history.push('/login')}>
                             Log In
                         </NavItem>
-                        {/* TODO: "Host Your Event call-to-action button" (links to /register) */}
+                        {/* TODO: "Host your Event" call-to-action button" (links to /register) */}
                     </Nav>
                 }
                 {!!firstName &&
@@ -47,7 +58,7 @@ class TopNav extends Component {
                         </NavItem>
 
                         <NavDropdown title={firstName} id="basic-nav-dropdown">
-                            <MenuItem onClick={() => this.props.history.push('/profile')}>My Profile</MenuItem>
+                            <MenuItem onClick={this.profile}>My Profile</MenuItem>
                             <MenuItem divider />
                             <MenuItem onClick={() => this.props.history.push('/logout')}>Log Out</MenuItem>
                         </NavDropdown>

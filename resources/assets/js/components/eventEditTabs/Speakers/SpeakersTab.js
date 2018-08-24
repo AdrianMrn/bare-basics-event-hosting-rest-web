@@ -36,7 +36,11 @@ class Speakers extends Component {
             } else {
                 console.log(response);
                 if (response.data.error) {
-                    // TODO: display error (this means the user is already a speaker at this event, just display the error message to the user)
+                    this.props.store.set('errorModal')({
+                        showErrorModal: true,
+                        alertStyle: 'info',
+                        errorMessages: ['This email address is already registered as a speaker!']
+                    });
                 } else {
                     const speakers = store.get('selectedEventSpeakers');
                     speakers.push(response.data.speaker);

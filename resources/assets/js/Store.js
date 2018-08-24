@@ -9,7 +9,8 @@ export default createConnectedStore({
 
   errorModal: {
     showErrorModal: false,
-    errorMessage: [],
+    errorMessages: [],
+    alertStyle: '',
   },
 
   user: {

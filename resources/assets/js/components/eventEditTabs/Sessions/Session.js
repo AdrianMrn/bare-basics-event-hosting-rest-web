@@ -194,7 +194,6 @@ class Session extends Component {
                                     <p key={index}>
                                         <Glyphicon glyph="user" />
                                         {" "}{speaker.label}
-                                        {/* TODO: clicking these should link to speaker tab and start editing that speaker (maybe) */}
                                     </p>
                                 ))}
                             </div>
