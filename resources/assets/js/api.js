@@ -39,9 +39,6 @@ export function authenticateAccount(data, next) {
     })
         .then(response => {
             // Saving the user's data to cookies
-            // TODO: find a way to get the user's details and set them in cookies (in the store as well? or let Root.js handle this?)
-            /* cookie.save('firstName', data.first_name);
-            cookie.save('lastName', data.last_name); */
             cookie.save('email', data.email);
             cookie.save('accessToken', response.data.access_token);
             cookie.save('refreshToken', response.data.refresh_token);
@@ -229,10 +226,6 @@ export function deleteSpeaker(id, next) {
 
 export function uploadImage(image, eventId, next) {
     setAccessToken();
-
-    // TODO: check if user is event owner
-    console.log(image);
-
     const formData = new FormData();
     formData.append("image", image);
 

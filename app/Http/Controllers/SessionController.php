@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Session;
 use App\Event;
+use App\Sessionspeaker;
 
 class SessionController extends Controller 
 {
@@ -51,8 +52,9 @@ class SessionController extends Controller
         $event = Event::findOrFail($session->event_id);
 
         if ($event->owner_id === $request->user()->id) {
+            $sessionSpeakers = Sessionspeaker::where('session_id', $id)->delete();
             $session->delete();
-            // TODO: remove all Sessionspeaker rows that have this session's id
+            
             return JsonResponse::create(['error' => false]);
         } else {
             abort(401);

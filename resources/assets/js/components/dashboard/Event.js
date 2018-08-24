@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Panel, Button } from 'react-bootstrap';
+import moment from 'moment';
 
 export default class Event extends Component {
     render() {
@@ -13,11 +14,15 @@ export default class Event extends Component {
                             <Button className='pull-right' bsStyle='default' onClick={() => this.props.navigateToEventEdit(data.slug)}>Edit</Button>
                         </Panel.Title>
                         {data.date_start && <div>
-                            <span>{data.date_start}</span> - <span>{data.date_end}</span> {/* TODO: display human readable dates */}
+                            <span>{moment(data.date_start).format('Do MMM')}</span> - <span>{moment(data.date_end).format('Do MMM YYYY')}</span>
                         </div>}
                     </Panel.Heading>
                     <Panel.Body>
-                        {/* TODO: insert event logo */}
+                        {(!!data.imageUrl) &&
+                            <div className='image-display-list'>
+                                <img src={data.imageUrl} />
+                            </div>
+                        }
                         {data.description}
                     </Panel.Body>
                 </Panel>

@@ -21,14 +21,22 @@ class Dashboard extends Component {
         this.setState({ fetchingEvent: true });
         getEventData(this.props.match.params.slug, (error, response) => {
             if (error) {
-                // TODO: display error
-                console.log(error)
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                    isAuthError: false
+                });
             } else {
                 console.log(response.data);
                 this.props.store.set('selectedEvent')(response.data.eventData);
             }
             this.setState({ fetchingEvent: false });
         });
+    }
+
+    validateGeneraltabForm = () => {
+        const store = this.props.store;
+        let eventEdit = store.get('eventEdit');
+        return eventEdit.name.length > 0 && eventEdit.date_start && eventEdit.date_start.length > 0 && eventEdit.date_end && eventEdit.date_end.length > 0;
     }
 
     handleSaveGeneralInfo = event => {
@@ -44,8 +52,10 @@ class Dashboard extends Component {
         saveEventGeneralInfo(selectedEvent.id, eventEdit,
             (error, response) => {
                 if (error) {
-                    // TODO: display error
-                    console.log(error);
+                    this.props.store.set('errorModal')({
+                        showErrorModal: true,
+                        isAuthError: false
+                    });
                 } else {
                     store.set('selectedEvent')({ ...selectedEvent, ...eventEdit });
                 }
@@ -61,8 +71,10 @@ class Dashboard extends Component {
             const selectedEvent = store.get('selectedEvent');
             getEventExtraDetails(tab, selectedEvent.id, (error, response) => {
                 if (error) {
-                    // TODO: display error
-                    console.log(error);
+                    this.props.store.set('errorModal')({
+                        showErrorModal: true,
+                        isAuthError: false
+                    });
                 } else {
                     store.set(`selectedEvent${tab.charAt(0).toUpperCase() + tab.slice(1)}`)(response.data);
                 }
@@ -104,24 +116,24 @@ class Dashboard extends Component {
                                         <div className='event-edit-tab'>
                                             {this.state.fetchingEvent && <div className="lds-dual-ring"></div>}
                                             {!this.state.fetchingEvent &&
-                                                <GeneralTab navigateToDashboard={this.navigateToDashboard} handleSave={this.handleSaveGeneralInfo} loading={this.state.loading} />
+                                                <GeneralTab validateForm={this.validateGeneraltabForm} navigateToDashboard={this.navigateToDashboard} handleSave={this.handleSaveGeneralInfo} loading={this.state.loading} />
                                             }
                                         </div>
                                     </Tab>
 
-                                    <Tab eventKey={'sessions'} title="Sessions" disabled={this.state.fetchingEvent}>
+                                    <Tab eventKey={'sessions'} title="Sessions" disabled={this.state.fetchingEvent || !this.validateGeneraltabForm()}>
                                         <div className='event-edit-tab'>
                                             <SessionsTab loading={this.state.loading} forceRefresh={() => this.handleChangeTabs('sessions')} />
                                         </div>
                                     </Tab>
 
-                                    <Tab eventKey={'speakers'} title="Speakers" disabled={this.state.fetchingEvent}>
+                                    <Tab eventKey={'speakers'} title="Speakers" disabled={this.state.fetchingEvent || !this.validateGeneraltabForm()}>
                                         <div className='event-edit-tab'>
                                             <SpeakersTab loading={this.state.loading} forceRefresh={() => this.handleChangeTabs('speakers')} />
                                         </div>
                                     </Tab>
 
-                                    <Tab eventKey={'sponsors'} title="Sponsors" disabled={this.state.fetchingEvent}>
+                                    <Tab eventKey={'sponsors'} title="Sponsors" disabled={this.state.fetchingEvent || !this.validateGeneraltabForm()}>
                                         <div className='event-edit-tab'>
                                             <SponsorsTab loading={this.state.loading} />
                                         </div>

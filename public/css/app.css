@@ -435,6 +435,18 @@
   margin-top: 20px;
 }
 
+.image-display-list {
+  float: left;
+  margin-right: 50px;
+}
+
+.image-display-list img {
+  max-width: 200px;
+  max-height: 130px;
+  width: auto;
+  height: auto;
+}
+
 .image-display {
   display: inline-block;
 }
@@ -484,6 +496,22 @@
   position: absolute;
   left: 35px;
   bottom: 20px;
+}
+
+.auth-link {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.generaltab-save-disclaimer {
+  position: absolute;
+  right: 120px;
+  bottom: 10px;
+  color: red;
+}
+
+.session-date-disclaimer {
+  color: red;
 }
 
 /* Error Modal */

@@ -24,8 +24,10 @@ class Sessions extends Component {
         const selectedEvent = store.get('selectedEvent');
         createNewSession(selectedEvent.id, (error, response) => {
             if (error) {
-                console.log(error);
-                // TODO: display error
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                    isAuthError: false
+                });
             } else {
                 const sessions = store.get('selectedEventSessions');
                 sessions.push(response.data);

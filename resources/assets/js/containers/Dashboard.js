@@ -21,8 +21,10 @@ class Dashboard extends Component {
         getUserEvents((error, response) => {
             this.setState({ fetchingEvents: false });
             if (error) {
-                // TODO: display error
-                console.log(error)
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                    isAuthError: false
+                });
             } else {
                 this.props.store.set('myEvents')(response.data);
             }
@@ -33,8 +35,10 @@ class Dashboard extends Component {
         this.setState({ disableCreateEventButton: true });
         createNewEvent((error, response) => {
             if (error) {
-                // TODO: display error
-                console.log(error)
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                    isAuthError: false
+                });
                 this.setState({ disableCreateEventButton: false });
             } else {
                 this.setState({ disableCreateEventButton: false });
@@ -55,7 +59,7 @@ class Dashboard extends Component {
                 <div className="row">
                     <div className="col-md-10 col-md-offset-1">
                         <PageHeader>
-                            Your Dashboard <small></small>
+                            Dashboard <small>Events</small>
                         </PageHeader>
                         <div className="y-padding">
                             <Button bsStyle="info" onClick={this.createEvent} disabled={this.state.disableCreateEventButton}>
@@ -71,7 +75,6 @@ class Dashboard extends Component {
                             </Button>
                         </div>
                         <div className="y-padding">
-                            {/* TODO: Title with "your events", ... */}
                             {this.state.fetchingEvents && <div className="lds-dual-ring"></div>}
                             {store.state.myEvents && store.state.myEvents.map((data, index) => (
                                 <Event data={data} navigateToEventEdit={this.navigateToEventEdit} key={index} />

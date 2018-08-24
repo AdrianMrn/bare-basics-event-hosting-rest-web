@@ -35,8 +35,10 @@ class Speaker extends Component {
         this.setState({ loading: true });
         getSpeakerInfo(this.props.data.id, (error, response) => {
             if (error) {
-                // TODO: display error
-                console.log(error);
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                    isAuthError: false
+                });
             } else {
                 this.setState({ speakerDetails: response.data, loading: false });
             }
@@ -48,8 +50,10 @@ class Speaker extends Component {
         const id = this.props.data.id
         deleteSpeaker(id, (error, response) => {
             if (error) {
-                console.log(error);
-                // TODO: display error
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                    isAuthError: false
+                });
             } else {
                 this.props.forceRefresh();
                 this.setState({ loading: false });
@@ -64,14 +68,13 @@ class Speaker extends Component {
             <Panel>
                 <Panel.Body>
                     <div>
+                        <p className="session-date-disclaimer">Only the owner of the email address can edit their profile details through the app.</p>
+                        
                         <div className="user-info">
                             {/* TODO: display user info, media (image) description, company, ... from this.state.speakerDetails */}
                             {speaker.first_name} {speaker.last_name} - {speaker.email}
                         </div>
 
-                        {/* TODO: Disclaimer that only the speaker can edit their details through the app/website
-                                      AND if you want to add a new speaker, you should use the email input at the top of the page
-                            */}
                         <div className="event-component-buttons-remove">
                             {/* TODO: When pressed, ask for confirmation */}
                             <Button onClick={this.delete} bsStyle="danger" disabled={loading}>

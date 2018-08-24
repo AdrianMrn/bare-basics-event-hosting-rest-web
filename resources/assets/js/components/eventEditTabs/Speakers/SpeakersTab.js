@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Glyphicon, FormGroup, FormControl } from "react-bootstrap";
+import { Button, Glyphicon, FormGroup, FormControl, Checkbox } from "react-bootstrap";
 
 import Store from '../../../Store';
 
@@ -13,7 +13,8 @@ class Speakers extends Component {
 
         this.state = {
             loading: false,
-            email: ''
+            email: '',
+            gdprBoxChecked: false
         }
     }
 
@@ -29,8 +30,10 @@ class Speakers extends Component {
         const selectedEvent = store.get('selectedEvent');
         createNewSpeaker(selectedEvent.id, { email: this.state.email }, (error, response) => {
             if (error) {
-                console.log(error);
-                // TODO: display error
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                    isAuthError: false
+                });
             } else {
                 console.log(response);
                 if (response.data.error) {
@@ -50,6 +53,10 @@ class Speakers extends Component {
         this.scrollTarget.scrollIntoView({ behavior: 'smooth' });
     }
 
+    toggleGdprBoxChecked = e => {
+        this.setState({ gdprBoxChecked: !this.state.gdprBoxChecked });
+    }
+
     render() {
         const store = this.props.store;
         const loading = this.props.loading || this.state.loading;
@@ -66,8 +73,14 @@ class Speakers extends Component {
                                 placeholder="Speaker's email"
                             />
                         </FormGroup>
-                        {/* TODO: "GDPR disclaimer: The owner of this email address has given me permission to share his email address with BBEvents." */}
-                        <Button type="submit" bsStyle="info" onClick={this.createSpeaker} disabled={loading || !this.state.email.length || !this.validateForm()}>
+
+                        <Checkbox
+                            checked={this.state.gdprBoxChecked}
+                            onChange={this.toggleGdprBoxChecked} >
+                            GDPR disclaimer: The owner of this email address has given you permission to share this email address with BBEvents.
+                        </Checkbox>
+
+                        <Button type="submit" bsStyle="info" onClick={this.createSpeaker} disabled={loading || !this.state.email.length || !this.validateForm() || !this.state.gdprBoxChecked}>
                             <span>
                                 {this.props.loading &&
                                     <Glyphicon glyph="refresh" />
@@ -75,19 +88,21 @@ class Speakers extends Component {
                                 {!this.props.loading &&
                                     <Glyphicon glyph="plus" />
                                 }
-                                {" "}Create a Speaker
+                                {" "}Add Speaker
                             </span>
                         </Button>
                     </form>
                 </div>
 
                 {this.props.loading && <div className="lds-dual-ring"></div>}
-                {store.get('selectedEventSpeakers').map((data, index) => (
-                    <Speaker data={data} key={data.id} forceRefresh={this.props.forceRefresh} />
-                ))}
+                {
+                    store.get('selectedEventSpeakers').map((data, index) => (
+                        <Speaker data={data} key={data.id} forceRefresh={this.props.forceRefresh} />
+                    ))
+                }
 
                 <div ref={scrollTarget => { this.scrollTarget = scrollTarget; }} />
-            </div>
+            </div >
         );
     }
 }

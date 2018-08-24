@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl } from "react-bootstrap";
+import { NavLink } from 'react-router-dom';
 
 import Store from '../../Store';
 
@@ -41,7 +42,12 @@ class Login extends Component {
                         Login
                     </Button>
                 </form>
-                {/* TODO: link to register */}
+
+                <div className="auth-link">
+                    <NavLink to="/register">
+                        Don't have an account yet? Register here
+                    </NavLink>
+                </div>
             </div>
         );
     }

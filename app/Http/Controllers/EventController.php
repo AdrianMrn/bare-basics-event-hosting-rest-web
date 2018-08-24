@@ -65,6 +65,10 @@ class EventController extends Controller
 
     public function getUserEvents(Request $request){
         $events = Event::where('owner_id', $request->user()->id)->get();
+        foreach ($events as $event) {
+            $event->imageUrl = $event->getFirstMediaUrl();
+        }
+
         return $events;
     }
 

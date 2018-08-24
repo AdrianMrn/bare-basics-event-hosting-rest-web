@@ -19,12 +19,6 @@ class General extends Component {
         }
     }
 
-    validateForm() {
-        const store = this.props.store;
-        let eventEdit = store.get('eventEdit');
-        return eventEdit.name.length > 0 && eventEdit.date_start.length > 0 && eventEdit.date_end.length > 0;
-    }
-
     componentDidMount = () => {
         let selectedEvent = this.props.store.get('selectedEvent');
         this.props.store.set('eventEdit')(selectedEvent);
@@ -59,8 +53,10 @@ class General extends Component {
 
         uploadImage(pictureFile[0], eventEdit.id, (error, response) => {
             if (error) {
-                // TODO: display error
-                console.log(error);
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                    isAuthError: false
+                });
             } else {
                 console.log(response);
             }
@@ -73,8 +69,10 @@ class General extends Component {
         const id = this.props.store.get('eventEdit').id;
         deleteEvent(id, (error, response) => {
             if (error) {
-                console.log(error);
-                // TODO: display error
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                    isAuthError: false
+                });
             } else {
                 this.props.navigateToDashboard();
             }
@@ -98,7 +96,7 @@ class General extends Component {
                         />
                         {(!!eventEdit.image || !!eventEdit.imageUrl) &&
                             <div className='image-display'>
-                                <img src={eventEdit.image || eventEdit.imageUrl} height="130" width="130" />
+                                <img src={eventEdit.image || eventEdit.imageUrl} />
                             </div>
                         }
                     </FormGroup>
@@ -160,8 +158,12 @@ class General extends Component {
                         </Button>
                     </div>
 
+                    {!this.props.validateForm() &&
+                        <p className="generaltab-save-disclaimer">You need at least a name and a date for your event to save it.</p>
+                    }
+
                     <div className="event-edit-savebutton-bottom">
-                        <Button bsStyle="primary" disabled={!this.validateForm() || loading} type="submit">
+                        <Button bsStyle="primary" disabled={!this.props.validateForm() || loading} type="submit">
                             <Glyphicon glyph="save" />
                             {' '}Save
                         </Button>

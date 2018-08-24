@@ -35,8 +35,6 @@ class Authenticate extends Component {
     afterLoginOrRegister = (error, data) => {
         this.setState({ disableSubmit: false });
         if (error) {
-            console.log(error);
-            // TODO: display error message to user
             this.props.store.set('errorModal')({
                 showErrorModal: true,
                 isAuthError: true

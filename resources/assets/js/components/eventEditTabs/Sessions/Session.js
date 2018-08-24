@@ -42,8 +42,10 @@ class Session extends Component {
     getSpeakers = () => {
         getSessionSpeakers(this.props.data.id, (error, response) => {
             if (error) {
-                // TODO: display error
-                console.log(error)
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                    isAuthError: false
+                });
             } else {
                 this.setState({
                     speakers: response.data.map(speaker => {
@@ -84,8 +86,10 @@ class Session extends Component {
         // Get a list of all possible speakers and populate the multiselect with them
         getEventExtraDetails('speakers', this.props.store.get('selectedEvent').id, (error, response) => {
             if (error) {
-                console.log(error);
-                // TODO: display error
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                    isAuthError: false
+                });
             } else {
                 const s = response.data.map(speaker => {
                     return { value: speaker.id, label: `${speaker.speakerName} - ${speaker.email}` }
@@ -107,8 +111,10 @@ class Session extends Component {
         Promise.all([
             updateSession(sessionId, sessionEdit, (error, response) => {
                 if (error) {
-                    // TODO: display error
-                    console.log(error);
+                    this.props.store.set('errorModal')({
+                        showErrorModal: true,
+                        isAuthError: false
+                    });
                     Promise.reject(error);
                 } else {
                     Promise.resolve(response);
@@ -116,8 +122,10 @@ class Session extends Component {
             }),
             updateSessionSpeakers(sessionId, { sessionSpeakers }, (error, response) => {
                 if (error) {
-                    // TODO: display error
-                    console.log(error);
+                    this.props.store.set('errorModal')({
+                        showErrorModal: true,
+                        isAuthError: false
+                    });
                     Promise.reject(error);
                 } else {
                     Promise.resolve(response);
@@ -141,8 +149,10 @@ class Session extends Component {
         const id = this.props.data.id
         deleteSession(id, (error, response) => {
             if (error) {
-                console.log(error);
-                // TODO: display error
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                    isAuthError: false
+                });
             } else {
                 this.props.forceRefresh();
                 this.props.toggleEditingSession();
@@ -161,7 +171,6 @@ class Session extends Component {
                 <Panel.Body>
                     {!this.state.editing &&
                         <div>
-                            {/* TODO: add event media (image) */}
                             {data.date_start &&
                                 <div className="session-date">
                                     <span>
@@ -177,7 +186,9 @@ class Session extends Component {
                                 </div>
                             }
 
-                            {/* TODO: disclaimer/warning that the session will not show up in the app unless it has a start and end date */}
+                            {!data.date_start &&
+                                <p className="session-date-disclaimer">This session will not show up in the app until it has a start and end hour.</p>
+                            }
 
                             <div className="session-name">
                                 <h3>{data.name}</h3>
@@ -280,7 +291,7 @@ class Session extends Component {
                                         {' '}Delete
                                     </Button>
                                 </div>
-                                
+
                                 <div className="event-component-buttons">
                                     <Button onClick={this.cancelEdit} bsStyle="warning" disabled={loading}>
                                         <Glyphicon glyph="remove" />
