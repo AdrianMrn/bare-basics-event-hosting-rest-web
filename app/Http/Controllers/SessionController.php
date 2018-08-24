@@ -12,6 +12,7 @@ class SessionController extends Controller
 {
 
     public function store(Request $request){
+        return ($request->user()->id);
         if ($request->has('eventId')){
             $event = Event::findOrFail($request->input('eventId'));
             if ($event->owner_id === $request->user()->id) {
