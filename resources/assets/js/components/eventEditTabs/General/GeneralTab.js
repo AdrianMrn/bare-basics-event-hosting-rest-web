@@ -20,9 +20,9 @@ class General extends Component {
     }
 
     validateForm() {
-        //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
-        /* TODO: validation; title and dates should not be empty. */
-        return true;
+        const store = this.props.store;
+        let eventEdit = store.get('eventEdit');
+        return eventEdit.name.length > 0 && eventEdit.date_start.length > 0 && eventEdit.date_end.length > 0;
     }
 
     componentDidMount = () => {
