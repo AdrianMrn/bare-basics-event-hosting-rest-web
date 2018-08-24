@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import { NavLink } from 'react-router-dom';
 
-
 import Store from '../../Store';
 
 class Register extends Component {
     validateForm = () => {
         const store = this.props.store;
-        return store.get('first_name').length > 0 && store.get('first_name').length < 100 &&
-            store.get('last_name').length > 0 && store.get('last_name').length < 100 &&
-            store.get('email').length > 0 && store.get('email').length < 250 &&
-            store.get('password').length > 0 && store.get('password').length < 100;
+        return store.get('first_name').length > 0 && store.get('first_name').length < 255 &&
+            store.get('last_name').length > 0 && store.get('last_name').length < 255 &&
+            store.get('email').length > 0 && store.get('email').length < 255 &&
+            store.get('password').length > 0 && store.get('password').length < 255;
     }
 
     render() {

@@ -26,7 +26,6 @@ class Sessions extends Component {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,
-                    isAuthError: false
                 });
             } else {
                 const sessions = store.get('selectedEventSessions');

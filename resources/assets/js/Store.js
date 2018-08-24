@@ -9,8 +9,7 @@ export default createConnectedStore({
 
   errorModal: {
     showErrorModal: false,
-    isDeletePrompt: false,
-    isAuthError: false,
+    errorMessage: [],
   },
 
   user: {

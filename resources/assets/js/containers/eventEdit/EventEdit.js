@@ -23,7 +23,6 @@ class Dashboard extends Component {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,
-                    isAuthError: false
                 });
             } else {
                 console.log(response.data);
@@ -36,7 +35,11 @@ class Dashboard extends Component {
     validateGeneraltabForm = () => {
         const store = this.props.store;
         let eventEdit = store.get('eventEdit');
-        return eventEdit.name.length > 0 && eventEdit.date_start && eventEdit.date_start.length > 0 && eventEdit.date_end && eventEdit.date_end.length > 0;
+        return eventEdit.name.length > 0 &&
+            eventEdit.date_start &&
+            eventEdit.date_start.length > 0
+            eventEdit.date_end &&
+            eventEdit.date_end.length > 0;
     }
 
     handleSaveGeneralInfo = event => {
@@ -52,9 +55,10 @@ class Dashboard extends Component {
         saveEventGeneralInfo(selectedEvent.id, eventEdit,
             (error, response) => {
                 if (error) {
+                    const errorMessages = (error.response.data.message ? [error.response.data.message] : error.response.data)
                     this.props.store.set('errorModal')({
                         showErrorModal: true,
-                        isAuthError: false
+                        errorMessages
                     });
                 } else {
                     store.set('selectedEvent')({ ...selectedEvent, ...eventEdit });
@@ -73,7 +77,6 @@ class Dashboard extends Component {
                 if (error) {
                     this.props.store.set('errorModal')({
                         showErrorModal: true,
-                        isAuthError: false
                     });
                 } else {
                     store.set(`selectedEvent${tab.charAt(0).toUpperCase() + tab.slice(1)}`)(response.data);

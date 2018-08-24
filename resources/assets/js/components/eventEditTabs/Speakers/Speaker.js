@@ -37,7 +37,6 @@ class Speaker extends Component {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,
-                    isAuthError: false
                 });
             } else {
                 this.setState({ speakerDetails: response.data, loading: false });
@@ -52,7 +51,6 @@ class Speaker extends Component {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,
-                    isAuthError: false
                 });
             } else {
                 this.props.forceRefresh();

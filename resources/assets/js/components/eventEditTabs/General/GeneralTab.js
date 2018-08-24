@@ -55,7 +55,6 @@ class General extends Component {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,
-                    isAuthError: false
                 });
             } else {
                 console.log(response);
@@ -71,7 +70,6 @@ class General extends Component {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,
-                    isAuthError: false
                 });
             } else {
                 this.props.navigateToDashboard();

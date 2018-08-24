@@ -7,38 +7,30 @@ class ErrorModal extends Component {
     handleClose = () => {
         this.props.store.set('errorModal')({
             showErrorModal: false,
-            isDeletePrompt: false,
-            isAuthError: false,
+            errorMessages: []
         });
     }
 
     render() {
         const errorModal = this.props.store.get('errorModal');
-        const { showErrorModal, isDeletePrompt, isAuthError } = errorModal;
+        const { showErrorModal, errorMessages } = errorModal;
         return (
             <Modal show={showErrorModal} onHide={this.handleClose}>
                 <Modal.Body>
-                    {isDeletePrompt &&
+                    {!!errorMessages &&
                         <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
-                            <h4>Are you sure want to delete this?</h4>
-                            <p>
-                                <Button /* TODO: onClick... */ bsStyle="danger">Yes</Button>
-                                <span> or </span>
-                                <Button onClick={this.handleDismiss}>Hide Alert</Button>
-                            </p>
-                        </Alert>
-                    }
-                    {isAuthError &&
-                        <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
-                            <h4>Those credentials are incorrect.</h4>
+                            {errorMessages.map((data, index) => {
+                                return <h4 key={index}>{data}</h4>
+                            })}
                             <p>
                                 <Button onClick={this.handleClose}>Close</Button>
                             </p>
                         </Alert>
                     }
-                    {(!isDeletePrompt && !isAuthError) &&
+
+                    {!errorMessages &&
                         <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
-                            <h4>Oops! We ran into an error we couldn't deal with, sorry!</h4>
+                            <h4>Oops! We ran into an error we couldn't handle, sorry!</h4>
                             <p>
                                 <Button onClick={this.handleClose}>Close</Button>
                             </p>

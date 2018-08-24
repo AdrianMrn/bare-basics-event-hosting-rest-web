@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Event;
 
@@ -29,9 +30,20 @@ class EventController extends Controller
     }
 
     public function update($id, Request $request){
-        $event = Event::findOrFail($id);
+        $validate = [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:2000',
+            'date_start' => 'required|date',
+            'date_end' => 'required|date'];
+
+        $valid = Validator::make($request->only(['name', 'description', 'date_start', 'date_end']),$validate);
         
-        /* TODO: maybe some validation like no 1000 character event names etc, same for profile, sessions and sponsors */
+        if ($valid->fails()) {
+            return  response()->json($valid->errors()->all(), 400);
+        }
+
+
+        $event = Event::findOrFail($id);
 
         if ($event->owner_id === $request->user()->id) {
             $event->name = $request->name;

@@ -44,7 +44,6 @@ class Session extends Component {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,
-                    isAuthError: false
                 });
             } else {
                 this.setState({
@@ -88,7 +87,6 @@ class Session extends Component {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,
-                    isAuthError: false
                 });
             } else {
                 const s = response.data.map(speaker => {
@@ -113,7 +111,6 @@ class Session extends Component {
                 if (error) {
                     this.props.store.set('errorModal')({
                         showErrorModal: true,
-                        isAuthError: false
                     });
                     Promise.reject(error);
                 } else {
@@ -124,7 +121,6 @@ class Session extends Component {
                 if (error) {
                     this.props.store.set('errorModal')({
                         showErrorModal: true,
-                        isAuthError: false
                     });
                     Promise.reject(error);
                 } else {
@@ -151,7 +147,6 @@ class Session extends Component {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,
-                    isAuthError: false
                 });
             } else {
                 this.props.forceRefresh();

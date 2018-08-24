@@ -32,7 +32,6 @@ class Speakers extends Component {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,
-                    isAuthError: false
                 });
             } else {
                 console.log(response);

@@ -23,7 +23,6 @@ class Dashboard extends Component {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,
-                    isAuthError: false
                 });
             } else {
                 this.props.store.set('myEvents')(response.data);
@@ -37,7 +36,6 @@ class Dashboard extends Component {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,
-                    isAuthError: false
                 });
                 this.setState({ disableCreateEventButton: false });
             } else {

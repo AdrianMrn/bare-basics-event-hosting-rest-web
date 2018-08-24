@@ -35,9 +35,10 @@ class Authenticate extends Component {
     afterLoginOrRegister = (error, data) => {
         this.setState({ disableSubmit: false });
         if (error) {
+            const errorMessages = (error.response.data.message ? [error.response.data.message] : error.response.data)
             this.props.store.set('errorModal')({
                 showErrorModal: true,
-                isAuthError: true
+                errorMessages
             });
         } else {
             // Seting the user info in the store
