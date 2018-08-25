@@ -30,7 +30,8 @@ class TopNav extends Component {
     render() {
         const firstName = this.props.store.get('user').first_name;
         return (
-            <Navbar>
+            <Navbar fixedTop>
+                {/* TODO: background-color with app's topnav's color? and text in white?  */}
                 <Navbar.Header>
                     <Navbar.Brand>
                         <NavLink to="/" exact>BBEvents</NavLink>

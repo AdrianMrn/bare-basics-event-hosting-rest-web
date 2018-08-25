@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Laravel\Passport\Client;
+use Illuminate\Support\Facades\Validator;
 
 class ApiLoginController extends Controller
 {
@@ -24,6 +25,16 @@ class ApiLoginController extends Controller
      */
     protected function authenticate(Request $request)
     {
+        $validate = [
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:6'];
+
+        $valid = Validator::make($request->only(['email', 'last_name', 'first_name', 'password']),$validate);
+
+        if ($valid->fails()) {
+            return  response()->json($valid->errors()->all(), 400);
+        }
+
         $request->request->add([
             'grant_type' => 'password',
             'username' => $request->email,

@@ -12,6 +12,7 @@ class Sponsors extends Component {
         let store = this.props.store;
         return (
             <div>
+                {/* TODO: create this page (can copy most from sessionsTab I think) */}
                 {/* <form onSubmit={this.props.handleSubmitLogin}>
                     <FormGroup controlId="email" bsSize="sm">
                         <FormControl

@@ -9,12 +9,13 @@ import Store from '../../../Store';
 
 import { uploadImage, deleteEvent } from '../../../api';
 
+import Autocomplete from './Autocomplete';
+
 class General extends Component {
     constructor() {
         super();
 
         this.state = {
-            addressInput: '',
             loading: false
         }
     }
@@ -38,22 +39,16 @@ class General extends Component {
         this.props.store.set('eventEdit')({ ...eventEdit, [field]: event.target.value });
     }
 
-    addressLookup = event => {
-        this.setState({ addressInput: event.target.value });
-        /*  TODO: (google geocode) autocomplete address and set it in store: address, city & country
-            and set coords_lat & coords_lon
-        */
-    }
-
     onImageDrop = debounce((pictureFile, pictureDataURL) => {
         this.setState({ loading: true });
 
-        let eventEdit = this.props.store.get('eventEdit');
-        this.props.store.set('eventEdit')({ ...eventEdit, image: pictureDataURL[0] });
+        const store = this.props.store;
+        let eventEdit = store.get('eventEdit');
+        store.set('eventEdit')({ ...eventEdit, image: pictureDataURL[0] });
 
         uploadImage(pictureFile[0], eventEdit.id, (error, response) => {
             if (error) {
-                this.props.store.set('errorModal')({
+                store.set('errorModal')({
                     showErrorModal: true,
                 });
             } else {
@@ -64,11 +59,12 @@ class General extends Component {
     }, 100);
 
     delete = () => {
+        const store = this.props.store;
         this.setState({ loading: true });
-        const id = this.props.store.get('eventEdit').id;
+        const id = store.get('eventEdit').id;
         deleteEvent(id, (error, response) => {
             if (error) {
-                this.props.store.set('errorModal')({
+                store.set('errorModal')({
                     showErrorModal: true,
                 });
             } else {
@@ -139,13 +135,7 @@ class General extends Component {
                     </FormGroup>
 
                     <FormGroup controlId="name" bsSize="sm">
-                        <FormControl
-                            type="text"
-                            value={this.state.addressInput}
-                            onChange={this.addressLookup}
-                            disabled={loading}
-                            placeholder="Location (address)"
-                        />
+                        <Autocomplete disabled={loading} />
                     </FormGroup>
 
                     <div className="event-edit-removebutton-bottom">

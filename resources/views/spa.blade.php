@@ -7,6 +7,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>BB Events</title>
         <link href="{{mix('css/app.css')}}" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="{{ 'https://maps.googleapis.com/maps/api/js?key=' . env('GOOGLEAPIKEY') . '&libraries=places' }}"></script>
     </head>
     <body>
         <div id="root"></div>

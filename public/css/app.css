@@ -394,6 +394,10 @@
     float: right; }
   .daterangepicker .drp-calendar.left {
     clear: none !important; } }
+body {
+  margin-top: 50px;
+}
+
 .navbar-laravel {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -516,6 +520,33 @@
   float: right;
   width: 25%;
   margin-left: 20px;
+  color: red;
+}
+
+/* Location autocomplete dropdown */
+
+.autocomplete-dropdown-container {
+  border-bottom: honeydew;
+  border-left: honeydew;
+  border-right: honeydew;
+  border-top: 1px solid #e6e6e6;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 2px 2px;
+}
+
+.suggestion-item,
+.suggestion-item--active {
+  padding: 8px;
+  text-align: left;
+  background-color: #fff;
+  cursor: pointer;
+  -webkit-transition: 0.05s all;
+  transition: 0.05s all;
+}
+
+.suggestion-item--active {
+  background-color: #D3D3D3;
 }
 
 /* event speaker */

@@ -56,6 +56,8 @@ class EventController extends Controller
             $event->is_private = $request->is_private;
             $event->type = $request->type;
             $event->venue_name = $request->venue_name;
+            $event->coords_lon = $request->coords_lon;
+            $event->coords_lat = $request->coords_lat;
             
             $event->save();
             return JsonResponse::create(['error' => false, 'eventData' => $event]);

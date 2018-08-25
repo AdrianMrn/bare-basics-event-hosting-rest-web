@@ -205,7 +205,6 @@ class Session extends Component {
                         </div>
                     }
 
-                    {/* TODO: form validation  */}
                     {this.state.editing &&
                         <div>
                             <form onSubmit={this.saveSession}>

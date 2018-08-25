@@ -24,6 +24,7 @@ class AttendeeController extends Controller
         foreach ($attModels as $attMod) {
             $event = Event::find($attMod->event_id);
             if ($event) {
+                $event->imageUrl = $event->getFirstMediaUrl();
                 if ($event->date_end > date("Y-m-d H:i:s")) {
                     array_push($upcomingEvents, $event);
                 } else {
