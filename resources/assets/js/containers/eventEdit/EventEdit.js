@@ -25,7 +25,6 @@ class Dashboard extends Component {
                     showErrorModal: true,
                 });
             } else {
-                console.log(response.data);
                 this.props.store.set('selectedEvent')(response.data.eventData);
             }
             this.setState({ fetchingEvent: false });

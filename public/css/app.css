@@ -511,7 +511,11 @@
 }
 
 .session-date-disclaimer {
-  color: red;
+  font-size: 13px;
+  font-style: italic;
+  float: right;
+  width: 25%;
+  margin-left: 20px;
 }
 
 /* event speaker */
@@ -523,6 +527,11 @@
 .speaker-email {
   display: inline;
   margin-left: 10px;
+}
+
+.speaker-position {
+  margin-top: 5px;
+  font-style: italic;
 }
 
 /* Error Modal */

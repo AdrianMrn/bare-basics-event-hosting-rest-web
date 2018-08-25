@@ -10,19 +10,6 @@ import { getSessionSpeakers, getEventExtraDetails, deleteSession, updateSession,
 import Store from '../../../Store';
 
 class Session extends Component {
-    /* 
-        TODO: Fix bugs with react-select:
-        -The options and defaultValue props should come from the same array, otherwise we'll get duplicates in the list after a save.
-            Options should have the complete array, defaultValue should just be list with indexes from the array, eg:
-                options={possibleSpeakers}
-                defaultValue={[possibleSpeakers[1], possibleSpeakers[2]]}
-        
-        -When saving the session, don't use the list from 'state.editSpeakers' to update the speakers, as that only gets updated
-            when the react-select object is touched. Find a way to get the list from the object (ref?)
-            or make sure 'state.editSpeakers' is filled with the initial speakers on componentDidMount, so we don't send an empty list
-    */
-
-
     constructor() {
         super();
 
@@ -48,8 +35,9 @@ class Session extends Component {
             } else {
                 this.setState({
                     speakers: response.data.map(speaker => {
-                        return { value: speaker.id, label: `${speaker.speakerName} - ${speaker.email}` }
-                    })
+                        return { value: speaker.speaker_id, label: `${speaker.speakerName} - ${speaker.email}` }
+                    }),
+                    editSpeakers: response.data.map(speaker => { return speaker.speaker_id })
                 });
             }
             this.setState({ loading: false });
@@ -62,6 +50,7 @@ class Session extends Component {
     }
 
     handleSpeakerChange = speakers => {
+        // When the <Select> is changed, fill editSpeakers like this: [1, 5, 10] (each number is a speaker's id)
         this.setState({ editSpeakers: speakers.map(speaker => { return speaker.value }) });
     }
 
@@ -109,8 +98,10 @@ class Session extends Component {
         Promise.all([
             updateSession(sessionId, sessionEdit, (error, response) => {
                 if (error) {
+                    const errorMessages = (error.response.data.message ? [error.response.data.message] : error.response.data)
                     this.props.store.set('errorModal')({
                         showErrorModal: true,
+                        errorMessages
                     });
                     Promise.reject(error);
                 } else {
@@ -119,8 +110,10 @@ class Session extends Component {
             }),
             updateSessionSpeakers(sessionId, { sessionSpeakers }, (error, response) => {
                 if (error) {
+                    const errorMessages = (error.response.data.message ? [error.response.data.message] : error.response.data)
                     this.props.store.set('errorModal')({
                         showErrorModal: true,
+                        errorMessages
                     });
                     Promise.reject(error);
                 } else {
@@ -161,6 +154,7 @@ class Session extends Component {
         const sessionEdit = this.props.store.get('sessionEdit');
         const selectedEvent = this.props.store.get('selectedEvent');
         const loading = this.state.loading;
+
         return (
             <Panel>
                 <Panel.Body>
@@ -255,13 +249,13 @@ class Session extends Component {
                                 <div className="session-speakers">
                                     <Select
                                         onChange={this.handleSpeakerChange}
-                                        defaultValue={this.state.speakers}
                                         isMulti
                                         isSearchable
                                         isDisabled={loading}
                                         placeholder={this.state.possibleSpeakers.length ? 'Speakers' : 'Create some speakers first!'}
                                         closeMenuOnSelect={false}
                                         styles={styles}
+                                        defaultValue={this.state.speakers}
                                         options={this.state.possibleSpeakers}
                                     />
                                 </div>

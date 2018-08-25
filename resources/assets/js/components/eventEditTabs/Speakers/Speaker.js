@@ -62,16 +62,20 @@ class Speaker extends Component {
     render() {
         const loading = this.state.loading;
         const speaker = this.state.speakerDetails;
+        console.log(speaker);
         return (
             <Panel>
                 <Panel.Body>
                     <div>
                         <p className="session-date-disclaimer">Only the owner of the email address can edit their profile details through the app.</p>
-                        
+
                         <div className="user-info">
-                            {/* TODO: display user info, media (image) description, company, ... from this.state.speakerDetails */}
+                            {/* TODO: display user media (from speaker.imageUrl) */}
                             <h3 className="speaker-name">{speaker.first_name} {speaker.last_name}</h3>
                             <p className="speaker-email">{speaker.email}</p>
+
+                            <p className="speaker-position">{speaker.position} {(!!speaker.position && !!speaker.company) ? 'at' : ''} {speaker.company}</p>
+                            <p className="speaker-description">{speaker.description}</p>
                         </div>
 
                         <div className="event-component-buttons-remove">

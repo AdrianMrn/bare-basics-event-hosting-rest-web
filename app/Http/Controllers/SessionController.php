@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Session;
 use App\Event;
@@ -30,6 +31,18 @@ class SessionController extends Controller
     }
 
     public function update($id, Request $request){
+        $validate = [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:2000',
+            'date_start' => 'nullable|date',
+            'date_end' => 'nullable|date'];
+
+        $valid = Validator::make($request->only(['name', 'description', 'date_start', 'date_end']),$validate);
+        
+        if ($valid->fails()) {
+            return  response()->json($valid->errors()->all(), 400);
+        }
+
         $session = Session::findOrFail($id);
         $event = Event::findOrFail($session->event_id);
 
