@@ -32,7 +32,12 @@ class Autocomplete extends Component {
 
     handleChange = address => {
         let eventEdit = this.props.store.get('eventEdit');
-        this.props.store.set('eventEdit')({ ...eventEdit, address });
+        this.props.store.set('eventEdit')({
+            ...eventEdit,
+            address,
+            coords_lon: 0,
+            coords_lat: 0
+        });
     };
 
     render() {
