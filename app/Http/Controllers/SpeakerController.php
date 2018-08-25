@@ -71,6 +71,7 @@ class SpeakerController extends Controller
     public function show($id, Request $request){
         $speaker = Speaker::findOrFail($id);
         $user = User::where('id', $speaker->user_id)->first();
+        $user->imageUrl = $user->getFirstMediaUrl();
 
         return $user;
     }
@@ -92,6 +93,10 @@ class SpeakerController extends Controller
         $speakers = Speaker::where('event_id', $id)->get();
         foreach ($speakers as $speaker) {
             $user = User::findOrFail($speaker->user_id);
+            // User images
+            $speaker->imageUrl = $user->getFirstMediaUrl();
+
+            // User info
             $speaker->speakerName = $user->first_name . ' ' . $user->last_name;
             $speaker->email = $user->email;
         }

@@ -514,6 +514,17 @@
   color: red;
 }
 
+/* event speaker */
+
+.speaker-name {
+  display: inline;
+}
+
+.speaker-email {
+  display: inline;
+  margin-left: 10px;
+}
+
 /* Error Modal */
 
 .modal-body {

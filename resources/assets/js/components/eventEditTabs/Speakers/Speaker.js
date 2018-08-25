@@ -70,7 +70,8 @@ class Speaker extends Component {
                         
                         <div className="user-info">
                             {/* TODO: display user info, media (image) description, company, ... from this.state.speakerDetails */}
-                            {speaker.first_name} {speaker.last_name} - {speaker.email}
+                            <h3 className="speaker-name">{speaker.first_name} {speaker.last_name}</h3>
+                            <p className="speaker-email">{speaker.email}</p>
                         </div>
 
                         <div className="event-component-buttons-remove">

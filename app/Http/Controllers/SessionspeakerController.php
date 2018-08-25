@@ -18,6 +18,10 @@ class SessionspeakerController extends Controller
         $speakers = Sessionspeaker::where('session_id', $id)->get();
         foreach ($speakers as $speaker) {
             $user = User::findOrFail($speaker->user_id);
+            // User images
+            $speaker->imageUrl = $user->getFirstMediaUrl();
+
+            // User info
             $speaker->speakerName = $user->first_name . ' ' . $user->last_name;
             $speaker->email = $user->email;
         }

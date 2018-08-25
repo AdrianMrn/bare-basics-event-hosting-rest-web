@@ -167,7 +167,6 @@ class General extends Component {
                         </Button>
                     </div>
 
-                    {/* TODO: buttons for Publish/Unpublish */}
                     {/* To Publish, the event should have: an image, a title, a start & end date */}
                 </form>
             </div>
