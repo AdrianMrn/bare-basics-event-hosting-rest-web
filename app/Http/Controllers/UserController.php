@@ -27,22 +27,13 @@ class UserController extends Controller
         $user = User::where('id', $request->user()->id)->first();
         $updatedUser = $user->update($request->all());
 
-        return $updatedUser;
-
-    }
-
-    /* public function linkImage($id, Request $request){
-        $event = Event::findOrFail($id);
-
-        if ($event->owner_id === $request->user()->id) {
-            $event->clearMediaCollection();
-            $event->addMediaFromRequest('image')->toMediaCollection();
-
-            return JsonResponse::create(['error' => false]);
+        if ($request->image) {
+            $user->clearMediaCollection();
+            $user->addMediaFromRequest('image')->toMediaCollection();
         }
 
-        abort(401);
-    } */
+        return JsonResponse::create(['error' => false]);
+    }
   
 }
 

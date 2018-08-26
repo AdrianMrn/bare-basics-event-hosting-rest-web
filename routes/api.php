@@ -28,7 +28,8 @@ Route::group(['middleware' => ['auth:api']], function () {
         'sessions' => 'SessionController',
         'attendees' => 'AttendeeController',
         'speakers' => 'SpeakerController',
-        'sessionspeaker' => 'SessionspeakerController'
+        'sessionspeaker' => 'SessionspeakerController',
+        'users' => 'UserController'
         ]);
         
     /* 
