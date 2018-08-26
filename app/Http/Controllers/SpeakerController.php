@@ -33,8 +33,7 @@ class SpeakerController extends Controller
                         'password' => Hash::make($password),
                     ]);
 
-                    // TODO: stop using mailgun sandbox, register my domain so we can send mails to everyone
-                    Mail::to($request->email)->send(new \App\Mail\AccountCreated($password));
+                    Mail::to($request->email)->send(new \App\Mail\AccountCreated($password, $request->email));
                 } else {
                     // If this user is already a speaker at this event, don't add them again
                     $s = Speaker::where('user_id', $user->id)->first();
@@ -92,13 +91,15 @@ class SpeakerController extends Controller
     public function getEventSpeakers($id, Request $request){
         $speakers = Speaker::where('event_id', $id)->get();
         foreach ($speakers as $speaker) {
-            $user = User::findOrFail($speaker->user_id);
-            // User images
-            $speaker->imageUrl = $user->getFirstMediaUrl();
-
-            // User info
-            $speaker->speakerName = $user->first_name . ' ' . $user->last_name;
-            $speaker->email = $user->email;
+            $user = User::find($speaker->user_id);
+            if ($user) {
+                // User images
+                $speaker->imageUrl = $user->getFirstMediaUrl();
+    
+                // User info
+                $speaker->speakerName = $user->first_name . ' ' . $user->last_name;
+                $speaker->email = $user->email;
+            }
         }
         return $speakers;
     }

@@ -34,7 +34,6 @@ class Speakers extends Component {
                     showErrorModal: true,
                 });
             } else {
-                console.log(response);
                 if (response.data.error) {
                     this.props.store.set('errorModal')({
                         showErrorModal: true,
@@ -47,6 +46,7 @@ class Speakers extends Component {
                     store.set('selectedEventSpeakers')(speakers);
                     this.scrollToBottom();
                 }
+                this.setState({ gdprBoxChecked: false });
             }
             this.setState({ loading: false, email: '' });
         });

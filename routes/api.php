@@ -40,6 +40,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/get-session-speakers/{id}', 'SessionspeakerController@getSessionSpeakers');
     Route::post('/set-session-speakers/{id}', 'SessionspeakerController@setSessionSpeakers');
 
+    Route::get('/query-events/{query}', 'EventController@getEventsByQuery');
+    Route::get('/check-if-attending-event/{eventId}', 'AttendeeController@checkIfAttendingEvent');
+
     Route::post('/events/link-image/{id}', 'EventController@linkImage');
     Route::post('/users/link-image/{id}', 'UserController@linkImage');
     Route::post('/sponsors/link-image/{id}', 'SponsorController@linkImage');

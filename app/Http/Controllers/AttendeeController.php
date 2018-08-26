@@ -36,26 +36,34 @@ class AttendeeController extends Controller
         return JsonResponse::create(['upcomingEvents' => $upcomingEvents, 'pastEvents' => $pastEvents]);
     }
 
-    public function create(Request $request){
+    public function checkIfAttendingEvent($eventId, Request $request){
+        $attendee = Attendee::where([['event_id', $eventId], ['user_id', $request->user()->id]])->first();
 
+        if ($attendee) {
+            return JsonResponse::create(['attending' => true, 'attendeeId' => $attendee->id]);
+        } else {
+            return JsonResponse::create(['attending' => false]);
+        }
     }
 
-    public function get(Request $request){
+    // This is actually used as the store function to create a new attendee
+    public function update($id, Request $request){
+        $attendee = new Attendee;
+        $attendee->user_id = $request->user()->id;
+        $attendee->event_id = $id;
+        $attendee->save();
 
+        return JsonResponse::create(['attendeeId' => $attendee->id]);
     }
 
-    public function update(Request $request){
-
-    }
-
-    public function delete(Request $request){
-
+    public function destroy($id, Request $request){
+        Attendee::findOrFail($id)->delete();
     }
 
     public function getEventAttendees($id, Request $request){
         $attendees = Attendee::where('event_id', $id)->get();
         foreach ($attendees as $attendee) {
-            $user = User::findOrFail($attendee->user_id);
+            $user = User::find($attendee->user_id);
             // User images
             $attendee->imageUrl = $user->getFirstMediaUrl();
 

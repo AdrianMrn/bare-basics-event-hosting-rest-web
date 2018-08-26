@@ -45,7 +45,7 @@ class Autocomplete extends Component {
         const address = eventEdit.address;
         return (
             <PlacesAutocomplete
-                value={address}
+                value={address || ''}
                 onChange={this.handleChange}
                 onSelect={this.handleSelect}
             >

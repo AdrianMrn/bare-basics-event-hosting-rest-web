@@ -66,6 +66,16 @@ class EventController extends Controller
         abort(401);
     }
 
+    public function getEventsByQuery($query, Request $request){
+        $events = Event::where('name', 'LIKE', '%'.$query.'%')->get();
+
+        foreach ($events as $event) {
+            $event->imageUrl = $event->getFirstMediaUrl();
+        }
+
+        return $events;
+    }
+
     public function destroy($id, Request $request){
         $event = Event::findOrFail($id);
 

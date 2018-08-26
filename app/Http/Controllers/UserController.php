@@ -25,7 +25,9 @@ class UserController extends Controller
     public function update(Request $request){
         // TODO: complete this function, with image linking & profile update
         $user = User::where('id', $request->user()->id)->first();
-        
+        $updatedUser = $user->update($request->all());
+
+        return $updatedUser;
 
     }
 

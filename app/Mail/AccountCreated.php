@@ -16,9 +16,10 @@ class AccountCreated extends Mailable
      *
      * @return void
      */
-    public function __construct($password)
+    public function __construct($password, $receiver)
     {
         $this->password = $password;
+        $this->receiver = $receiver;
     }
 
     /**
@@ -28,9 +29,9 @@ class AccountCreated extends Mailable
      */
     public function build()
     {
-        return $this->from('postmaster@sandbox1130ed18768546ab8261e91ef48d6275.mailgun.org')
+        return $this->from(env('MAIL_USERNAME'))
                     ->subject('Account Created!')
                     ->view('accountCreated')
-                    ->with(['password' => $this->password]);
+                    ->with(['password' => $this->password, 'receiver' => $this->receiver]);
     }
 }
