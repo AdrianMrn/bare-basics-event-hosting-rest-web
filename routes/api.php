@@ -44,7 +44,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/query-events/{query}', 'EventController@getEventsByQuery');
     Route::get('/check-if-attending-event/{eventId}', 'AttendeeController@checkIfAttendingEvent');
 
-    Route::post('/update-profile-image', 'UserController@uploadImage');
+    Route::post('/update-profile-image', 'UserController@updateImage');
 
     Route::post('/events/link-image/{id}', 'EventController@linkImage');
     Route::post('/sponsors/link-image/{id}', 'SponsorController@linkImage');
