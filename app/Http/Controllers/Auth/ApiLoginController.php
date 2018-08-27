@@ -29,7 +29,7 @@ class ApiLoginController extends Controller
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6'];
 
-        $valid = Validator::make($request->only(['email', 'last_name', 'first_name', 'password']),$validate);
+        $valid = Validator::make($request->only(['email', 'password']),$validate);
 
         if ($valid->fails()) {
             return  response()->json($valid->errors()->all(), 400);

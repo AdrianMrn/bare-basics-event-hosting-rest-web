@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\User;
 
@@ -23,7 +24,25 @@ class UserController extends Controller
     }
     
     public function update(Request $request){
-        // TODO: complete this function, with image linking & profile update
+        $validate = [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:2000',
+            'position' => 'nullable|string|max:255',
+            'company' => 'nullable|string|max:255',
+            'linkedin' => 'nullable|URL|max:255',
+            'facebook' => 'nullable|URL|max:255',
+            'twitter' => 'nullable|URL|max:255',
+            'website' => 'nullable|URL|max:255',
+            'image' => 'nullable|dimensions:max_width=500,max_height=500|max:10240'
+        ];
+
+        $valid = Validator::make($request->only(['first_name', 'last_name', 'description', 'position', 'company', 'position', 'linkedin', 'facebook', 'twitter', 'website']),$validate);
+        
+        if ($valid->fails()) {
+            return response()->json($valid->errors()->all(), 400);
+        }
+
         $user = User::where('id', $request->user()->id)->first();
         $updatedUser = $user->update($request->all());
 
@@ -31,6 +50,23 @@ class UserController extends Controller
             $user->clearMediaCollection();
             $user->addMediaFromRequest('image')->toMediaCollection();
         }
+
+        return JsonResponse::create(['error' => false]);
+    }
+
+    public function updateImage(Request $request){
+        $validate = ['image' => 'required|dimensions:max_width=500,max_height=500|max:10240'];
+
+        $valid = Validator::make($request->only(['image']),$validate);
+        
+        if ($valid->fails()) {
+            return response()->json($valid->errors()->all(), 400);
+        }
+
+        $user = User::where('id', $request->user()->id)->first();
+
+        $user->clearMediaCollection();
+        $user->addMediaFromRequest('image')->toMediaCollection();
 
         return JsonResponse::create(['error' => false]);
     }

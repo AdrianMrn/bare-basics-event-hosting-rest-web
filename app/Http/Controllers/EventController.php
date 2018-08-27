@@ -46,21 +46,9 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
 
         if ($event->owner_id === $request->user()->id) {
-            $event->name = $request->name;
-            $event->description = $request->description;
-            $event->address = $request->address;
-            $event->city = $request->city;
-            $event->country = $request->country;
-            $event->date_start = $request->date_start;
-            $event->date_end = $request->date_end;
-            $event->is_private = $request->is_private;
-            $event->type = $request->type;
-            $event->venue_name = $request->venue_name;
-            $event->coords_lon = $request->coords_lon;
-            $event->coords_lat = $request->coords_lat;
+            $updatedEvent = $event->update($request->all());
             
-            $event->save();
-            return JsonResponse::create(['error' => false, 'eventData' => $event]);
+            return JsonResponse::create(['error' => false, 'eventData' => $updatedEvent]);
         }
 
         abort(401);
@@ -97,6 +85,16 @@ class EventController extends Controller
     }
 
     public function linkImage($id, Request $request){
+        $validate = [
+            'image' => 'required|dimensions:max_width=500,max_height=500|max:10240'
+        ];
+
+        $valid = Validator::make($request->only(['image']),$validate);
+        
+        if ($valid->fails()) {
+            return  response()->json($valid->errors()->all(), 400);
+        }
+
         $event = Event::findOrFail($id);
 
         if ($event->owner_id === $request->user()->id) {
