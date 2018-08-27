@@ -191,9 +191,9 @@ export function updateSessionSpeakers(id, postData, next) {
         });
 }
 
-export function createNewSpeaker(eventId, postData, next) {
+export function createNewSpeaker(postData, next) {
     setAccessToken();
-    axios.post(`${apiUrl}/speakers?eventId=${eventId}`, postData)
+    axios.post(`${apiUrl}/speakers`, postData)
         .then(response => {
             next(false, response);
         })
@@ -241,7 +241,28 @@ export function uploadImage(image, eventId, next) {
         .catch(error => {
             next(error);
         });
+}
 
+export function createNewSponsor(eventId, next) {
+    setAccessToken();
+    axios.post(`${apiUrl}/sponsors`, { eventId })
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
+export function deleteSponsor(sponsorId, next) {
+    setAccessToken();
+    axios.delete(`${apiUrl}/sponsors/${id}`)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
 }
 
 /* export function getUserInfo(next) {

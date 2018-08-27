@@ -95,6 +95,14 @@ body {
   padding-bottom: 50px;
 }
 
+.user-info img {
+  max-width:200px;
+  max-height:130px;
+  width: auto;
+  height: auto;
+  display: block;
+}
+
 .event-edit-savebutton-bottom {
   position: absolute;
   right: 35px;

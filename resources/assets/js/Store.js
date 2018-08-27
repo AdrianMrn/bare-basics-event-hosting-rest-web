@@ -81,7 +81,11 @@ export default createConnectedStore({
   selectedEventSponsors: [],
 
   sponsorEdit: {
-
+    name: '',
+    description: '',
+    url: '',
+    tier: '',
+    event_id: ''
   },
 
 });

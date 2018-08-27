@@ -28,7 +28,7 @@ class Speakers extends Component {
 
         let store = this.props.store;
         const selectedEvent = store.get('selectedEvent');
-        createNewSpeaker(selectedEvent.id, { email: this.state.email }, (error, response) => {
+        createNewSpeaker({ email: this.state.email, eventId: selectedEvent.id }, (error, response) => {
             if (error) {
                 this.props.store.set('errorModal')({
                     showErrorModal: true,

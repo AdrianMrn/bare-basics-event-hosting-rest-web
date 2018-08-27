@@ -70,7 +70,7 @@ class Speaker extends Component {
                         <p className="session-date-disclaimer">Only the owner of the email address can edit their profile details through the app.</p>
 
                         <div className="user-info">
-                            {/* TODO: display user media (from speaker.imageUrl) */}
+                            <img src={speaker.imageUrl} />
                             <h3 className="speaker-name">{speaker.first_name} {speaker.last_name}</h3>
                             <p className="speaker-email">{speaker.email}</p>
 

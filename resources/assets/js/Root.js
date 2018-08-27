@@ -55,7 +55,7 @@ export default class Root extends Component {
                                 <PrivateRoute exact path='/dashboard' component={Dashboard} />
                                 <PrivateRoute exact path='/dashboard/event-detail/:slug' component={EventEdit} />
 
-                                {/* TODO: Redirect to 404 or home when route doesn't match */}
+                                {/* TODO: Redirect to home when route can't be found */}
                             </Switch>
                         </div>
 

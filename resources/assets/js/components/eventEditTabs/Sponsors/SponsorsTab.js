@@ -1,48 +1,74 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, FormControl } from "react-bootstrap";
+import { Button, Glyphicon, FormGroup, FormControl } from "react-bootstrap";
 
 import Store from '../../../Store';
 
+import { createNewSponsor } from '../../../api';
+
+import Sponsor from './Sponsor';
+
 class Sponsors extends Component {
-    validateForm() {
-        //return this.props.store.get('email').length > 0 && this.props.store.get('password').length > 0;
+    constructor() {
+        super();
+
+        this.state = {
+            loading: false,
+            editingSponsor: false,
+        }
+    }
+
+    createSponsor = () => {
+        this.setState({ loading: true });
+
+        let store = this.props.store;
+        const selectedEvent = store.get('selectedEvent');
+        createNewSponsor(selectedEvent.id, (error, response) => {
+            if (error) {
+                this.props.store.set('errorModal')({
+                    showErrorModal: true,
+                });
+            } else {
+                const sponsors = store.get('selectedEventSponsors');
+                sponsors.push(response.data);
+                store.set('selectedEventSponsors')(sponsors);
+            }
+            this.setState({ loading: false });
+            this.scrollToBottom();
+        });
+    }
+
+    toggleEditingSponsor = () => {
+        this.setState({ editingSponsor: !this.state.editingSponsor });
+    }
+
+    scrollToBottom() {
+        this.scrollTarget.scrollIntoView({ behavior: 'smooth' });
     }
 
     render() {
         let store = this.props.store;
         return (
             <div>
-                {/* TODO: create this page (can copy most from sessionsTab I think) */}
-                {/* <form onSubmit={this.props.handleSubmitLogin}>
-                    <FormGroup controlId="email" bsSize="sm">
-                        <FormControl
-                            autoFocus
-                            type="email"
-                            value={store.get('email')}
-                            onChange={e => store.set('email')(e.target.value)}
-                            disabled={this.props.disableSubmit}
-                            placeholder="Email"
-                        />
-                    </FormGroup>
-                    <FormGroup controlId="password" bsSize="sm">
-                        <FormControl
-                            value={store.get('password')}
-                            onChange={e => store.set('password')(e.target.value)}
-                            type="password"
-                            disabled={this.props.disableSubmit}
-                            placeholder="Password"
-                        />
-                    </FormGroup>
-                    <Button
-                        block
-                        bsSize="large"
-                        disabled={!this.validateForm() || this.props.disableSubmit}
-                        type="submit"
-                    >
-                        Login
+                <div className="y-padding">
+                    <Button bsStyle="info" onClick={this.createSponsor} disabled={this.props.loading || this.state.loading || this.state.editingSponsor}>
+                        <span>
+                            {this.props.loading &&
+                                <Glyphicon glyph="refresh" />
+                            }
+                            {!this.props.loading &&
+                                <Glyphicon glyph="plus" />
+                            }
+                            {" "}Create a Sponsor
+                        </span>
                     </Button>
-                </form> */}
+                </div>
 
+                {this.props.loading && <div className="lds-dual-ring"></div>}
+                {store.get('selectedEventSponsors').map((data, index) => (
+                    <Sponsor disableEdit={this.state.editingSponsor} data={data} key={data.id} forceRefresh={this.props.forceRefresh} toggleEditingSponsor={this.toggleEditingSponsor} />
+                ))}
+
+                <div ref={scrollTarget => { this.scrollTarget = scrollTarget; }} />
             </div>
         );
     }

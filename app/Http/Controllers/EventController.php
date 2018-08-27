@@ -7,18 +7,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 use App\Event;
+use App\Attendee;
 
 class EventController extends Controller 
 {
 
     public function store(Request $request){
         $event = new Event;
-
         $event->name = 'Unnamed Event';
-        $event->slug = 'unnamed-event-' . time();
+        $event->slug = time();
         $event->owner_id = $request->user()->id;
-
         $event->save();
+
+        // When creating an event, the owner should automatically become an attendee
+        $attendee = new Attendee;
+        $attendee->user_id = $request->user()->id;
+        $attendee->event_id = $event->id;
+        $attendee->save();
+
         return $event;
     }
 
@@ -55,7 +61,7 @@ class EventController extends Controller
     }
 
     public function getEventsByQuery($query, Request $request){
-        $events = Event::where('name', 'LIKE', '%'.$query.'%')->get();
+        $events = Event::where('name', 'LIKE', '%'.$query.'%')->whereNotNull('date_start')->get();
 
         foreach ($events as $event) {
             $event->imageUrl = $event->getFirstMediaUrl();
