@@ -21,15 +21,45 @@ class SponsorController extends Controller
             $event = Event::findOrFail($request->eventId);
             if ($event->owner_id == $request->user()->id) {
                 $sponsor = new Sponsor;
-                $sponsor->name = $request->name;
-                $sponsor->description = $request->description;
-                $sponsor->url = $request->url;
-                $sponsor->tier = $request->tier;
-                $sponsor->event_id = $request->event_id;
+                $sponsor->name = 'Unnamed sponsor';
+                $sponsor->event_id = $request->eventId;
         
                 $sponsor->save();
                 return $sponsor;
             }
+        }
+        
+        abort(401);
+    }
+
+    public function update($id, Request $request){
+        $validate = [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:2000',
+            'url' => 'nullable|URL|max:500',
+            'tier' => 'nullable|string|max:20'
+        ];
+
+        $valid = Validator::make($request->only(['name', 'description', 'url', 'tier']),$validate);
+        
+        if ($valid->fails()) {
+            return  response()->json($valid->errors()->all(), 400);
+        }
+
+        $sponsor = Sponsor::findOrFail($id);
+        $event = Event::findOrFail($sponsor->event_id);
+
+        if ($event->owner_id == $request->user()->id) {
+            $updatedEvent = $event->update($request->all());
+
+            $sponsor->name = $request->name;
+            $sponsor->description = $request->description;
+            $sponsor->url = $request->url;
+            $sponsor->tier = $request->tier;
+            $sponsor->event_id = $request->event_id;
+    
+            $sponsor->save();
+            return $sponsor;
         }
         
         abort(401);

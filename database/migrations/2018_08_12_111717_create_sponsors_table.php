@@ -16,9 +16,9 @@ class CreateSponsorsTable extends Migration
         Schema::create('sponsors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('description');
-            $table->string('url');
-            $table->string('tier');
+            $table->text('description')->nullable();
+            $table->string('url')->nullable();
+            $table->string('tier')->nullable();
             $table->integer('event_id')->unsigned()->index();
             $table->timestamps();
             $table->softDeletes();

@@ -37,7 +37,7 @@ class Dashboard extends Component {
         return eventEdit.name.length > 0 &&
             eventEdit.date_start &&
             eventEdit.date_start.length > 0
-            eventEdit.date_end &&
+        eventEdit.date_end &&
             eventEdit.date_end.length > 0;
     }
 
@@ -137,7 +137,7 @@ class Dashboard extends Component {
 
                                     <Tab eventKey={'sponsors'} title="Sponsors" disabled={this.state.fetchingEvent || !this.validateGeneraltabForm()}>
                                         <div className='event-edit-tab'>
-                                            <SponsorsTab loading={this.state.loading} />
+                                            <SponsorsTab loading={this.state.loading} forceRefresh={() => this.handleChangeTabs('sponsors')} />
                                         </div>
                                     </Tab>
                                 </Tabs>

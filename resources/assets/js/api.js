@@ -254,6 +254,17 @@ export function createNewSponsor(eventId, next) {
         });
 }
 
+export function updateSponsor(id, postData, next) {
+    setAccessToken();
+    axios.put(`${apiUrl}/sponsors/${id}`, postData)
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
 export function deleteSponsor(sponsorId, next) {
     setAccessToken();
     axios.delete(`${apiUrl}/sponsors/${id}`)
