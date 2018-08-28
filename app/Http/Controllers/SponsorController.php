@@ -59,8 +59,7 @@ class SponsorController extends Controller
         if ($event->owner_id == $request->user()->id) {
             $updatedSponsor = $sponsor->update($request->all());
     
-            $sponsor->save();
-            return $sponsor;
+            return $updatedSponsor;
         }
         
         abort(401);
