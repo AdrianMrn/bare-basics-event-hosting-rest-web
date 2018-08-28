@@ -37,7 +37,7 @@ class UserController extends Controller
             'image' => 'nullable|dimensions:max_width=1240,max_height=1240|max:10240'
         ];
 
-        $valid = Validator::make($request->only(['first_name', 'last_name', 'description', 'position', 'company', 'position', 'linkedin', 'facebook', 'twitter', 'website']),$validate);
+        $valid = Validator::make($request->only(['first_name', 'last_name', 'description', 'company', 'position', 'linkedin', 'facebook', 'twitter', 'website']),$validate);
         
         if ($valid->fails()) {
             return response()->json($valid->errors()->all(), 400);

@@ -81,7 +81,7 @@ class Sponsor extends Component {
         this.setState({ editing: false });
         this.props.toggleEditingSponsor();
     }
-    /* TODO: (frontend and backend) finish Sponsor, SponsorsTab and SponsorController */
+
     delete = () => {
         this.setState({ loading: true });
         const id = this.props.data.id
@@ -131,7 +131,7 @@ class Sponsor extends Component {
                             </div>
                         }
 
-                        {this.state.editing && /* TODO: finish editing sponsor */
+                        {this.state.editing &&
                             <form onSubmit={this.saveSponsor}>
 
                                 <FormGroup>
