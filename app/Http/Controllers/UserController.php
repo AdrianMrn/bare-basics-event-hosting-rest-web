@@ -24,6 +24,7 @@ class UserController extends Controller
     }
     
     public function update(Request $request){
+        return JsonResponse::create(['error' => false, 'user' => $request->position]);
         $validate = [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -50,7 +51,7 @@ class UserController extends Controller
             $user->clearMediaCollection();
             $user->addMediaFromRequest('image')->toMediaCollection();
         }
-        
+
         $user = User::where('id', $request->user()->id)->first();
         
         return JsonResponse::create(['error' => false, 'user' => $user]);
