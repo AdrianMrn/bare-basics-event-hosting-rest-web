@@ -57,7 +57,15 @@ class SponsorController extends Controller
         $event = Event::findOrFail($sponsor->event_id);
 
         if ($event->owner_id == $request->user()->id) {
-            $updatedSponsor = $sponsor->update($request->all());
+            $sponsor->name = $request->name;
+            $sponsor->description = $request->description;
+            $sponsor->tier = $request->tier;
+            /* This is unecessary and fixed in the latest migration (not run on prod as of 28/8) */
+            if ($request->url) {
+                $sponsor->url = $request->url;
+            } else {
+                $sponsor->url = '';
+            }
     
             return JsonResponse::create(['error' => false]);
         }
