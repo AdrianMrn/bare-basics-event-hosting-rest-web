@@ -33,7 +33,8 @@ class Sessions extends Component {
                 store.set('selectedEventSessions')(sessions);
             }
             this.setState({ loading: false });
-            this.scrollToBottom();
+            this.props.forceRefresh();
+            /* this.scrollToBottom(); */
         });
     }
 

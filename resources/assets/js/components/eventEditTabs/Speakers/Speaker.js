@@ -62,7 +62,6 @@ class Speaker extends Component {
     render() {
         const loading = this.state.loading;
         const speaker = this.state.speakerDetails;
-        console.log(speaker);
         return (
             <Panel>
                 <Panel.Body>

@@ -45,9 +45,8 @@ class EventController extends Controller
         $valid = Validator::make($request->only(['name', 'description', 'date_start', 'date_end']),$validate);
         
         if ($valid->fails()) {
-            return  response()->json($valid->errors()->all(), 400);
+            return response()->json($valid->errors()->all(), 400);
         }
-
 
         $event = Event::findOrFail($id);
 
@@ -92,7 +91,7 @@ class EventController extends Controller
 
     public function linkImage($id, Request $request){
         $validate = [
-            'image' => 'required|dimensions:max_width=500,max_height=500|max:10240'
+            'image' => 'required|dimensions:max_width=1240,max_height=1240|max:10240'
         ];
 
         $valid = Validator::make($request->only(['image']),$validate);

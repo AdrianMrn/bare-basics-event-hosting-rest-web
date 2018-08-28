@@ -34,7 +34,7 @@ class UserController extends Controller
             'facebook' => 'nullable|URL|max:255',
             'twitter' => 'nullable|URL|max:255',
             'website' => 'nullable|URL|max:255',
-            'image' => 'nullable|dimensions:max_width=500,max_height=500|max:10240'
+            'image' => 'nullable|dimensions:max_width=1240,max_height=1240|max:10240'
         ];
 
         $valid = Validator::make($request->only(['first_name', 'last_name', 'description', 'position', 'company', 'position', 'linkedin', 'facebook', 'twitter', 'website']),$validate);

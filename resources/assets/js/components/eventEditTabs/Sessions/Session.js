@@ -25,6 +25,9 @@ class Session extends Component {
     componentDidMount = () => {
         this.getSpeakers();
     }
+    componentDidUpdate = () => {
+        this.getSpeakers();
+    }
 
     getSpeakers = () => {
         getSessionSpeakers(this.props.data.id, (error, response) => {
@@ -103,6 +106,7 @@ class Session extends Component {
                         showErrorModal: true,
                         errorMessages
                     });
+                    this.setState({ loading: false });
                     Promise.reject(error);
                 } else {
                     Promise.resolve(response);
@@ -115,6 +119,7 @@ class Session extends Component {
                         showErrorModal: true,
                         errorMessages
                     });
+                    this.setState({ loading: false });
                     Promise.reject(error);
                 } else {
                     Promise.resolve(response);
@@ -251,7 +256,7 @@ class Session extends Component {
                                         isMulti
                                         isSearchable
                                         isDisabled={loading}
-                                        placeholder={this.state.possibleSpeakers.length ? 'Speakers' : 'Create some speakers first!'}
+                                        placeholder={this.state.possibleSpeakers.length ? 'Speakers' : 'Create a speaker in the next tab first!'}
                                         closeMenuOnSelect={false}
                                         styles={styles}
                                         defaultValue={this.state.speakers}

@@ -45,7 +45,7 @@ export function authenticateAccount(data, next) {
 
             getMyProfile((error, response) => {
                 if (error) {
-                    console.log(error);
+                    next(error);
                 } else {
                     cookie.save('firstName', response.data.first_name);
                     cookie.save('lastName', response.data.last_name);
@@ -243,6 +243,25 @@ export function uploadImage(image, eventId, next) {
         });
 }
 
+export function uploadSponsorImage(image, sponsorId, next) {
+    setAccessToken();
+    const formData = new FormData();
+    formData.append("image", image);
+
+    axios.post(`${apiUrl}/sponsors/link-image/${sponsorId}`,
+        formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(response => {
+            next(false, response);
+        })
+        .catch(error => {
+            next(error);
+        });
+}
+
 export function createNewSponsor(eventId, next) {
     setAccessToken();
     axios.post(`${apiUrl}/sponsors`, { eventId })
@@ -267,7 +286,7 @@ export function updateSponsor(id, postData, next) {
 
 export function deleteSponsor(sponsorId, next) {
     setAccessToken();
-    axios.delete(`${apiUrl}/sponsors/${id}`)
+    axios.delete(`${apiUrl}/sponsors/${sponsorId}`)
         .then(response => {
             next(false, response);
         })

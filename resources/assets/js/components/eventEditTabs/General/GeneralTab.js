@@ -48,11 +48,13 @@ class General extends Component {
 
         uploadImage(pictureFile[0], eventEdit.id, (error, response) => {
             if (error) {
-                store.set('errorModal')({
+                const errorMessages = (error.response.data.message ? [error.response.data.message] : error.response.data)
+                this.props.store.set('errorModal')({
                     showErrorModal: true,
+                    errorMessages
                 });
             } else {
-                console.log(response);
+
             }
             this.setState({ loading: false });
         });
@@ -83,7 +85,7 @@ class General extends Component {
                     <FormGroup>
                         <ImageUploader
                             buttonText='Event logo'
-                            label={'Max file size: 5MB, accepted: jpg|png, square'}
+                            label={'Max file size: 10MB, accepted: jpg|png, max dimensions: 1240x1240'}
                             onChange={this.onImageDrop}
                             imgExtension={['.jpg', '.jpeg', '.png']}
                             maxFileSize={5242880}

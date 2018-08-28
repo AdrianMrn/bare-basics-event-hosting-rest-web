@@ -43,6 +43,8 @@ class SessionController extends Controller
             return  response()->json($valid->errors()->all(), 400);
         }
 
+        /* TODO: also validate that date_start isn't before event's date_start and date_end etc etc */
+
         $session = Session::findOrFail($id);
         $event = Event::findOrFail($session->event_id);
 

@@ -85,7 +85,9 @@ export default createConnectedStore({
     description: '',
     url: '',
     tier: '',
-    event_id: ''
+    event_id: '',
+    image: '',
+    imageUrl: '',
   },
 
 });

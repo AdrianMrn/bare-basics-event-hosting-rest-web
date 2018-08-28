@@ -37,7 +37,7 @@ class SpeakerController extends Controller
                     Mail::to($request->email)->send(new \App\Mail\AccountCreated($password, $request->email));
                 } else {
                     // If this user is already a speaker at this event, don't add them again
-                    $s = Speaker::where('user_id', $user->id)->first();
+                    $s = Speaker::where([['user_id', $user->id],['event_id', $event->id]])->first();
                     if ($s) {
                         return JsonResponse::create(['error' => 'This user is already a speaker at this event.']);
                     }

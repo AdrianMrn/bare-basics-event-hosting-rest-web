@@ -33,6 +33,7 @@ class Sponsors extends Component {
                 store.set('selectedEventSponsors')(sponsors);
             }
             this.setState({ loading: false });
+            this.props.forceRefresh();
             this.scrollToBottom();
         });
     }
