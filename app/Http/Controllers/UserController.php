@@ -45,8 +45,6 @@ class UserController extends Controller
 
         $user = User::where('id', $request->user()->id)->first();
         $updatedUser = $user->update($request->all());
-        $updatedUser = $user->update(['position' => $request->position]);
-        
         
         if ($request->image) {
             $user->clearMediaCollection();
