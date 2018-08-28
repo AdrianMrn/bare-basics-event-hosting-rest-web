@@ -57,13 +57,7 @@ class SponsorController extends Controller
         $event = Event::findOrFail($sponsor->event_id);
 
         if ($event->owner_id == $request->user()->id) {
-            $updatedEvent = $event->update($request->all());
-
-            $sponsor->name = $request->name;
-            $sponsor->description = $request->description;
-            $sponsor->url = $request->url;
-            $sponsor->tier = $request->tier;
-            $sponsor->event_id = $request->event_id;
+            $updatedSponsor = $sponsor->update($request->all());
     
             $sponsor->save();
             return $sponsor;
