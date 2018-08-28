@@ -45,13 +45,15 @@ class UserController extends Controller
 
         $user = User::where('id', $request->user()->id)->first();
         $updatedUser = $user->update($request->all());
-
+        
         if ($request->image) {
             $user->clearMediaCollection();
             $user->addMediaFromRequest('image')->toMediaCollection();
         }
-
-        return JsonResponse::create(['error' => false]);
+        
+        $user = User::where('id', $request->user()->id)->first();
+        
+        return JsonResponse::create(['error' => false, 'user' => $user]);
     }
 
     public function updateImage(Request $request){
