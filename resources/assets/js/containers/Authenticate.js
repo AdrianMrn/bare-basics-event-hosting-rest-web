@@ -84,7 +84,7 @@ class Authenticate extends Component {
     render() {
         return (
             <div>
-                <div className="row">
+                <div className="row margin-top">
                     <div className="col-md-6 col-md-offset-3">
                         {this.props.location.pathname === '/register' &&
                             <Register

@@ -39,8 +39,9 @@ class EventController extends Controller
         $validate = [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:2000',
-            'date_start' => 'required|date',
-            'date_end' => 'required|date'];
+            'date_start' => 'required|date|after_or_equal:today',
+            'date_end' => 'required|date|after_or_equal:date_start'
+        ];
 
         $valid = Validator::make($request->only(['name', 'description', 'date_start', 'date_end']),$validate);
         

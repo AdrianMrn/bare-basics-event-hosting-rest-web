@@ -35,20 +35,29 @@ class SessionController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:2000',
             'date_start' => 'nullable|date',
-            'date_end' => 'nullable|date'];
+            'date_end' => 'nullable|date|after_or_equal:date_start'
+        ];
 
         $valid = Validator::make($request->only(['name', 'description', 'date_start', 'date_end']),$validate);
         
         if ($valid->fails()) {
-            return  response()->json($valid->errors()->all(), 400);
+            return response()->json($valid->errors()->all(), 400);
         }
 
-        /* TODO: also validate that date_start isn't before event's date_start and date_end etc etc */
-
+        
         $session = Session::findOrFail($id);
         $event = Event::findOrFail($session->event_id);
-
+        
         if ($event->owner_id === $request->user()->id) {
+            /* TODO: validate that date_start isn't before event's date_start and date_end isn't after event's date_end etc etc */
+            if ($request->date_start && $request->date_start < $event->date_start) {
+                return response()->json(["The session's start should be after the event's start."], 400);
+            }
+            if ($request->date_end && $request->date_end > $event->date_end) {
+                return response()->json(["The session's end should be before the event's end."], 400);
+            }
+
+
             $session->name = $request->name;
             $session->description = $request->description;
             $session->date_start = $request->date_start;

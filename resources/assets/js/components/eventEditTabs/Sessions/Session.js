@@ -106,7 +106,7 @@ class Session extends Component {
                     this.setState({ loading: false });
                     Promise.reject(error);
                 } else {
-                    Promise.resolve(response);
+                    Promise.resolve(true);
                 }
             }),
             updateSessionSpeakers(sessionId, { sessionSpeakers }, (error, response) => {
@@ -119,15 +119,17 @@ class Session extends Component {
                     this.setState({ loading: false });
                     Promise.reject(error);
                 } else {
-                    Promise.resolve(response);
+                    Promise.resolve(true);
                 }
             })
-        ]).then((values) => {
-            this.setState({ editing: false, loading: false });
-            this.props.toggleEditingSession();
-            this.props.forceRefresh();
-            this.getSpeakers();
-        });
+        ])
+            .then(values => {
+                console.log(values);
+                this.setState({ editing: false, loading: false });
+                this.props.toggleEditingSession();
+                this.props.forceRefresh();
+                this.getSpeakers();
+            });
     }
 
     cancelEdit = () => {
