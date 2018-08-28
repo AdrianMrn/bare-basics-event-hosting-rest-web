@@ -25,9 +25,6 @@ class Session extends Component {
     componentDidMount = () => {
         this.getSpeakers();
     }
-    componentDidUpdate = () => {
-        this.getSpeakers();
-    }
 
     getSpeakers = () => {
         getSessionSpeakers(this.props.data.id, (error, response) => {
