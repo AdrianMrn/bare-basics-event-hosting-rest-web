@@ -13,6 +13,10 @@ export default createConnectedStore({
     alertStyle: '',
   },
 
+  appModal: {
+    showAppModal: false
+  },
+
   user: {
     email: '',
     first_name: '',

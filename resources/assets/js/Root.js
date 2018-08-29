@@ -10,6 +10,7 @@ import Dashboard from './containers/Dashboard';
 import EventEdit from './containers/eventEdit/EventEdit';
 import TopNav from './components/TopNav';
 import ErrorModal from './components/ErrorModal';
+import AppModal from './components/AppModal';
 
 export default class Root extends Component {
 
@@ -44,6 +45,7 @@ export default class Root extends Component {
                     <Store.Container>
                         <TopNav />
                         <ErrorModal />
+                        <AppModal />
                         <div className="container">
                             <Switch>
                                 {/* TODO: <Route exact path='/' component={Home} /> */}
