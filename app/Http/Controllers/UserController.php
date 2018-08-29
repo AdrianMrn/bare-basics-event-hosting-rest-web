@@ -49,6 +49,8 @@ class UserController extends Controller
             $updatedUser = $user->update($request->except(['email', 'password']));
         } else {
             $updatedUser = $user->update($request->except(['email']));
+            $user->password = bcrypt($request->password);
+            $user->save();
         }
         
         return JsonResponse::create(['error' => false]);
