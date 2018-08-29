@@ -38,8 +38,7 @@ class SessionspeakerController extends Controller
         $userSessions = [];
         foreach ($sessionSpeakers as $sessionSpeaker) {
             $session = Session::find($sessionSpeaker->session_id);
-            return JsonResponse::create(['session' => $session, 'eventId' => $eventId]);
-            if ($session->event_id === $eventId) {
+            if ($session->event_id == $eventId) {
                 array_push($userSessions, $session);
             }
         }
