@@ -90,6 +90,12 @@ class EventController extends Controller
         return $events;
     }
 
+    public function getNextTenEvents(Request $request){
+        $events = Event::where('date_start', '>=', date('Y-m-d'))->get();
+        
+        return $events;
+    }
+
     public function linkImage($id, Request $request){
         $validate = [
             'image' => 'required|dimensions:max_width=1240,max_height=1240|max:10240'

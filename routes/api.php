@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     
     Route::get('/get-attending-events', 'AttendeeController@getAttendingEvents');
     Route::get('/get-user-sessions/{userId}/{eventId}', 'SessionspeakerController@getUserSessions');
+    Route::get('/get-next-ten-events', 'EventController@getNextTenEvents');
     
     Route::get('/eventinfo/sessions/{id}', 'SessionController@getEventSessions');
     Route::get('/eventinfo/speakers/{id}', 'SpeakerController@getEventSpeakers');
