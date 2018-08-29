@@ -92,6 +92,10 @@ class EventController extends Controller
 
     public function getNextTenEvents(Request $request){
         $events = Event::where('date_start', '>=', date('Y-m-d'))->orderBy('date_start', 'ASC')->get();
+
+        foreach ($events as $event) {
+            $event->imageUrl = $event->getFirstMediaUrl();
+        }
         
         return $events;
     }
