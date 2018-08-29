@@ -91,7 +91,7 @@ class EventController extends Controller
     }
 
     public function getNextTenEvents(Request $request){
-        $events = Event::where('date_start', '>=', date('Y-m-d'))->get();
+        $events = Event::where('date_start', '>=', date('Y-m-d'))->orderBy('date_start', 'ASC')->get();
         
         return $events;
     }
