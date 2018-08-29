@@ -30,7 +30,7 @@ class SessionspeakerController extends Controller
     }
 
     public function getUserSessions($id, $eventId, Request $request){
-        $sessionSpeakers = Sessionspeaker::where('user_id', $id);
+        $sessionSpeakers = Sessionspeaker::where('user_id', $id)->get();
         /* FIXME: I forgot to add event_id in the sessionSpeaker model, so we have to loop over
             all of this user's sessionSpeaker entries to figure out if they're at the event we need.
         */
