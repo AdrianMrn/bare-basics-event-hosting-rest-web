@@ -46,13 +46,9 @@ class UserController extends Controller
 
         $user = User::where('id', $request->user()->id)->first();
         if ($request->password === null) {
-            unset($request->password);
-        }
-        $updatedUser = $user->update($request->except(['email']));
-        
-        if ($request->image) {
-            $user->clearMediaCollection();
-            $user->addMediaFromRequest('image')->toMediaCollection();
+            $updatedUser = $user->update($request->except(['email', 'password']));
+        } else {
+            $updatedUser = $user->update($request->except(['email']));
         }
         
         return JsonResponse::create(['error' => false]);
