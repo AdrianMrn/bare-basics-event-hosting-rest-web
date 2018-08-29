@@ -5,9 +5,11 @@ import cookie from 'react-cookies';
 
 import Store from './Store'
 
+import Home from './containers/Home';
 import Authenticate from './containers/Authenticate';
 import Dashboard from './containers/Dashboard';
 import EventEdit from './containers/eventEdit/EventEdit';
+
 import TopNav from './components/TopNav';
 import ErrorModal from './components/ErrorModal';
 import AppModal from './components/AppModal';
@@ -48,7 +50,7 @@ export default class Root extends Component {
                         <AppModal />
                         <div className="container">
                             <Switch>
-                                {/* TODO: <Route exact path='/' component={Home} /> */}
+                                <Route exact path='/' component={Home} />
 
                                 <AuthRoute exact path='/register' component={Authenticate} />
                                 <AuthRoute exact path='/login' component={Authenticate} />
@@ -57,7 +59,8 @@ export default class Root extends Component {
                                 <PrivateRoute exact path='/dashboard' component={Dashboard} />
                                 <PrivateRoute exact path='/dashboard/event-detail/:slug' component={EventEdit} />
 
-                                {/* TODO: Redirect to home when route can't be found */}
+                                {/* Redirect to home when route can't be found */}
+                                <Redirect to="/" />
                             </Switch>
                         </div>
 
