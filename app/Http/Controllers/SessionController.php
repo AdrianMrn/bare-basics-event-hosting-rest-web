@@ -49,7 +49,6 @@ class SessionController extends Controller
         $event = Event::findOrFail($session->event_id);
         
         if ($event->owner_id === $request->user()->id) {
-            /* TODO: validate that date_start isn't before event's date_start and date_end isn't after event's date_end etc etc */
             if ($request->date_start && $request->date_start < $event->date_start) {
                 return response()->json(["The session's start should be after the event's start."], 400);
             }
