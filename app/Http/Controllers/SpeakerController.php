@@ -24,9 +24,9 @@ class SpeakerController extends Controller
                 $user = User::where('email', $request->email)->first();
                 
                 if (!$user) {
-                    // This email address is not yet registered, so we create the user and send them an email with their temporary password
-                    //$password = uniqid();
-                    $password = 'test123'; /* TODO: set this back to uniqid */
+                    // The email address is not yet registered, so we create the user and send them an email with their temporary password
+                    /* $password = 'test123'; */ /* only for testing purposes. DO NOT leave this uncommented in prod */
+                    $password = uniqid();
                     $user = User::create([
                         'first_name' => 'Anonymous',
                         'last_name' => 'User',
