@@ -25,6 +25,7 @@ class UserController extends Controller
     
     public function update(Request $request){
         $validate = [
+            'password' => 'nullable|string|max:255|min:6',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'description' => 'nullable|string|max:2000',
@@ -37,23 +38,26 @@ class UserController extends Controller
             'image' => 'nullable|dimensions:max_width=1240,max_height=1240|max:10240'
         ];
 
-        $valid = Validator::make($request->only(['first_name', 'last_name', 'description', 'company', 'position', 'linkedin', 'facebook', 'twitter', 'website']),$validate);
+        $valid = Validator::make($request->only(['password', 'first_name', 'last_name', 'description', 'company', 'position', 'linkedin', 'facebook', 'twitter', 'website']),$validate);
         
         if ($valid->fails()) {
             return response()->json($valid->errors()->all(), 400);
         }
 
+        $data = $request->except(['email']);
+
         $user = User::where('id', $request->user()->id)->first();
-        $updatedUser = $user->update($request->all());
+        if ($data->password === null) {
+            unset($data->password);
+        }
+        $updatedUser = $user->update($data->all());
         
         if ($request->image) {
             $user->clearMediaCollection();
             $user->addMediaFromRequest('image')->toMediaCollection();
         }
-
-        $user = User::where('id', $request->user()->id)->first();
         
-        return JsonResponse::create(['error' => false, 'user' => $user]);
+        return JsonResponse::create(['error' => false]);
     }
 
     public function updateImage(Request $request){
