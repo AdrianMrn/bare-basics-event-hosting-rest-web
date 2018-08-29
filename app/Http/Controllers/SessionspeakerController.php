@@ -34,6 +34,7 @@ class SessionspeakerController extends Controller
         /* FIXME: I forgot to add event_id in the sessionSpeaker model, so we have to loop over
             all of this user's sessionSpeaker entries to figure out if they're at the event we need.
         */
+        return $sessionSpeakers;
 
         $userSessions = [];
         foreach ($sessionSpeakers as $sessionSpeaker) {
