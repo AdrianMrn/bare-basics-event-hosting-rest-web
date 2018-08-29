@@ -214,7 +214,6 @@ class Session extends Component {
                             <form onSubmit={this.saveSession}>
                                 <div className="session-date">
                                     <FormGroup controlId="dates" bsSize="sm">
-                                        {/* TODO: enforce minDate and maxDate by not allowing the user to pick outside this range */}
                                         <DateRangePicker
                                             minDate={selectedEvent.date_start}
                                             maxDate={selectedEvent.date_end}

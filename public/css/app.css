@@ -398,10 +398,19 @@ body {
   margin-top: 50px;
 }
 
-.navbar-laravel {
-  background-color: #fff;
-  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+/* .navbar {
+  background-color: #3F51B5;
+  background-image: none;
+  border-color: transparent;
+}
+.navbar-default .navbar-nav>li>a {
+  color: #FFF;
+  text-shadow: none;
+} */
+
+.bb-logo {
+  height: 70px;
+  margin: 5px;
 }
 
 .y-padding {
@@ -415,6 +424,14 @@ body {
 
 .margin-top {
   margin-top: 50px;
+}
+
+.modal-google-play {
+  margin: 20px;
+}
+
+.alert.alert-info {
+  text-align: center;
 }
 
 .sponsor-item {
@@ -674,6 +691,21 @@ h3 {
   100% {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    margin-top: 150px;
+  }
+
+  .session-date {
+    float: none;
+  }
+
+  .speaker-email {
+    display: block;
+    margin: 0;
   }
 }
 
