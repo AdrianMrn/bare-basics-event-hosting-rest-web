@@ -44,13 +44,11 @@ class UserController extends Controller
             return response()->json($valid->errors()->all(), 400);
         }
 
-        $data = $request->except(['email']);
-
         $user = User::where('id', $request->user()->id)->first();
-        if ($data->password === null) {
-            unset($data->password);
+        if ($request->password === null) {
+            unset($request->password);
         }
-        $updatedUser = $user->update($data->all());
+        $updatedUser = $user->update($request->except(['email']));
         
         if ($request->image) {
             $user->clearMediaCollection();
