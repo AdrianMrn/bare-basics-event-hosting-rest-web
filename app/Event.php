@@ -19,6 +19,6 @@ class Event extends Model implements HasMedia
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-    protected $fillable = array('name', 'slug', 'address', 'city', 'country', 'venue_name', 'description', 'date_start', 'date_end', 'owner_id', 'type', 'is_private');
+    protected $fillable = array('coords_lon', 'coords_lat', 'name', 'slug', 'address', 'city', 'country', 'venue_name', 'description', 'date_start', 'date_end', 'owner_id', 'type', 'is_private');
 
 }
