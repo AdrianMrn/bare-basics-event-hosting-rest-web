@@ -20,7 +20,7 @@ export default class Root extends Component {
         // Private routes can only be accessed when the user has a valid access token
         const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route {...rest} render={(props) => (
-                cookie.load('accessToken') /* TODO: Make this into a secure check by checking with Laravel Passport if the access token is legit? */
+                cookie.load('accessToken') /* FIXME: Make this into a secure check by checking with Laravel Passport if the access token is legit? */
                     ? <Component {...props} />
                     : <Redirect to={{
                         pathname: '/login',
@@ -50,7 +50,8 @@ export default class Root extends Component {
                         <AppModal />
                         <div className="container">
                             <Switch>
-                                <Route exact path='/' component={Home} />
+                                <Route exact path='/' component={Home} /> {/* TODO: finish this page */}
+                                {/* TODO: favicon!! */}
 
                                 <AuthRoute exact path='/register' component={Authenticate} />
                                 <AuthRoute exact path='/login' component={Authenticate} />

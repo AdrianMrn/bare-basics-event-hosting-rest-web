@@ -396,17 +396,8 @@
     clear: none !important; } }
 body {
   margin-top: 50px;
+  padding-bottom: 50px;
 }
-
-/* .navbar {
-  background-color: #3F51B5;
-  background-image: none;
-  border-color: transparent;
-}
-.navbar-default .navbar-nav>li>a {
-  color: #FFF;
-  text-shadow: none;
-} */
 
 .bb-logo {
   height: 70px;
@@ -649,6 +640,116 @@ h3 {
           text-decoration-color: #337ab7;
 }
 
+/* HOMEPAGE */
+
+.home-fold {
+  padding-top: 30px;
+  height: 450px;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.fold-logo {
+  margin-bottom: 10px;
+}
+
+.tagline {
+  color: #4152af;
+}
+
+.logo-container button {
+  margin-top: 15px;
+  padding: 10px 50px;
+}
+
+button {
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.home-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 70px;
+}
+
+.btn-primary {
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #337ab7), to(#4152af));
+  background-image: linear-gradient(to bottom, #337ab7 0, #4152af 100%);
+}
+
+.screenshot-container {
+  padding: 30px;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  border: 1px solid #2f2f2f;
+  border-radius: 20px;
+}
+
+.screenshot-app {
+  padding: 10px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -ms-flex-positive: 1;
+      flex-grow: 1;
+}
+
+.screenshot-left-bullits {
+  margin-left: 30px;
+}
+
+.screenshot-right-bullits {
+  margin-right: 30px;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.flex-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.flew-row-item {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -ms-flex-positive: 1;
+      flex-grow: 1;
+}
+
+.home-screenshot {
+  width: 100%;
+  -ms-flex-item-align: center;
+      align-self: center;
+}
+
 /* loading spinner */
 
 .lds-dual-ring {
@@ -706,6 +807,24 @@ h3 {
   .speaker-email {
     display: block;
     margin: 0;
+  }
+
+  /* HOME */
+
+  .fold-logo {
+    width: 80%;
+  }
+
+  .home-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+
+  .screenshot-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 
