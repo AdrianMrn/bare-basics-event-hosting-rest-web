@@ -124,7 +124,6 @@ class Session extends Component {
             })
         ])
             .then(values => {
-                console.log(values);
                 this.setState({ editing: false, loading: false });
                 this.props.toggleEditingSession();
                 this.props.forceRefresh();
