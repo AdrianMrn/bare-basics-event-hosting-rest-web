@@ -13,8 +13,10 @@ class UpdateEventsTable extends Migration
      */
     public function up()
     {
-        $table->decimal('coords_lon', 10, 7)->nullable();
-        $table->decimal('coords_lat', 10, 7)->nullable();
+        Schema::table('events', function (Blueprint $table) {
+            $table->decimal('coords_lon', 10, 7)->nullable();
+            $table->decimal('coords_lat', 10, 7)->nullable();
+        });
     }
 
     /**
